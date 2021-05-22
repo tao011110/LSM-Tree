@@ -21,7 +21,8 @@ memTable::~memTable()
 
 void memTable::put(uint64_t key, const std::string &s)
 {
-    byteSize += (sizeof(s) + 12);
+    byteSize += (s.length() + 12);
+    //std::cout << byteSize << std::endl;
     Node *q = new Node;
     if(empty()){
         q->right = head->right;
@@ -175,6 +176,8 @@ void memTable::reset()
     tail->down = nullptr;
     tail->up = nullptr;
     tophead = head;
+    byteSize = 0;
+    size = 0;
 }
 
 std::vector<std::pair<uint64_t, std::string>> memTable::writeBack()

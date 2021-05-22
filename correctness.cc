@@ -25,7 +25,7 @@ private:
         for (i = 0; i < max; ++i) {
             store.put(i, std::string(i+1, 's'));
         }
-        store.make();
+        //store.make();
         std::cout << "finish" << std::endl;
         for (i = 0; i < max; ++i) {
             EXPECT(std::string(i+1, 's'), store.get(i));

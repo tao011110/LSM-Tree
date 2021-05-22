@@ -111,3 +111,106 @@ void Cache::reset()
     }
     head->next = nullptr;
 }
+
+std::pair<int, int> Cache::findRange(std::vector<Node*> vec)
+{
+    std::pair<int, int> result;
+    uint64_t max = 0, min =  UINT64_MAX - 1;
+    for(int i = 0; i < (int)vec.size(); i++){
+        if(max < vec[i]->max){
+            max = vec[i]->max;
+        }
+        if(min > vec[i]->min){
+            min = vec[i]->min;
+        }
+    }
+    result.first = min;
+    result.second = max;
+
+    return result;
+}
+
+std::pair<int, int> Cache::compLevel0(std::vector<Node*> &curvec)
+{
+    std::vector<Node*> handle;
+    curvec.push_back(head->next);
+    Node *tmp = head->next->next;
+    curvec.push_back(tmp);
+    std::pair<int, int> range = findRange(curvec);
+    head->next = tmp->next;
+    cachePrev = head;
+
+    return range;
+}
+
+std::vector<Cache::Node*> Cache::compNextLevel(int currentLevel)
+{
+    std::vector<Node*> handle;
+    Node *tmp = cachePrev;
+    int size = pow(2, currentLevel + 1);
+
+    for(int i = 0; i < size; i++){
+        tmp = tmp->next;
+        if(tmp == nullptr){
+            break;
+        }
+        handle.push_back(tmp);
+    }
+    if(tmp == nullptr){
+        cacheNext = nullptr;
+    }
+    else{
+        cacheNext = tmp->next;
+    }
+    cachePrev->next = cacheNext;
+
+    return handle;
+}
+
+std::pair<int, int> Cache::compCurrentLevel(int currentLevel, std::vector<Node *> &curvec)
+{
+    std::vector<Node*> handle;
+    curvec.push_back(head->next);
+    curvec.push_back(head->next->next);
+    std::pair<int, int> range = findRange(curvec);
+    uint64_t min = range.first;
+    uint64_t max = range.second;
+    Node *tmp = head->next->next;
+    Node *prev = tmp;
+    Node *begin = tmp;          //被合并的下一层前面的一个
+    int size = pow(2, 1);
+
+    for(int i = 0; i < size; i++){
+        tmp = tmp->next;
+        if(tmp == nullptr){
+            break;
+        }
+        if((tmp->min > min && tmp->min < max) || (tmp->max > min && tmp->max < max)){
+            prev->next = tmp->next;
+            handle.push_back(tmp);
+            Node *del = tmp;
+            delete del;
+            continue;
+        }
+        prev = tmp;
+    }
+    Node *end = new Node;
+    if(tmp != nullptr){
+        end = tmp;
+    }
+    else{
+        end = tmp->next;
+    }
+}
+
+//std::pair<int, int> Cache::compaction(int currentLevel, std::vector<Node*> *curvec, std::vector<Node*> *nextvec)
+//{
+//    if(currentLevel == 0){
+//        compLevel0(curvec);
+//        compNextLevel(currentLevel, nextvec);
+//    }
+//    else{
+//        compCurrentLevel(currentLevel, curvec);
+//        compNextLevel(currentLevel, nextvec);
+//    }
+//}

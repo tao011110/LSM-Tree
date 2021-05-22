@@ -4,7 +4,7 @@
 sstable::sstable(std::vector<std::pair<uint64_t, std::string>> vec)
 {
     uint64_t size = vec.size();
-
+    std::cout << "vecsize " << size << std::endl;
     header.time = 0;
     header.num = size;
     header.max = vec[size - 1].first;
@@ -57,11 +57,11 @@ void sstable::makeFileSST(std::string path)
     for(uint64_t i = 0; i < header.num; i++){
         file.write(reinterpret_cast<char*>(&index[i].first), sizeof(index[i].first));
         file.write(reinterpret_cast<char*>(&index[i].second), sizeof(index[i].second));
-        //std::cout << sizeof(index[i].first) << "  orand  " << sizeof(index[i].second) << "  " << file.tellp()<<std::endl;
+       // std::cout << sizeof(index[i].first) << "  orand  " << sizeof(index[i].second) << "  " << file.tellp()<<std::endl;
     }
     for(uint64_t i = 0; i < header.num; i++){
         file.write(data[i].c_str(), data[i].length());
-        //std::cout << "length  " << data[i].length() <<std::endl;
+        //std::cout << data[i].c_str() << "  length  " << data[i].length() <<std::endl;
     }
     file.close();
 }

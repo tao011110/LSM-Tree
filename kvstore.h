@@ -6,6 +6,7 @@
 #include "cache.h"
 #include <fstream>
 #include <cmath>
+#include <algorithm>
 
 class KVStore : public KVStoreAPI {
 	// You can add your implementation here
@@ -15,6 +16,7 @@ private:
     Cache cache;
     int currentLevel = 0;
     int currentNum = 0;
+    bool isLevel0 = true;
 
 public:
 	KVStore(const std::string &dir);
@@ -29,7 +31,7 @@ public:
 
 	void reset() override;
 
-    void compaction();
+    void compaction(std::vector<std::string> vec, int currentLenvel);
 
 //    int getCurrentLevel(){
 //        return currentLevel;
