@@ -162,7 +162,6 @@ bool memTable::del(uint64_t key, bool &isDeleted)
         return true;
     }
     else{
-        put(key, d);
         return false;
     }
 }

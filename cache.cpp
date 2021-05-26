@@ -76,7 +76,22 @@ uint64_t Cache::Node ::getOffsetIndex(uint64_t key, bool &flag)
 
 std::string Cache::Node ::nodeGet(uint64_t key, bool &flag)
 {
-
+    if(key > max || key < min){
+        //std::cout << "beyond range" << std::endl;
+        flag = false;
+        return "";
+    }
+    uint32_t hashVal[4] = {0};
+    uint64_t tmpKey = key;
+    MurmurHash3_x64_128(&tmpKey, sizeof(tmpKey), 1, hashVal);
+//    for(int i = 0; i < 4; i++){
+//        std::cout << "hash " << hashVal[i] << std::endl;
+//    }
+    if(!bf.match(hashVal)){
+        //std::cout <<key <<  "not bf" << std::endl;
+        flag = false;
+        return "";
+    }
     uint64_t beginIndex = getOffsetIndex(key, flag);
     if(flag == false){
         return "";
@@ -118,13 +133,12 @@ std::string Cache::Node ::nodeGet(uint64_t key, bool &flag)
 
 std::string Cache::get(uint64_t key)
 {
-    //Node *tmp = head->next;
-    //std::cout << "key  " << key << std::endl;
     uint64_t levelVec_size = levelVec.size();
     for(uint64_t i = 0; i < levelVec_size; i++){
         Node *tmp = levelVec[i]->next;
         while(tmp != nullptr){
             bool flag = true;
+            //std::cout << "tmp  " << tmp->path;
             std::string result = tmp->nodeGet(key, flag);
             if(flag == false){
                 tmp = tmp->next;
@@ -184,93 +198,51 @@ std::pair<int, int> Cache::findRange(std::vector<Node*> &vec)
     return result;
 }
 
-//std::pair<int, int> Cache::compLevel0(std::vector<Node*> &curvec)
-//{
-//    curvec.push_back(head->next);
-//    curvec.push_back(head->next->next);
-//    Node *tmp = head->next->next->next;
-//    curvec.push_back(tmp);
-//    std::pair<int, int> range = findRange(curvec);
-//    head->next = tmp->next;
-//    cachePrev = head;
 //
-//    //return range;
-//}
-
-std::pair<int, int> Cache::compCurrentLevel(std::vector<Node *> &curvec, std::vector<std::string> &find, int level)
-{
-    Node *tmp = levelVec[level]->next;
-    std::vector<Node *> remain;
-    if(tmp == nullptr){
-        //std::cout << "nullll" << std::endl;
-    }
-    while(tmp != nullptr){
-        uint64_t find_size = find.size();
-        if(find_size == 0){
-            break;
-        }
-        //std::cout << tmp->path << "  " <<find.size() << std::endl;
-        uint64_t j = 0;
-        for(j = 0; j < find_size; j++){
-            if(tmp->path == find[j]){
-                curvec.push_back(tmp);
-                //std::cout << tmp->num<<std::endl;
-                find.erase(find.begin() + j);
-                //tmp->next = del->next;
-                break;
-            }
-        }
-
-        if(j == find_size) {
-            remain.push_back(tmp);
-            //std::cout << remain[remain.size() - 1]->path << "  and  "<< std::endl;
-        }
-        tmp = tmp->next;
-        if(tmp != nullptr && j == find_size) {
-            //std::cout << "  and  " << tmp->path << std::endl;
-        }
-    }
-    levelVec[level]->next = nullptr;
-    uint64_t remain_size = remain.size();
-    for(uint64_t i = 0; i < remain_size; i++){
-        //std::cout << "remain path  " << remain[i]->path << std::endl;
-        remain[i]->next = nullptr;
-    }
-    for(uint64_t i = 1; i <= remain_size; i++){
-        remain[remain_size - i]->next = levelVec[level]->next;
-        levelVec[level]->next = remain[remain_size - i]->next;
-    }
-//    Node *head = new Node;
-//    Node *n = head->next;
-//    Node *del = levelVec[level]->next;
-//    while(del != nullptr){
+//std::pair<int, int> Cache::compCurrentLevel(std::vector<Node *> &curvec, std::vector<std::string> &find, int level)
+//{
+//    Node *tmp = levelVec[level]->next;
+//    std::vector<Node *> remain;
+//    if(tmp == nullptr){
+//        //std::cout << "nullll" << std::endl;
+//    }
+//    while(tmp != nullptr){
 //        uint64_t find_size = find.size();
 //        if(find_size == 0){
 //            break;
 //        }
-//        std::cout << "path  " << del->path << std::endl;
 //        uint64_t j = 0;
 //        for(j = 0; j < find_size; j++){
-//            if(del->path == find[j]){
-//                curvec.push_back(del);
-//                std::cout << del->num<<std::endl;
+//            if(tmp->path == find[j]){
+//                curvec.push_back(tmp);
 //                find.erase(find.begin() + j);
-//                del = del->next;
 //                break;
 //            }
 //        }
-//        if(j == find_size){
 //
+//        if(j == find_size) {
+//            remain.push_back(tmp);
+//        }
+//        tmp = tmp->next;
+//        if(tmp != nullptr && j == find_size) {
 //        }
 //    }
+//    levelVec[level]->next = nullptr;
+//    uint64_t remain_size = remain.size();
+//    for(uint64_t i = 0; i < remain_size; i++){
+//        remain[i]->next = nullptr;
+//    }
+//    for(uint64_t i = 1; i <= remain_size; i++){
+//        remain[remain_size - i]->next = levelVec[level]->next;
+//        levelVec[level]->next = remain[remain_size - i]->next;
+//    }
+//
+//    std::pair<int, int> range = findRange(curvec);
+//
+//    return range;
+//}
 
-
-    std::pair<int, int> range = findRange(curvec);
-
-    return range;
-}
-
-std::vector<Cache::Node*> Cache::compNextLevel(int currentLevel)
+std::vector<Cache::Node*> Cache::compLevel(int currentLevel, std::pair<int, int> &range)
 {
     std::vector<Node*> handle;
     if(currentLevel < levelVec.size()) {
@@ -279,22 +251,10 @@ std::vector<Cache::Node*> Cache::compNextLevel(int currentLevel)
             Node *del = tmp->next;
             tmp->next = del->next;
             handle.push_back(del);
-            //std::cout << "delete " << del->path<<std::endl;
         }
         levelVec[currentLevel]->next = nullptr;
     }
+    range = findRange(handle);
 
     return handle;
 }
-
-//std::pair<int, int> Cache::compaction(int currentLevel, std::vector<Node*> *curvec, std::vector<Node*> *nextvec)
-//{
-//    if(currentLevel == 0){
-//        compLevel0(curvec);
-//        compNextLevel(currentLevel, nextvec);
-//    }
-//    else{
-//        compCurrentLevel(currentLevel, curvec);
-//        compNextLevel(currentLevel, nextvec);
-//    }
-//}

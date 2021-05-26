@@ -6,12 +6,21 @@ KVStore::KVStore(const std::string &dir): KVStoreAPI(dir)
 {
     currentLevel = 0;
     currentNum = 0;
+
+    int level = currentLevel;
+    int num = 0;
+    std::string path = "data/level-";
+    std::string tmppath = path + std::to_string(level);
+
 }
+
+//系统正常关闭
 KVStore::~KVStore()
 {
-    //std::vector<std::pair<uint64_t, std::string>> vec = mt.writeBack();
-    //mt.~memTable();
-    //然后写回sstable
+    //将 MemTable 中的所有数据以 SSTable 形式写回
+    std::vector<memTable::dataNode> vec = mt.writeBack();
+    makeSST(vec);
+
     mt.~memTable();
     cache.~Cache();
 }
@@ -28,7 +37,6 @@ void KVStore::put(uint64_t key, const std::string &s)
         makeSST(vec);
         std::vector<memTable::dataNode>().swap(vec);
         mt.reset();
-
         checkCompaction();
     }
 
@@ -77,18 +85,37 @@ void KVStore::makeSST(std::vector<memTable::dataNode> &vec)
         cache.add(tmppath, st, currentLevel);
     }
     else{
+        maxLevel++;
         const char *newDir = tmppath.data();
         utils::mkdir(newDir);
         tmppath += ("/" + std::to_string(currentNum) + ".sst");
         st.makeFileSST(tmppath);
         cache.add(tmppath, st, currentLevel);
     }
+    //std::cout << "make  " << tmppath << std::endl;
 }
-
 
 //首先，读出所需sstable的index，有相交？两边按照迭代合并index；然后，得到header，再有bf，最后有data；最后放入
 void KVStore::compaction(std::vector<std::string> &v)
 {
+    bool isDeepest = false;
+    if(maxLevel == currentLevel){
+        isDeepest = true;
+    }
+    std::vector<int> num;
+    for(uint64_t i = 0; i < v.size(); i++){
+        std::string m = v[i];
+        std::string str = m.substr(0, m.length() - 4);
+        int n = atoi(str.c_str());
+        num.push_back(n);
+    }
+    sort(num.begin(), num.end());
+    for(uint64_t i = 0; i < v.size(); i++){
+        std::string m = std::to_string(num[i]);
+        std::string str = m + ".sst";
+        v[i] = str;
+        //std::cout << "v: " << v[i] <<std::endl;
+    }
     isCompaction = true;
     std::vector<Cache::Node*> curvec, nextvec, comp, curremain, remain;
     std::pair<int, int> range;
@@ -106,14 +133,20 @@ void KVStore::compaction(std::vector<std::string> &v)
     else{
         for(uint64_t i = 0; vsize - i > curSize; i++){
             std::string tmppath = path + "/" + v[i];
+            //std::cout << "find.push_back  " << tmppath << std::endl;
             find.push_back(tmppath);
         }
     }
-    std::vector<Cache::Node*> curtmp = cache.compNextLevel(currentLevel);
+    for(uint64_t j = 0; j < find.size(); j++){
+        //std::cout << "find[j] " << find[j] << std::endl;
+    }
+    std::vector<Cache::Node*> curtmp = cache.compLevel(currentLevel, range);
     uint64_t curtmp_size = curtmp.size();
+    //std::cout << find.size() << " curtmp_size  " << curtmp_size << std::endl;
     for(uint64_t i = 0; i < curtmp_size; i++){
         uint64_t j = 0;
         uint64_t find_size = find.size();
+        //std::cout << "curtmp[i]->path " << curtmp[i]->path << std::endl;
         for(j = 0; j < find_size; j++){
             if(curtmp[i]->path == find[j]){
                 curvec.push_back(curtmp[i]);
@@ -137,19 +170,21 @@ void KVStore::compaction(std::vector<std::string> &v)
 
     std::vector<std::string>().swap(v);
 
-    nextvec = cache.compNextLevel(currentLevel + 1);
     uint64_t min = range.first;
     uint64_t max = range.second;
+    //std::cout << min << "  " << max <<std::endl;
+    nextvec = cache.compLevel(currentLevel + 1, range);
     uint64_t nextvec_size = nextvec.size();
     for(uint64_t i = 0; i < nextvec_size; i++){
-        if((nextvec[i]->min < max && nextvec[i]->min > min)
-                || (nextvec[i]->max < max && nextvec[i]->max > min)){
+        if((nextvec[i]->min <= max && nextvec[i]->min >= min)
+                || (nextvec[i]->max <= max && nextvec[i]->max >= min)){
             comp.push_back(nextvec[i]);
         }
         else{
             remain.push_back(nextvec[i]);                   //这样能按照存放在nextvec里时间戳从大到小的顺序
         }
     }
+
     uint64_t remain_size = remain.size();
     for(uint64_t i = 1; i <= remain_size; i++){
         cache.addNode(remain[remain_size - i], currentLevel + 1);
@@ -157,6 +192,7 @@ void KVStore::compaction(std::vector<std::string> &v)
 
     std::vector<std::vector<node>> toMerge;
     uint64_t curvec_size = curvec.size();
+    //std::cout << "curvec_size "<< curvec_size<<std::endl;
     for(uint64_t i = 0; i < curvec_size; i++){
         uint64_t curtime = curvec[i]->time;
         std::vector<node> cur;
@@ -234,6 +270,10 @@ void KVStore::compaction(std::vector<std::string> &v)
 
     uint64_t comp_size = comp.size();
     for(uint64_t i = 0; i < comp_size; i++){
+        std::string path = comp[i]->path;
+        const char *delFile = path.data();
+        utils::rmfile(delFile);
+
         uint64_t curtime = comp[i]->time;
         std::vector<node> cur;
         for(uint64_t j = 0; j < comp[i]->num; j++){
@@ -252,6 +292,7 @@ void KVStore::compaction(std::vector<std::string> &v)
     //删除已有的sstable
     for(uint64_t i = 0; i < curvec_size; i++){
         std::string s = curvec[i]->path;
+        //std::cout << "delete  " << s << std::endl;
         const char *delFile = s.data();
         utils::rmfile(delFile);
     }
@@ -302,6 +343,17 @@ void KVStore::compaction(std::vector<std::string> &v)
     }
 
     uint64_t mergeResult_size = mergeResult.size();
+    //可以优化，这样查找~deleted~太耗时间了
+    for(uint64_t i = 0; i < mergeResult.size(); i++){
+        if(mergeResult[i].val == "~DELETED~"){
+            std::cout << "~DELETED~" << std::endl;
+            mergeResult.erase(mergeResult.begin() + i);
+            i--;
+            mergeResult_size--;
+        }
+    }
+
+    mergeResult_size = mergeResult.size();
     int totalsize = 0;
     int prev = 0;
     currentLevel++;
@@ -415,7 +467,9 @@ bool KVStore::del(uint64_t key)
     if(isDeleted == true){
         return false;
     }
-    if(flag == false && isDeleted == false){
+    if(flag == false){
+        std::string d = "~DELETED~";
+        put(key, d);
         flag = cache.del(key);
     }
 
@@ -429,24 +483,6 @@ bool KVStore::del(uint64_t key)
 void KVStore::reset()
 {
     mt.reset();
-    int num = currentNum;
-    int level = currentLevel;
-    while(level >= 0){
-        int nextNum = num / 2;
-        std::string path = "data/level-";
-        path += std::to_string(level);
-        const char *newDir = path.data();
-        while(num > 0){
-            num--;
-            std::string newPath = path;
-            newPath + ("/" + std::to_string(currentNum) + ".sst");
-            const char *delPath = newPath.data();
-            utils::rmfile(delPath);
-        }
-        utils::rmdir(newDir);
-        num = nextNum;
-        level--;
-    }
     cache.reset();
     currentLevel = 0;
     currentNum = 0;

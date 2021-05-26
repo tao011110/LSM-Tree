@@ -6,6 +6,12 @@
 
 #IncludeRegexTransform: 
 
+D:/PROGRAM_CPP/LSM-2/MurmurHash3.h
+stdlib.h
+-
+stdint.h
+-
+
 D:/PROGRAM_CPP/LSM-2/bloomfilter.h
 cstdint
 -
@@ -25,6 +31,8 @@ fstream
 -
 cmath
 -
+MurmurHash3.h
+D:/PROGRAM_CPP/LSM-2/MurmurHash3.h
 bloomfilter.h
 D:/PROGRAM_CPP/LSM-2/bloomfilter.h
 sstable.h
@@ -39,14 +47,6 @@ string
 -
 test.h
 D:/PROGRAM_CPP/LSM-2/test.h
-
-D:/PROGRAM_CPP/LSM-2/kvstore.cc
-kvstore.h
-D:/PROGRAM_CPP/LSM-2/kvstore.h
-utils.h
-D:/PROGRAM_CPP/LSM-2/utils.h
-string
--
 
 D:/PROGRAM_CPP/LSM-2/kvstore.h
 kvstore_api.h
@@ -101,26 +101,4 @@ string
 -
 kvstore.h
 D:/PROGRAM_CPP/LSM-2/kvstore.h
-
-D:/PROGRAM_CPP/LSM-2/utils.h
-sstream
--
-sys/stat.h
--
-vector
--
-sys/types.h
--
-direct.h
--
-stdio.h
--
-io.h
--
-windows.h
--
-dirent.h
--
-unistd.h
--
 

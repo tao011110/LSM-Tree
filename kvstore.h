@@ -26,6 +26,7 @@ private:
     uint64_t compactionTime = 0;
     int currentLevel = 0;
     int currentNum = 0;
+    int maxLevel = 0;
     bool isCompaction = false;
 
 public:

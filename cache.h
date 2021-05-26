@@ -3,6 +3,7 @@
 #include <string>
 #include <fstream>
 #include <cmath>
+#include "MurmurHash3.h"
 #include "bloomfilter.h"
 #include "sstable.h"
 
@@ -34,11 +35,8 @@ public:
     bool del(uint64_t key);
     void add(std::string &p, sstable &st, int level);
     void reset();
-    std::pair<int, int> compaction(int currentLevel, std::vector<Node*> &curvec, std::vector<Node*> &nextvec);
     std::pair<int, int> findRange(std::vector<Node*> &);
-    std::pair<int, int> compLevel0(std::vector<Node*> &curvec);
-    std::pair<int, int> compCurrentLevel(std::vector<Node*> &curvec, std::vector<std::string> &find, int level);
-    std::vector<Cache::Node*> compNextLevel(int currentLevel);
+    std::vector<Cache::Node*> compLevel(int currentLevel, std::pair<int, int> &range);
     void addNode(Node *addition, int level);
 //    void resetPrev(){
 //        cachePrev = head;
