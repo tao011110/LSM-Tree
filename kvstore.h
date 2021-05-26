@@ -21,11 +21,11 @@ private:
         ~node(){}
     };
     memTable mt;
-    uint64_t time = 1;
     Cache cache;
+    uint64_t time = 1;
+    uint64_t compactionTime = 0;
     int currentLevel = 0;
     int currentNum = 0;
-    bool isLevel0 = true;
     bool isCompaction = false;
 
 public:
@@ -46,21 +46,4 @@ public:
     void makeSST(std::vector<memTable::dataNode> &vec);
 
     void checkCompaction();
-
-//    int getCurrentLevel(){
-//        return currentLevel;
-//    }
-
-//    int getCurrentNum(){
-//        return currentNum;
-//    }
-
-//    void setCurrentLevel(int level){
-//        currentLevel = level;
-//    }
-
-//    void setCurrentNum(int num){
-//        currentNum = num;
-//    }
-    void make();
 };

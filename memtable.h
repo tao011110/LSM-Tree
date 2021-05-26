@@ -20,6 +20,7 @@ private:
             value = v;
         }
         Node(): key(-1), right(nullptr), down(nullptr), up(nullptr), value("") {}
+        ~Node(){}
     };
     Node *head, *tail, *tophead;
 

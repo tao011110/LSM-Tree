@@ -4,21 +4,19 @@ memTable::memTable()
 {
     head = new Node;
     tail = new Node;
+    tophead = head;
     head->right = tail;
     head->down = nullptr;
     head->up = nullptr;
     tail->right = nullptr;
     tail->down = nullptr;
     tail->up = nullptr;
-    tophead = head;
     byteSize = 0;
     size = 0;
 }
 
 memTable::~memTable()
 {
-    //writeBack();
-    std::cout << "~memTable  " << std::endl;
     Node *tmp = head;
     while(tmp != nullptr) {
         Node *delp = tmp->up;
@@ -31,6 +29,9 @@ memTable::~memTable()
         delete tmp;
         tmp = delp;
     }
+    head = nullptr;
+    tail = nullptr;
+    tophead = nullptr;
 }
 
 void memTable::put(uint64_t key, const std::string &s)

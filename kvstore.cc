@@ -12,7 +12,8 @@ KVStore::~KVStore()
     //std::vector<std::pair<uint64_t, std::string>> vec = mt.writeBack();
     //mt.~memTable();
     //然后写回sstable
-
+    mt.~memTable();
+    cache.~Cache();
 }
 
 /**
@@ -36,7 +37,6 @@ void KVStore::put(uint64_t key, const std::string &s)
 
 void KVStore::checkCompaction()
 {
-    //std::cout << "begin check " <<std::endl;
     std::string path = "data/level-";
     int i = 0;
     std::string tmppath = path + std::to_string(i);
@@ -44,7 +44,6 @@ void KVStore::checkCompaction()
         std::vector<std::string> ret;
         int size = utils::scanDir(tmppath, ret);
         if(size > pow(2, i + 1)){
-            //std::cout << "compaction level " << i <<std::endl;
             sort(ret.begin(), ret.end());
             currentLevel = i;
             compaction(ret);
@@ -53,85 +52,60 @@ void KVStore::checkCompaction()
         tmppath = path + std::to_string(i);
         std::vector<std::string>().swap(ret);
     }
-    //std::cout << "end check " <<std::endl;
 }
 
 void KVStore::makeSST(std::vector<memTable::dataNode> &vec)
 {
-    //std::cout <<"wocleng  " << vec.size() <<std::endl;
     sstable st(vec);
     vec.clear();
-    //std::cout <<"finish reset  "<<std::endl;
-    st.setTime(time);
+    std::vector<memTable::dataNode>().swap(vec);
+    if(isCompaction == false) {
+        st.setTime(time);
+    }
+    else{
+        st.setTime(compactionTime);
+    };
     time++;
     std::string path = "data/level-";
 
     std::string tmppath = path + std::to_string(currentLevel);
     currentNum++;
-    //std::cout << "check  path is:  " << tmppath << std::endl;
 
-    //while(true){
     if(utils::dirExists(tmppath)){
         tmppath += ("/" + std::to_string(currentNum) + ".sst");
-        //std::cout << "path is:  " << tmppath << std::endl;
         st.makeFileSST(tmppath);
         cache.add(tmppath, st, currentLevel);
     }
     else{
         const char *newDir = tmppath.data();
-        //std::cout << "make  " << tmppath << std::endl;
         utils::mkdir(newDir);
         tmppath += ("/" + std::to_string(currentNum) + ".sst");
-        //std::cout << "path is:  " << tmppath << std::endl;
         st.makeFileSST(tmppath);
         cache.add(tmppath, st, currentLevel);
     }
-    //}
-    //    tmppath += ("/" + std::to_string(currentNum) + ".sst");
-    //    //std::cout << "path is:  " << tmppath << std::endl;
-    //    st.makeFileSST(tmppath);
-    //    cache.add(tmppath, st);
 }
 
 
 //首先，读出所需sstable的index，有相交？两边按照迭代合并index；然后，得到header，再有bf，最后有data；最后放入
 void KVStore::compaction(std::vector<std::string> &v)
 {
-    //std::cout << "begin compaction " <<std::endl;
+    isCompaction = true;
     std::vector<Cache::Node*> curvec, nextvec, comp, curremain, remain;
     std::pair<int, int> range;
     std::string path = "data/level-" + std::to_string(currentLevel);
 
-//    if(currentLevel == 0){
-//        range = cache.compLevel0(curvec);
-//    }
-//    else{
-//        uint64_t vsize = v.size();
-//        uint64_t curSize = pow(2, currentLevel + 1);
-//        //std::cout << "vsize  " << vsize << "  " <<curSize << std::endl;
-//        std::vector<std::string> find;
-//        for(uint64_t i = 0; vsize - i > curSize; i++){
-//            find.push_back(path + "/" + v[i]);
-//        }
-//        range = cache.compCurrentLevel(curvec, find, currentLevel);
-//        std::vector<std::string>().swap(find);
-//    }
-
     uint64_t vsize = v.size();
     uint64_t curSize = pow(2, currentLevel + 1);
-    //std::cout << "vsize  " << vsize << "  " <<curSize << std::endl;
     std::vector<std::string> find;
     if(currentLevel == 0){
         for(uint64_t i = 0; i < vsize; i++){
             std::string tmppath = path + "/" + v[i];
-            //std::cout << "tmpp  " << tmppath<<std::endl;
             find.push_back(tmppath);
         }
     }
     else{
         for(uint64_t i = 0; vsize - i > curSize; i++){
             std::string tmppath = path + "/" + v[i];
-            //std::cout << "tmpppp  " << tmppath<<std::endl;
             find.push_back(tmppath);
         }
     }
@@ -144,6 +118,9 @@ void KVStore::compaction(std::vector<std::string> &v)
             if(curtmp[i]->path == find[j]){
                 curvec.push_back(curtmp[i]);
                 find.erase(find.begin() + j);
+                if(curtmp[i]->time > compactionTime){
+                    compactionTime = curtmp[i]->time;
+                }
                 break;
             }
         }
@@ -153,7 +130,6 @@ void KVStore::compaction(std::vector<std::string> &v)
     }
     uint64_t curremain_size = curremain.size();
     for(uint64_t i = 1; i <= curremain_size; i++){
-        //std::cout << "curremain[remain_size - i]  " << curremain[curremain_size - i]->path <<std::endl;
         cache.addNode(curremain[curremain_size - i], currentLevel);
     }
 
@@ -165,7 +141,6 @@ void KVStore::compaction(std::vector<std::string> &v)
     uint64_t min = range.first;
     uint64_t max = range.second;
     uint64_t nextvec_size = nextvec.size();
-    //std::cout << "woc0 " <<std::endl;
     for(uint64_t i = 0; i < nextvec_size; i++){
         if((nextvec[i]->min < max && nextvec[i]->min > min)
                 || (nextvec[i]->max < max && nextvec[i]->max > min)){
@@ -175,13 +150,10 @@ void KVStore::compaction(std::vector<std::string> &v)
             remain.push_back(nextvec[i]);                   //这样能按照存放在nextvec里时间戳从大到小的顺序
         }
     }
-    //std::cout << "woc1 " <<std::endl;
     uint64_t remain_size = remain.size();
     for(uint64_t i = 1; i <= remain_size; i++){
-        //std::cout << "remain[remain_size - i]  " << remain[remain_size - i]->path <<std::endl;
         cache.addNode(remain[remain_size - i], currentLevel + 1);
     }
-    //std::cout << "woc1.5 " << curvec.size() <<std::endl;
 
     std::vector<std::vector<node>> toMerge;
     uint64_t curvec_size = curvec.size();
@@ -189,7 +161,6 @@ void KVStore::compaction(std::vector<std::string> &v)
         uint64_t curtime = curvec[i]->time;
         std::vector<node> cur;
         uint64_t num = curvec[i]->num;
-        //std::cout << "num  " << num <<std::endl;
         for(uint64_t j = 0; j < num; j++){
             node tmp;
             tmp.time = curtime;
@@ -197,13 +168,10 @@ void KVStore::compaction(std::vector<std::string> &v)
             bool flag = true;
             tmp.val = curvec[i]->nodeGet(tmp.key, flag);
             tmp.size = (tmp.val).length() + 12;
-            //std::cout << "size: " << tmp->size << ", " << "val: " << tmp->val <<std::endl;
             cur.push_back(tmp);
         }
         toMerge.push_back(cur);
     }
-    //std::cout << "woc2 " <<std::endl;
-    //std::cout << "toMerge.size()" <<  toMerge.size() << std::endl;
 
     while(toMerge.size() > 1){
         std::vector<std::vector<node>> tmpMerge;
@@ -261,7 +229,6 @@ void KVStore::compaction(std::vector<std::string> &v)
         toMerge = tmpMerge;
         std::vector<std::vector<node>>().swap(tmpMerge);
     }
-    //std::cout << "woc3 " <<std::endl;
     std::vector<node> toMerge1 = toMerge[0];
     toMerge.pop_back();
 
@@ -276,7 +243,6 @@ void KVStore::compaction(std::vector<std::string> &v)
             bool flag = true;
             tmp.val = comp[i]->nodeGet(tmp.key, flag);
             tmp.size = (tmp.val).length() + 12;
-            //std::cout << "size: " << tmp->size << ", " << "val: " << tmp->val <<std::endl;
             cur.push_back(tmp);
         }
 
@@ -284,10 +250,8 @@ void KVStore::compaction(std::vector<std::string> &v)
     }
 
     //删除已有的sstable
-    //std::cout << "dele file!!" <<std::endl;
     for(uint64_t i = 0; i < curvec_size; i++){
         std::string s = curvec[i]->path;
-        //std::cout <<"has delete  " << s << std::endl;
         const char *delFile = s.data();
         utils::rmfile(delFile);
     }
@@ -337,8 +301,6 @@ void KVStore::compaction(std::vector<std::string> &v)
         mergeResult.insert(mergeResult.end(), toMerge1.begin() + k, toMerge1.end());
     }
 
-
-    //std::cout << "woc4!  " << mergeResult.size() <<std::endl;
     uint64_t mergeResult_size = mergeResult.size();
     int totalsize = 0;
     int prev = 0;
@@ -350,12 +312,10 @@ void KVStore::compaction(std::vector<std::string> &v)
         if(totalsize + size > 2086880){
             totalsize = 0;
             i--;
-            //std::cout << "hello" <<std::endl;
             std::vector<node> vec;
             std::vector<memTable::dataNode> v;
             vec.insert(vec.end(), mergeResult.begin() + prev, mergeResult.begin() + i);
             prev = i;
-            //std::cout << "prev    " << prev << std::endl;
 
             uint64_t vec_size = vec.size();
             for(uint64_t j = 0; j < vec_size; j++){
@@ -365,7 +325,6 @@ void KVStore::compaction(std::vector<std::string> &v)
                 v.push_back(tmp);
             }
             std::vector<node>().swap(vec);
-            //std::cout << "current  " << currentLevel << std::endl;
 
             makeSST(v);
             std::vector<memTable::dataNode>().swap(v);
@@ -389,30 +348,16 @@ void KVStore::compaction(std::vector<std::string> &v)
 
             std::vector<node>().swap(vec);
 
-            //std::cout << "currentlEnd  " << currentLevel << std::endl;
             makeSST(v);
             std::vector<memTable::dataNode>().swap(v);
             break;
         }
     }
 
-    //std::cout << "woc5" << std::endl;
     std::vector<node>().swap(mergeResult);
-//
-//    curvec_size = curvec.size();
-//    for(uint64_t i = 0; i < curvec_size; i++){
-//        curvec[i]->next = nullptr;
-//        delete curvec[i];
-//        curvec[i] = nullptr;
-//    }
+
     std::vector<Cache::Node*>().swap(curvec);
 
-//    nextvec_size = nextvec.size();
-//    for(uint64_t i = 0; i < nextvec_size; i++){
-//        nextvec[i]->next = nullptr;
-//        delete nextvec[i];
-//        nextvec[i] = nullptr;
-//    }
     std::vector<Cache::Node*>().swap(nextvec);
 
     comp_size = comp.size();
@@ -434,22 +379,10 @@ void KVStore::compaction(std::vector<std::string> &v)
         std::vector<node>().swap(toMerge[i]);
     }
     std::vector<std::vector<node>>().swap(toMerge);
-
+    isCompaction = false;
     checkCompaction();
 }
 
-void KVStore::make()
-{
-    std::vector<memTable::dataNode> vec = mt.writeBack();
-    mt.reset();
-    sstable st(vec);
-    st.setTime(time);
-    time++;
-    std::string path = "data/level-0/1.sst";
-    st.makeFileSST(path);
-
-    cache.add(path, st, currentLevel);
-}
 /**
  * Returns the (string) value of the given key.
  * An empty string indicates not found.
@@ -495,7 +428,7 @@ bool KVStore::del(uint64_t key)
  */
 void KVStore::reset()
 {
-    mt.~memTable();
+    mt.reset();
     int num = currentNum;
     int level = currentLevel;
     while(level >= 0){
@@ -517,4 +450,23 @@ void KVStore::reset()
     cache.reset();
     currentLevel = 0;
     currentNum = 0;
+    std::string path = "data/level-";
+
+    int i = 0;
+    std::string tmpDir = path + std::to_string(i);
+    while(utils::dirExists(tmpDir)){
+        std::vector<std::string> ret;
+        utils::scanDir(tmpDir, ret);
+        i++;
+        uint64_t ret_size = ret.size();
+        for(uint64_t j = 0; j < ret_size; j++){
+            std::string tmpPath = tmpDir + ("/" + ret[j]);
+            const char *delPath = tmpPath.data();
+            utils::rmfile(delPath);
+        }
+        std::vector<std::string>().swap(ret);
+        const char *delDir = tmpDir.data();
+        utils::rmdir(delDir);
+        tmpDir = path + std::to_string(i);
+    }
 }

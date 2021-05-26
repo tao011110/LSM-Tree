@@ -28,8 +28,6 @@ Cache::Node ::Node(std::string &p, sstable &st)
 
 Cache::Node ::~Node()
 {
-    delete next;
-    next = nullptr;
     delete[] index;
     index = nullptr;
 }
@@ -155,13 +153,6 @@ bool Cache::del(uint64_t key)
 
 void Cache::reset()
 {
-//    Node *p = head->next;
-//    while(p){
-//        Node *tmp = p->next;
-//        delete p;
-//        p = tmp;
-//    }
-//    head->next = nullptr;
     uint64_t levelVec_size = levelVec.size();
     for(uint64_t i = 0; i < levelVec_size; i++){
         Node *del = levelVec[i];
