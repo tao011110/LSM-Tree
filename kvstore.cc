@@ -32,9 +32,9 @@ KVStore::~KVStore()
 void KVStore::put(uint64_t key, const std::string &s)
 {
     if(mt.getByteSize() +  s.length() + 12 > 2086880){
-        //if(key >= 65300) {
-            std::cout << "write into sst at   " << key << std::endl;
-        //}
+//        if(key >= 64500) {
+//        std::cout << "write into sst at   " << key << std::endl;
+//        }
         std::vector<memTable::dataNode> vec = mt.writeBack();
         currentLevel = 0;
         makeSST(vec);
@@ -117,9 +117,13 @@ void KVStore::compaction(std::vector<std::string> &v)
         std::string m = std::to_string(num[i]);
         std::string str = m + ".sst";
         v[i] = str;
-        //std::cout << "level-" << currentLevel << "v: " << v[i] <<std::endl;
+        //std::cout << i <<" " << v[i] <<std::endl;
     }
-    std::string findtrue = v[v.size() - 1];
+//    if(v[0] == "8373.sst"){
+//        for(int i = 65339; i <= 65462 ; i++) {
+//            std::cout << "get " << i <<  " is  " << get(i).length() << std::endl;
+//        }
+//    }
 
     isCompaction = true;
     std::vector<Cache::Node*> curvec, nextvec, comp, curremain, remain;
@@ -182,7 +186,7 @@ void KVStore::compaction(std::vector<std::string> &v)
     uint64_t nextvec_size = nextvec.size();
     for(uint64_t i = 0; i < nextvec_size; i++){
         if((nextvec[i]->min <= max && nextvec[i]->min >= min)
-                || (nextvec[i]->max <= max && nextvec[i]->max >= min)){
+           || (nextvec[i]->max <= max && nextvec[i]->max >= min)){
             comp.push_back(nextvec[i]);
         }
         else{
@@ -274,30 +278,28 @@ void KVStore::compaction(std::vector<std::string> &v)
     toMerge.pop_back();
 
     uint64_t comp_size = comp.size();
+    std::vector<node> cur;
     for(uint64_t i = 0; i < comp_size; i++){
         //删除下一层待归并的sstable
         std::string path = comp[i]->path;
         //std::cout << "next comp path:  " << path<< std::endl;
         //std::cout << min << "  " << max << std::endl;
-        const char *delFile = path.data();
-        utils::rmfile(delFile);
 
         uint64_t curtime = comp[i]->time;
-        std::vector<node> cur;
         for(uint64_t j = 0; j < comp[i]->num; j++){
             node tmp;
             tmp.time = curtime;
             tmp.key = comp[i]->index[j].first;
             bool flag = true;
             tmp.val = comp[i]->nodeGet(tmp.key, flag);
-            if(tmp.key >= 65338 && tmp.key <= 65462){
-                std::cout <<tmp.key <<  "  you see key  and the length" << tmp.val.length() << std::endl;
-            }
+//            if(tmp.key >= 65338 && tmp.key <= 65462){
+//                //std::cout <<tmp.key <<  "  you see key  and the length" << tmp.val.length() << std::endl;
+//            }
             tmp.size = (tmp.val).length() + 12;
             cur.push_back(tmp);
         }
-
-        toMerge.push_back(cur);
+        const char *delFile = path.data();
+        utils::rmfile(delFile);
     }
 
     //删除已有的sstable
@@ -308,49 +310,101 @@ void KVStore::compaction(std::vector<std::string> &v)
         utils::rmfile(delFile);
     }
 
+//    std::vector<node> mergeResult;
+//    uint64_t k = 0, i = 0;
+//    uint64_t toMerge_size = toMerge.size();
+//    uint64_t toMerge1_size = toMerge1.size();
+//    for(i = 0; i < toMerge_size; i++){
+//        std::vector<node> tmp = toMerge[i];
+//        if(k == toMerge1_size){
+//            mergeResult.insert(mergeResult.end(), tmp.begin(), tmp.end());
+//            continue;
+//        }
+//        uint64_t tmp_size = tmp.size();
+//        uint64_t j = 0;
+//        while(j < tmp_size){
+//            if(tmp[j].key < min){
+//                mergeResult.push_back(tmp[j]);
+//                j++;
+//                continue;
+//            }
+//            if(tmp[j].key > max){
+//                mergeResult.insert(mergeResult.end(), tmp.begin() + j, tmp.end());
+//                break;
+//            }
+//            if(tmp[j].key < toMerge1[k].key){
+//                std::cout << "push  " <<  tmp[j].key << "  " << tmp[j].size - 12 << std::endl;
+//                mergeResult.push_back(tmp[j]);
+//                j++;
+//            }
+//            else{
+//                mergeResult.push_back(toMerge1[k]);
+//                if(tmp[j].key == toMerge1[k].key){
+//                    j++;
+//                }
+//                k++;
+//            }
+//            if(k == toMerge1_size && j < toMerge_size){
+//                mergeResult.insert(mergeResult.end(), tmp.begin() + j, tmp.end());
+//                break;
+//            }
+//        }
+//
+//        std::vector<node>().swap(tmp);
+//    }
+//    if(k < toMerge1_size && i == toMerge_size){
+//        mergeResult.insert(mergeResult.end(), toMerge1.begin() + k, toMerge1.end());
+//    }
     std::vector<node> mergeResult;
-    uint64_t k = 0, i = 0;
-    uint64_t toMerge_size = toMerge.size();
+    uint64_t k = 0, j = 0;
+    uint64_t cur_size = cur.size();
     uint64_t toMerge1_size = toMerge1.size();
-    for(i = 0; i < toMerge_size; i++){
-        std::vector<node> tmp = toMerge[i];
-        if(k == toMerge1_size){
-            mergeResult.insert(mergeResult.end(), tmp.begin(), tmp.end());
+    std::sort(std::begin(cur), std::end(cur),
+              [](const node &n1, const node &n2){
+                  return n1.key < n2.key;
+              });
+//    for(i = 0; i < cur_size; i++){
+//        if(k == toMerge1_size){
+//            mergeResult.insert(mergeResult.end(), tmp.begin(), tmp.end());
+//            continue;
+//        }
+
+    while(j < cur_size){
+        if(cur[j].key < min){
+            mergeResult.push_back(cur[j]);
+            j++;
             continue;
         }
-        uint64_t tmp_size = tmp.size();
-        uint64_t j = 0;
-        while(j < tmp_size){
-            if(tmp[j].key < min){
-                mergeResult.push_back(tmp[j]);
-                j++;
-                continue;
-            }
-            if(tmp[j].key > max){
-                mergeResult.insert(mergeResult.end(), tmp.begin() + j, tmp.end());
-                break;
-            }
-            if(tmp[j].key < toMerge1[k].key){
-                std::cout << "push  " <<  tmp[j].key << "  " << tmp[j].size - 12 << std::endl;
-                mergeResult.push_back(tmp[j]);
-                j++;
-            }
-            else{
-                mergeResult.push_back(toMerge1[k]);
-                if(tmp[j].key == toMerge1[k].key){
-                    j++;
-                }
-                k++;
-            }
-            if(k == toMerge1_size && j < toMerge_size){
-                mergeResult.insert(mergeResult.end(), tmp.begin() + j, tmp.end());
-                break;
-            }
+        if(cur[j].key > max){
+            mergeResult.insert(mergeResult.end(), cur.begin() + j, cur.end());
+            break;
         }
-
-        std::vector<node>().swap(tmp);
+        if(cur[j].key < toMerge1[k].key){
+//            if(cur[j].key >= 65339 && cur[j].key <= 65461) {
+//                std::cout << "push  " << cur[j].key << "  " << cur[j].size - 12 << std::endl;
+//            }
+            mergeResult.push_back(cur[j]);
+            j++;
+        }
+        else{
+            mergeResult.push_back(toMerge1[k]);
+            if(toMerge1[k].key >= 65339 && toMerge1[k].key <= 65461) {
+                //std::cout << "toMerge1[k] " << toMerge1[k].key << "  " << toMerge1[k].size - 12 << std::endl;
+            }
+            if(cur[j].key == toMerge1[k].key){
+                j++;
+            }
+            k++;
+        }
+        if(k == toMerge1_size && j < cur_size){
+            mergeResult.insert(mergeResult.end(), cur.begin() + j, cur.end());
+            break;
+        }
     }
-    if(k < toMerge1_size && i == toMerge_size){
+
+//        std::vector<node>().swap(tmp);
+//    }
+    if(k < toMerge1_size && j == cur_size){
         mergeResult.insert(mergeResult.end(), toMerge1.begin() + k, toMerge1.end());
     }
 
@@ -369,8 +423,8 @@ void KVStore::compaction(std::vector<std::string> &v)
 
     std::sort(std::begin(mergeResult), std::end(mergeResult),
               [](const node &n1, const node &n2){
-        return n1.key < n2.key;
-    });
+                  return n1.key < n2.key;
+              });
 
     mergeResult_size = mergeResult.size();
     int totalsize = 0;
@@ -378,6 +432,7 @@ void KVStore::compaction(std::vector<std::string> &v)
     currentLevel++;
 
     int count = 0;
+    uint64_t i = 0;
     for(i = 0; i < mergeResult_size; i++){
         int size = mergeResult[i].size;
         if(mergeResult[i].key >= 65338) {
@@ -455,7 +510,7 @@ void KVStore::compaction(std::vector<std::string> &v)
 
     std::vector<node>().swap(toMerge1);
 
-    toMerge_size = toMerge.size();
+    uint64_t toMerge_size = toMerge.size();
     for(uint64_t i = 0; i < toMerge_size; i++){
         std::vector<node>().swap(toMerge[i]);
     }
@@ -505,8 +560,8 @@ bool KVStore::del(uint64_t key)
         flag = cache.del(key);
         put(key, d);
     }
-    if(key >= 64562)
-        std::cout << "flag " << flag <<std::endl;
+//    if(key >= 64562)
+//        std::cout << "flag " << flag <<std::endl;
 
     return flag;
 }

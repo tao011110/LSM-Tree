@@ -77,7 +77,8 @@ uint64_t Cache::Node ::getOffsetIndex(uint64_t key, bool &flag)
 std::string Cache::Node ::nodeGet(uint64_t key, bool &flag)
 {
     if(key > max || key < min){
-        //std::cout << "beyond range" << std::endl;
+//        if(key >= 65338 && key <= 65462 && isF == true)
+//            std::cout <<  key<< "  " << "max " << max << "  min   " << min << std::endl;
         flag = false;
         return "";
     }
@@ -88,9 +89,8 @@ std::string Cache::Node ::nodeGet(uint64_t key, bool &flag)
 //        std::cout << "hash " << hashVal[i] << std::endl;
 //    }
     if(!bf.match(hashVal)){
-//        if(key >= 65300) {
+//        if(key >= 65338 && key <= 65462 && isF == true)
 //            std::cout <<key <<  "not bf" << std::endl;
-//        }
         flag = false;
         return "";
     }
@@ -126,6 +126,9 @@ std::string Cache::Node ::nodeGet(uint64_t key, bool &flag)
         file.close();
         std::string result = str;
         delete[] str;
+//        if(result == ""){
+//            std::cout << key << "   dont why" << std::endl;
+//        }
         //std::cout << "result  " <<result <<std::endl;
 //        if(result == "~DELETED~"){
 //            return "";
@@ -167,9 +170,9 @@ std::string Cache::get(uint64_t key)
             }
         }
     }
-    if(key >= 65300) {
-        std::cout << key << "   " << result.length() << std::endl;
-    }
+//    if(key >= 65300) {
+//        std::cout << key << "   " << result.length() << std::endl;
+//    }
 
     return "";
 }

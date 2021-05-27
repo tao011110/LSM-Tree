@@ -127,29 +127,21 @@ private:
         phase();
 
         // Test after all insertions
-        for (i = 0; i < max; ++i) {
-            //std::cout << i << std::endl;
-            EXPECT(std::string(i + 1, 's'), store.get(i));
-        }
+        for (i = 0; i < max; ++i)
+            EXPECT(std::string(i+1, 's'), store.get(i));
         phase();
 
         // Test deletions
         for (i = 0; i < max; i+=2)
             EXPECT(true, store.del(i));
-        std::cout << "part 1" << std::endl;
 
         for (i = 0; i < max; ++i)
             EXPECT((i & 1) ? std::string(i+1, 's') : not_found,
                    store.get(i));
-        std::cout << "part 2" << std::endl;
 
-        for (i = 1; i < max; ++i) {
-            //std::cout << i <<std::endl;
-            if(i == 64562){
-                std::cout << "now" << std::endl;
-            }
+        for (i = 1; i < max; ++i)
             EXPECT(i & 1, store.del(i));
-        }
+
         phase();
 
         report();
@@ -169,13 +161,12 @@ public:
 
         std::cout << "[Large Test]" << std::endl;
         regular_test(LARGE_TEST_MAX);
-        //regular_test(10240);
     }
 };
 
 int main(int argc, char *argv[])
 {
-    bool verbose = true;
+    bool verbose = (argc == 2 && std::string(argv[1]) == "-v");
 
     std::cout << "Usage: " << argv[0] << " [-v]" << std::endl;
     std::cout << "  -v: print extra info for failed tests [currently ";
@@ -189,4 +180,5 @@ int main(int argc, char *argv[])
 
     return 0;
 }
+
 
