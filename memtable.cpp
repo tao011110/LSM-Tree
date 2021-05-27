@@ -37,7 +37,9 @@ memTable::~memTable()
 void memTable::put(uint64_t key, const std::string &s)
 {
     byteSize += (s.length() + 12);
-    //std::cout << byteSize << std::endl;
+//    if(key >= 64562) {
+//        std::cout << "byteSize" <<  byteSize << std::endl;
+//    }
     Node *q = new Node;
     if(empty()){
         q->right = head->right;

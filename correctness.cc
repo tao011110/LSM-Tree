@@ -144,7 +144,7 @@ private:
         std::cout << "part 2" << std::endl;
 
         for (i = 1; i < max; ++i) {
-            std::cout << i <<std::endl;
+            //std::cout << i <<std::endl;
             if(i == 64562){
                 std::cout << "now" << std::endl;
             }

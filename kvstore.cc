@@ -32,6 +32,9 @@ KVStore::~KVStore()
 void KVStore::put(uint64_t key, const std::string &s)
 {
     if(mt.getByteSize() +  s.length() + 12 > 2086880){
+        //if(key >= 65300) {
+            std::cout << "write into sst at   " << key << std::endl;
+        //}
         std::vector<memTable::dataNode> vec = mt.writeBack();
         currentLevel = 0;
         makeSST(vec);
@@ -114,8 +117,10 @@ void KVStore::compaction(std::vector<std::string> &v)
         std::string m = std::to_string(num[i]);
         std::string str = m + ".sst";
         v[i] = str;
-        //std::cout << "v: " << v[i] <<std::endl;
+        //std::cout << "level-" << currentLevel << "v: " << v[i] <<std::endl;
     }
+    std::string findtrue = v[v.size() - 1];
+
     isCompaction = true;
     std::vector<Cache::Node*> curvec, nextvec, comp, curremain, remain;
     std::pair<int, int> range;
@@ -137,9 +142,9 @@ void KVStore::compaction(std::vector<std::string> &v)
             find.push_back(tmppath);
         }
     }
-    for(uint64_t j = 0; j < find.size(); j++){
-        //std::cout << "find[j] " << find[j] << std::endl;
-    }
+//    for(uint64_t j = 0; j < find.size(); j++){
+//        std::cout << "find[j] " << find[j] << std::endl;
+//    }
     std::vector<Cache::Node*> curtmp = cache.compLevel(currentLevel, range);
     uint64_t curtmp_size = curtmp.size();
     //std::cout << find.size() << " curtmp_size  " << curtmp_size << std::endl;
@@ -270,7 +275,10 @@ void KVStore::compaction(std::vector<std::string> &v)
 
     uint64_t comp_size = comp.size();
     for(uint64_t i = 0; i < comp_size; i++){
+        //删除下一层待归并的sstable
         std::string path = comp[i]->path;
+        //std::cout << "next comp path:  " << path<< std::endl;
+        //std::cout << min << "  " << max << std::endl;
         const char *delFile = path.data();
         utils::rmfile(delFile);
 
@@ -282,6 +290,9 @@ void KVStore::compaction(std::vector<std::string> &v)
             tmp.key = comp[i]->index[j].first;
             bool flag = true;
             tmp.val = comp[i]->nodeGet(tmp.key, flag);
+            if(tmp.key >= 65338 && tmp.key <= 65462){
+                std::cout <<tmp.key <<  "  you see key  and the length" << tmp.val.length() << std::endl;
+            }
             tmp.size = (tmp.val).length() + 12;
             cur.push_back(tmp);
         }
@@ -320,6 +331,7 @@ void KVStore::compaction(std::vector<std::string> &v)
                 break;
             }
             if(tmp[j].key < toMerge1[k].key){
+                std::cout << "push  " <<  tmp[j].key << "  " << tmp[j].size - 12 << std::endl;
                 mergeResult.push_back(tmp[j]);
                 j++;
             }
@@ -344,25 +356,35 @@ void KVStore::compaction(std::vector<std::string> &v)
 
     uint64_t mergeResult_size = mergeResult.size();
     //可以优化，这样查找~deleted~太耗时间了
-    for(uint64_t i = 0; i < mergeResult.size(); i++){
-        if(mergeResult[i].val == "~DELETED~"){
-            std::cout << "~DELETED~" << std::endl;
-            mergeResult.erase(mergeResult.begin() + i);
-            i--;
-            mergeResult_size--;
+    if(isDeepest == true) {
+        for (uint64_t i = 0; i < mergeResult_size; i++) {
+            if (mergeResult[i].val == "~DELETED~") {
+                //std::cout << "~DELETED~" << std::endl;
+                mergeResult.erase(mergeResult.begin() + i);
+                i--;
+                mergeResult_size--;
+            }
         }
     }
+
+    std::sort(std::begin(mergeResult), std::end(mergeResult),
+              [](const node &n1, const node &n2){
+        return n1.key < n2.key;
+    });
 
     mergeResult_size = mergeResult.size();
     int totalsize = 0;
     int prev = 0;
     currentLevel++;
 
+    int count = 0;
     for(i = 0; i < mergeResult_size; i++){
         int size = mergeResult[i].size;
-        //std::cout << "size  " <<size <<std::endl;
+        if(mergeResult[i].key >= 65338) {
+            std::cout << "at  " << i << " is " << mergeResult[i].key << " size  " << size << "    " << mergeResult[i].val.length() << std::endl;
+            //std::cout << "total  " << totalsize << std::endl;
+        }
         if(totalsize + size > 2086880){
-            totalsize = 0;
             i--;
             std::vector<node> vec;
             std::vector<memTable::dataNode> v;
@@ -374,12 +396,17 @@ void KVStore::compaction(std::vector<std::string> &v)
                 memTable::dataNode tmp;
                 tmp.key = vec[j].key;
                 tmp.val = vec[j].val;
+                if(tmp.key >= 65339 && tmp.key <= 65461){
+                    std::cout <<tmp.key << " yes  " << tmp.val.length() << std::endl;
+                }
                 v.push_back(tmp);
             }
-            std::vector<node>().swap(vec);
-
+            count++;
             makeSST(v);
             std::vector<memTable::dataNode>().swap(v);
+            std::vector<node>().swap(vec);
+
+            totalsize = 0;
             continue;
         }
         else{
@@ -397,6 +424,7 @@ void KVStore::compaction(std::vector<std::string> &v)
                 tmp.val = vec[j].val;
                 v.push_back(tmp);
             }
+            count++;
 
             std::vector<node>().swap(vec);
 
@@ -405,6 +433,7 @@ void KVStore::compaction(std::vector<std::string> &v)
             break;
         }
     }
+    //std::cout << "count  " << count <<std::endl;
 
     std::vector<node>().swap(mergeResult);
 
@@ -432,6 +461,7 @@ void KVStore::compaction(std::vector<std::string> &v)
     }
     std::vector<std::vector<node>>().swap(toMerge);
     isCompaction = false;
+    compactionTime = 0;
     checkCompaction();
 }
 
@@ -451,6 +481,9 @@ std::string KVStore::get(uint64_t key)
         if(result == ""){           //如果memtable中未找到，则到sstable中进行寻找
             //std::cout << "search in sstable" << std::endl;
             result = cache.get(key);
+            if(result == "~DELETED~"){
+                return "";
+            }
         }
     }
 
@@ -469,9 +502,11 @@ bool KVStore::del(uint64_t key)
     }
     if(flag == false){
         std::string d = "~DELETED~";
-        put(key, d);
         flag = cache.del(key);
+        put(key, d);
     }
+    if(key >= 64562)
+        std::cout << "flag " << flag <<std::endl;
 
     return flag;
 }
@@ -486,6 +521,8 @@ void KVStore::reset()
     cache.reset();
     currentLevel = 0;
     currentNum = 0;
+    compactionTime = 0;
+    maxLevel = 0;
     std::string path = "data/level-";
 
     int i = 0;

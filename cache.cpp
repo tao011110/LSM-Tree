@@ -88,10 +88,15 @@ std::string Cache::Node ::nodeGet(uint64_t key, bool &flag)
 //        std::cout << "hash " << hashVal[i] << std::endl;
 //    }
     if(!bf.match(hashVal)){
-        //std::cout <<key <<  "not bf" << std::endl;
+//        if(key >= 65300) {
+//            std::cout <<key <<  "not bf" << std::endl;
+//        }
         flag = false;
         return "";
     }
+//    if(key >= 65300) {
+//        std::cout <<key << "  may nwe" << std::endl;
+//    }
     uint64_t beginIndex = getOffsetIndex(key, flag);
     if(flag == false){
         return "";
@@ -122,34 +127,48 @@ std::string Cache::Node ::nodeGet(uint64_t key, bool &flag)
         std::string result = str;
         delete[] str;
         //std::cout << "result  " <<result <<std::endl;
-        if(result == "~DELETED~"){
-            return "";
-        }
-        else{
-            return result;
-        }
+//        if(result == "~DELETED~"){
+//            return "";
+//        }
+//        else{
+//            return result;
+//        }
+//        if(key >= 65300) {
+//            std::cout << key << "    there might be    " << result.length() << std::endl;
+//        }
+        return result;
     }
 }
 
 std::string Cache::get(uint64_t key)
 {
     uint64_t levelVec_size = levelVec.size();
+    std::string result = "";
     for(uint64_t i = 0; i < levelVec_size; i++){
         Node *tmp = levelVec[i]->next;
         while(tmp != nullptr){
             bool flag = true;
             //std::cout << "tmp  " << tmp->path;
-            std::string result = tmp->nodeGet(key, flag);
+            result = tmp->nodeGet(key, flag);
             if(flag == false){
                 tmp = tmp->next;
                 continue;
             }
             else{
                 if(result != ""){
+//                    if(key >= 65300) {
+//                        std::cout << key << "   " << result.length() << result[0] << result[1] << std::endl;
+//                    }
                     return result;
+                }
+                else{
+                    tmp = tmp->next;
                 }
             }
         }
+    }
+    if(key >= 65300) {
+        std::cout << key << "   " << result.length() << std::endl;
     }
 
     return "";
@@ -158,7 +177,7 @@ std::string Cache::get(uint64_t key)
 bool Cache::del(uint64_t key)
 {
     std::string result = get(key);
-    if(result == ""){
+    if(result == "" || result == "~DELETED~"){
         return false;
     }
 
