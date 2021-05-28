@@ -95,9 +95,6 @@
 		<Unit filename="D:/PROGRAM_CPP/LSM-2/cache.h">
 			<Option target="LSM_2correctness.cc"/>
 		</Unit>
-		<Unit filename="D:/PROGRAM_CPP/LSM-2/correctness.cc">
-			<Option target="LSM_2correctness.cc"/>
-		</Unit>
 		<Unit filename="D:/PROGRAM_CPP/LSM-2/kvstore.cc">
 			<Option target="LSM_2correctness.cc"/>
 		</Unit>
@@ -111,6 +108,9 @@
 			<Option target="LSM_2correctness.cc"/>
 		</Unit>
 		<Unit filename="D:/PROGRAM_CPP/LSM-2/memtable.h">
+			<Option target="LSM_2correctness.cc"/>
+		</Unit>
+		<Unit filename="D:/PROGRAM_CPP/LSM-2/persistence.cc">
 			<Option target="LSM_2correctness.cc"/>
 		</Unit>
 		<Unit filename="D:/PROGRAM_CPP/LSM-2/sstable.cpp">

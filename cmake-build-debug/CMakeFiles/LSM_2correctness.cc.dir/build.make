@@ -101,22 +101,9 @@ CMakeFiles/LSM_2correctness.cc.dir/cache.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/LSM_2correctness.cc.dir/cache.cpp.s"
 	D:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\PROGRAM_CPP\LSM-2\cache.cpp -o CMakeFiles\LSM_2correctness.cc.dir\cache.cpp.s
 
-CMakeFiles/LSM_2correctness.cc.dir/correctness.cc.obj: CMakeFiles/LSM_2correctness.cc.dir/flags.make
-CMakeFiles/LSM_2correctness.cc.dir/correctness.cc.obj: ../correctness.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\PROGRAM_CPP\LSM-2\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/LSM_2correctness.cc.dir/correctness.cc.obj"
-	D:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\LSM_2correctness.cc.dir\correctness.cc.obj -c D:\PROGRAM_CPP\LSM-2\correctness.cc
-
-CMakeFiles/LSM_2correctness.cc.dir/correctness.cc.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/LSM_2correctness.cc.dir/correctness.cc.i"
-	D:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\PROGRAM_CPP\LSM-2\correctness.cc > CMakeFiles\LSM_2correctness.cc.dir\correctness.cc.i
-
-CMakeFiles/LSM_2correctness.cc.dir/correctness.cc.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/LSM_2correctness.cc.dir/correctness.cc.s"
-	D:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\PROGRAM_CPP\LSM-2\correctness.cc -o CMakeFiles\LSM_2correctness.cc.dir\correctness.cc.s
-
 CMakeFiles/LSM_2correctness.cc.dir/kvstore.cc.obj: CMakeFiles/LSM_2correctness.cc.dir/flags.make
 CMakeFiles/LSM_2correctness.cc.dir/kvstore.cc.obj: ../kvstore.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\PROGRAM_CPP\LSM-2\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/LSM_2correctness.cc.dir/kvstore.cc.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\PROGRAM_CPP\LSM-2\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/LSM_2correctness.cc.dir/kvstore.cc.obj"
 	D:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\LSM_2correctness.cc.dir\kvstore.cc.obj -c D:\PROGRAM_CPP\LSM-2\kvstore.cc
 
 CMakeFiles/LSM_2correctness.cc.dir/kvstore.cc.i: cmake_force
@@ -129,7 +116,7 @@ CMakeFiles/LSM_2correctness.cc.dir/kvstore.cc.s: cmake_force
 
 CMakeFiles/LSM_2correctness.cc.dir/memtable.cpp.obj: CMakeFiles/LSM_2correctness.cc.dir/flags.make
 CMakeFiles/LSM_2correctness.cc.dir/memtable.cpp.obj: ../memtable.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\PROGRAM_CPP\LSM-2\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/LSM_2correctness.cc.dir/memtable.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\PROGRAM_CPP\LSM-2\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/LSM_2correctness.cc.dir/memtable.cpp.obj"
 	D:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\LSM_2correctness.cc.dir\memtable.cpp.obj -c D:\PROGRAM_CPP\LSM-2\memtable.cpp
 
 CMakeFiles/LSM_2correctness.cc.dir/memtable.cpp.i: cmake_force
@@ -139,6 +126,19 @@ CMakeFiles/LSM_2correctness.cc.dir/memtable.cpp.i: cmake_force
 CMakeFiles/LSM_2correctness.cc.dir/memtable.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/LSM_2correctness.cc.dir/memtable.cpp.s"
 	D:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\PROGRAM_CPP\LSM-2\memtable.cpp -o CMakeFiles\LSM_2correctness.cc.dir\memtable.cpp.s
+
+CMakeFiles/LSM_2correctness.cc.dir/persistence.cc.obj: CMakeFiles/LSM_2correctness.cc.dir/flags.make
+CMakeFiles/LSM_2correctness.cc.dir/persistence.cc.obj: ../persistence.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\PROGRAM_CPP\LSM-2\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/LSM_2correctness.cc.dir/persistence.cc.obj"
+	D:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\LSM_2correctness.cc.dir\persistence.cc.obj -c D:\PROGRAM_CPP\LSM-2\persistence.cc
+
+CMakeFiles/LSM_2correctness.cc.dir/persistence.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/LSM_2correctness.cc.dir/persistence.cc.i"
+	D:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\PROGRAM_CPP\LSM-2\persistence.cc > CMakeFiles\LSM_2correctness.cc.dir\persistence.cc.i
+
+CMakeFiles/LSM_2correctness.cc.dir/persistence.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/LSM_2correctness.cc.dir/persistence.cc.s"
+	D:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\PROGRAM_CPP\LSM-2\persistence.cc -o CMakeFiles\LSM_2correctness.cc.dir\persistence.cc.s
 
 CMakeFiles/LSM_2correctness.cc.dir/sstable.cpp.obj: CMakeFiles/LSM_2correctness.cc.dir/flags.make
 CMakeFiles/LSM_2correctness.cc.dir/sstable.cpp.obj: ../sstable.cpp
@@ -157,9 +157,9 @@ CMakeFiles/LSM_2correctness.cc.dir/sstable.cpp.s: cmake_force
 LSM_2correctness_cc_OBJECTS = \
 "CMakeFiles/LSM_2correctness.cc.dir/bloomfilter.cpp.obj" \
 "CMakeFiles/LSM_2correctness.cc.dir/cache.cpp.obj" \
-"CMakeFiles/LSM_2correctness.cc.dir/correctness.cc.obj" \
 "CMakeFiles/LSM_2correctness.cc.dir/kvstore.cc.obj" \
 "CMakeFiles/LSM_2correctness.cc.dir/memtable.cpp.obj" \
+"CMakeFiles/LSM_2correctness.cc.dir/persistence.cc.obj" \
 "CMakeFiles/LSM_2correctness.cc.dir/sstable.cpp.obj"
 
 # External object files for target LSM_2correctness.cc
@@ -167,9 +167,9 @@ LSM_2correctness_cc_EXTERNAL_OBJECTS =
 
 LSM_2correctness.cc.exe: CMakeFiles/LSM_2correctness.cc.dir/bloomfilter.cpp.obj
 LSM_2correctness.cc.exe: CMakeFiles/LSM_2correctness.cc.dir/cache.cpp.obj
-LSM_2correctness.cc.exe: CMakeFiles/LSM_2correctness.cc.dir/correctness.cc.obj
 LSM_2correctness.cc.exe: CMakeFiles/LSM_2correctness.cc.dir/kvstore.cc.obj
 LSM_2correctness.cc.exe: CMakeFiles/LSM_2correctness.cc.dir/memtable.cpp.obj
+LSM_2correctness.cc.exe: CMakeFiles/LSM_2correctness.cc.dir/persistence.cc.obj
 LSM_2correctness.cc.exe: CMakeFiles/LSM_2correctness.cc.dir/sstable.cpp.obj
 LSM_2correctness.cc.exe: CMakeFiles/LSM_2correctness.cc.dir/build.make
 LSM_2correctness.cc.exe: CMakeFiles/LSM_2correctness.cc.dir/linklibs.rsp

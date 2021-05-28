@@ -36,16 +36,6 @@ D:/PROGRAM_CPP/LSM-2/bloomfilter.h
 sstable.h
 D:/PROGRAM_CPP/LSM-2/sstable.h
 
-D:/PROGRAM_CPP/LSM-2/correctness.cc
-iostream
--
-cstdint
--
-string
--
-test.h
-D:/PROGRAM_CPP/LSM-2/test.h
-
 D:/PROGRAM_CPP/LSM-2/kvstore.h
 kvstore_api.h
 D:/PROGRAM_CPP/LSM-2/kvstore_api.h
@@ -77,6 +67,18 @@ iostream
 -
 vector
 -
+
+D:/PROGRAM_CPP/LSM-2/persistence.cc
+iostream
+-
+cstdint
+-
+string
+-
+cassert
+-
+test.h
+D:/PROGRAM_CPP/LSM-2/test.h
 
 D:/PROGRAM_CPP/LSM-2/sstable.h
 string

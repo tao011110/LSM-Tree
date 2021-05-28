@@ -195,33 +195,6 @@ cache.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\LSM_2correctness.cc.dir\build.make CMakeFiles/LSM_2correctness.cc.dir/cache.cpp.s
 .PHONY : cache.cpp.s
 
-correctness.obj: correctness.cc.obj
-
-.PHONY : correctness.obj
-
-# target to build an object file
-correctness.cc.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\LSM_2correctness.cc.dir\build.make CMakeFiles/LSM_2correctness.cc.dir/correctness.cc.obj
-.PHONY : correctness.cc.obj
-
-correctness.i: correctness.cc.i
-
-.PHONY : correctness.i
-
-# target to preprocess a source file
-correctness.cc.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\LSM_2correctness.cc.dir\build.make CMakeFiles/LSM_2correctness.cc.dir/correctness.cc.i
-.PHONY : correctness.cc.i
-
-correctness.s: correctness.cc.s
-
-.PHONY : correctness.s
-
-# target to generate assembly for a file
-correctness.cc.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\LSM_2correctness.cc.dir\build.make CMakeFiles/LSM_2correctness.cc.dir/correctness.cc.s
-.PHONY : correctness.cc.s
-
 kvstore.obj: kvstore.cc.obj
 
 .PHONY : kvstore.obj
@@ -276,6 +249,33 @@ memtable.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\LSM_2correctness.cc.dir\build.make CMakeFiles/LSM_2correctness.cc.dir/memtable.cpp.s
 .PHONY : memtable.cpp.s
 
+persistence.obj: persistence.cc.obj
+
+.PHONY : persistence.obj
+
+# target to build an object file
+persistence.cc.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LSM_2correctness.cc.dir\build.make CMakeFiles/LSM_2correctness.cc.dir/persistence.cc.obj
+.PHONY : persistence.cc.obj
+
+persistence.i: persistence.cc.i
+
+.PHONY : persistence.i
+
+# target to preprocess a source file
+persistence.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LSM_2correctness.cc.dir\build.make CMakeFiles/LSM_2correctness.cc.dir/persistence.cc.i
+.PHONY : persistence.cc.i
+
+persistence.s: persistence.cc.s
+
+.PHONY : persistence.s
+
+# target to generate assembly for a file
+persistence.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LSM_2correctness.cc.dir\build.make CMakeFiles/LSM_2correctness.cc.dir/persistence.cc.s
+.PHONY : persistence.cc.s
+
 sstable.obj: sstable.cpp.obj
 
 .PHONY : sstable.obj
@@ -318,15 +318,15 @@ help:
 	@echo ... cache.obj
 	@echo ... cache.i
 	@echo ... cache.s
-	@echo ... correctness.obj
-	@echo ... correctness.i
-	@echo ... correctness.s
 	@echo ... kvstore.obj
 	@echo ... kvstore.i
 	@echo ... kvstore.s
 	@echo ... memtable.obj
 	@echo ... memtable.i
 	@echo ... memtable.s
+	@echo ... persistence.obj
+	@echo ... persistence.i
+	@echo ... persistence.s
 	@echo ... sstable.obj
 	@echo ... sstable.i
 	@echo ... sstable.s

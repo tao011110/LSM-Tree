@@ -1,9 +1,9 @@
 file(REMOVE_RECURSE
   "CMakeFiles/LSM_2correctness.cc.dir/bloomfilter.cpp.obj"
   "CMakeFiles/LSM_2correctness.cc.dir/cache.cpp.obj"
-  "CMakeFiles/LSM_2correctness.cc.dir/correctness.cc.obj"
   "CMakeFiles/LSM_2correctness.cc.dir/kvstore.cc.obj"
   "CMakeFiles/LSM_2correctness.cc.dir/memtable.cpp.obj"
+  "CMakeFiles/LSM_2correctness.cc.dir/persistence.cc.obj"
   "CMakeFiles/LSM_2correctness.cc.dir/sstable.cpp.obj"
   "LSM_2correctness.cc.exe"
   "LSM_2correctness.cc.exe.manifest"

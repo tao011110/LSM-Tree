@@ -7,7 +7,7 @@ file(GLOB SOURCES
         bloomfilter.cpp
         cache.h
         cache.cpp
-        correctness.cc
+        #correctness.cc
         kvstore.h
         kvstore.cc
         kvstore_api.h
@@ -18,7 +18,7 @@ file(GLOB SOURCES
         sstable.cpp
         test.h
         utils.h
-        # persistence.cc
+        persistence.cc
         # main.cpp
         )
 
