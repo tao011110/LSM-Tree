@@ -14,8 +14,8 @@ private:
     struct Header{
         uint64_t time;
         uint64_t num;
-        uint64_t max;
         uint64_t min;
+        uint64_t max;
     };
 
 public:

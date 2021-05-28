@@ -7,8 +7,8 @@ sstable::sstable(std::vector<memTable::dataNode> &vec)
     uint64_t size = vec.size();
     header.time = 0;
     header.num = size;
-    header.max = vec[size - 1].key;
     header.min = vec[0].key;
+    header.max = vec[size - 1].key;
     uint32_t hash[4] = {0};
     index = new std::pair<uint64_t, uint32_t>[size];
     data = new std::string[size];

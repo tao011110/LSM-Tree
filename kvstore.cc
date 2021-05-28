@@ -7,11 +7,29 @@ KVStore::KVStore(const std::string &dir): KVStoreAPI(dir)
     currentLevel = 0;
     currentNum = 0;
 
-    int level = currentLevel;
-    int num = 0;
+    int level = 0;
+    std::string parentDir = "data";
+    std::vector<std::string> dirs;
+    utils::scanDir(parentDir, dirs);
+    int capacity = dirs.size();
     std::string path = "data/level-";
     std::string tmppath = path + std::to_string(level);
+    std::vector<std::string> fileName;
+    while(level < capacity) {
+        utils::scanDir(tmppath, fileName);
+        uint64_t size = fileName.size();
+        for (uint64_t i = 0; i < size; i++) {
+            std::string filepath = tmppath + "/" + fileName[i];
+            //std::cout << "file path  " << filepath << std::endl;
+            cache.fileToNode(level, filepath);
+        }
+        level++;
+        tmppath = path + std::to_string(level);
+        fileName.clear();
+    }
+    std::vector<std::string>().swap(fileName);
 
+    maxLevel = level;
 }
 
 //系统正常关闭
@@ -19,8 +37,9 @@ KVStore::~KVStore()
 {
     //将 MemTable 中的所有数据以 SSTable 形式写回
     std::vector<memTable::dataNode> vec = mt.writeBack();
-    makeSST(vec);
-
+    if(vec.size() != 0) {
+        makeSST(vec);
+    }
     mt.~memTable();
     cache.~Cache();
 }
@@ -435,10 +454,10 @@ void KVStore::compaction(std::vector<std::string> &v)
     uint64_t i = 0;
     for(i = 0; i < mergeResult_size; i++){
         int size = mergeResult[i].size;
-        if(mergeResult[i].key >= 65338) {
-            std::cout << "at  " << i << " is " << mergeResult[i].key << " size  " << size << "    " << mergeResult[i].val.length() << std::endl;
-            //std::cout << "total  " << totalsize << std::endl;
-        }
+//        if(mergeResult[i].key >= 65338) {
+//            std::cout << "at  " << i << " is " << mergeResult[i].key << " size  " << size << "    " << mergeResult[i].val.length() << std::endl;
+//            //std::cout << "total  " << totalsize << std::endl;
+//        }
         if(totalsize + size > 2086880){
             i--;
             std::vector<node> vec;
@@ -451,9 +470,6 @@ void KVStore::compaction(std::vector<std::string> &v)
                 memTable::dataNode tmp;
                 tmp.key = vec[j].key;
                 tmp.val = vec[j].val;
-                if(tmp.key >= 65339 && tmp.key <= 65461){
-                    std::cout <<tmp.key << " yes  " << tmp.val.length() << std::endl;
-                }
                 v.push_back(tmp);
             }
             count++;
@@ -536,6 +552,7 @@ std::string KVStore::get(uint64_t key)
         if(result == ""){           //如果memtable中未找到，则到sstable中进行寻找
             //std::cout << "search in sstable" << std::endl;
             result = cache.get(key);
+            //std::cout << key << " is " <<result.length() << std::endl;
             if(result == "~DELETED~"){
                 return "";
             }

@@ -31,3 +31,8 @@ void BloomFilter::setVal(uint32_t hashVal[])
         set[index] = num | set[index];
     }
 }
+
+void BloomFilter::getFromFile(std::ifstream &file)
+{
+    file.read((char *)set, 10240);
+}

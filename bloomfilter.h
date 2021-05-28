@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <string.h>
 #include <iostream>
+#include <fstream>
 
 class BloomFilter
 {
@@ -22,6 +23,7 @@ public:
     uint32_t getSet(int i){
         return set[i];
     }
+    void getFromFile(std::ifstream &file);
 };
 
 #endif // BLOOMFILTER_H

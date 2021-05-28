@@ -24,6 +24,7 @@ public:
             next = nullptr;
         }
         Node(std::string &p, sstable &st);
+        Node(std::string &p);
         ~Node();
         uint64_t getOffsetIndex(uint64_t key, bool &flag);
         std::string nodeGet(uint64_t key,  bool &flag);
@@ -38,13 +39,9 @@ public:
     std::pair<int, int> findRange(std::vector<Node*> &);
     std::vector<Cache::Node*> compLevel(int currentLevel, std::pair<int, int> &range);
     void addNode(Node *addition, int level);
-//    void resetPrev(){
-//        cachePrev = head;
-//    }
+    void fileToNode(int level, std::string);
 
 private:
-//    Node *cachePrev;
-//    Node *cacheNext;
     std::vector<Node*> levelVec;
 };
 

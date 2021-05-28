@@ -2,10 +2,7 @@
 
 Cache::Cache()
 {
-//    head = new Node;
-//    cachePrev = head;
-//    head->next = nullptr;
-//    cacheNext = new Node;
+
 }
 
 Cache::~Cache()
@@ -26,10 +23,46 @@ Cache::Node ::Node(std::string &p, sstable &st)
     next = nullptr;
 }
 
+Cache::Node ::Node(std::string &p)
+{
+    std::ifstream file;
+    path = p;
+    //std::cout << "path  " << p << std::endl;
+    file.open(p, std::ios::in | std::ios::binary);
+    file.read((char *)&time, 8);
+    //std::cout << "time  " << time << std::endl;
+    file.read((char *)&num, 8);
+    //std::cout << "num  " << num << std::endl;
+    file.read((char *)&min, 8);
+    //std::cout << "min  " << min << std::endl;
+    file.read((char *)&max, 8);
+    //std::cout << "max  " << max << std::endl;
+    bf.getFromFile(file);
+
+    index = new std::pair<uint64_t, uint32_t>[num];
+    for(int i = 0; i < num; i++){
+        uint64_t key = 0;
+        uint32_t offset = 0;
+        file.read((char*)&key, 8);
+        file.read((char*)&offset, 4);
+        index[i] = std::pair<uint64_t, uint32_t>(key, offset);
+    }
+
+    file.close();
+    //std::cout << "num  " << num << std::endl;
+}
+
 Cache::Node ::~Node()
 {
     delete[] index;
     index = nullptr;
+}
+
+void Cache::fileToNode(int level, std::string p)
+{
+    Node *addition = new Node(p);
+    addition->next = nullptr;
+    addNode(addition, level);
 }
 
 void Cache::add(std::string &p, sstable &st, int level)
@@ -42,11 +75,13 @@ void Cache::add(std::string &p, sstable &st, int level)
 void Cache::addNode(Node *addition, int level)
 {
     if(level >= levelVec.size()){
-        //std::cout << "new level " << level <<std::endl;
-        Node *head = new Node;
-        head->next = addition;
+        while(level >= levelVec.size()) {
+            //std::cout << "new level " << level <<std::endl;
+            Node *head = new Node;
+            levelVec.push_back(head);
+        }
+        levelVec[levelVec.size() - 1]->next = addition;
         addition->next = nullptr;
-        levelVec.push_back(head);
     }
     else{
         addition->next = levelVec[level]->next;
@@ -82,6 +117,7 @@ std::string Cache::Node ::nodeGet(uint64_t key, bool &flag)
         flag = false;
         return "";
     }
+    //std::cout << "key  wc" << key << std::endl;
     uint32_t hashVal[4] = {0};
     uint64_t tmpKey = key;
     MurmurHash3_x64_128(&tmpKey, sizeof(tmpKey), 1, hashVal);
@@ -98,12 +134,13 @@ std::string Cache::Node ::nodeGet(uint64_t key, bool &flag)
 //        std::cout <<key << "  may nwe" << std::endl;
 //    }
     uint64_t beginIndex = getOffsetIndex(key, flag);
+    //std::cout << "key  " << key << std::endl;
     if(flag == false){
         return "";
     }
     else{
         uint32_t beginOffset = index[beginIndex].second;
-        uint32_t  endOffset = 0;
+        uint32_t endOffset = 0;
         std::fstream file(path, std::ios::in|std::ios::binary);
         if(beginIndex < num - 1){
             endOffset = index[beginIndex + 1].second;
@@ -219,50 +256,6 @@ std::pair<int, int> Cache::findRange(std::vector<Node*> &vec)
 
     return result;
 }
-
-//
-//std::pair<int, int> Cache::compCurrentLevel(std::vector<Node *> &curvec, std::vector<std::string> &find, int level)
-//{
-//    Node *tmp = levelVec[level]->next;
-//    std::vector<Node *> remain;
-//    if(tmp == nullptr){
-//        //std::cout << "nullll" << std::endl;
-//    }
-//    while(tmp != nullptr){
-//        uint64_t find_size = find.size();
-//        if(find_size == 0){
-//            break;
-//        }
-//        uint64_t j = 0;
-//        for(j = 0; j < find_size; j++){
-//            if(tmp->path == find[j]){
-//                curvec.push_back(tmp);
-//                find.erase(find.begin() + j);
-//                break;
-//            }
-//        }
-//
-//        if(j == find_size) {
-//            remain.push_back(tmp);
-//        }
-//        tmp = tmp->next;
-//        if(tmp != nullptr && j == find_size) {
-//        }
-//    }
-//    levelVec[level]->next = nullptr;
-//    uint64_t remain_size = remain.size();
-//    for(uint64_t i = 0; i < remain_size; i++){
-//        remain[i]->next = nullptr;
-//    }
-//    for(uint64_t i = 1; i <= remain_size; i++){
-//        remain[remain_size - i]->next = levelVec[level]->next;
-//        levelVec[level]->next = remain[remain_size - i]->next;
-//    }
-//
-//    std::pair<int, int> range = findRange(curvec);
-//
-//    return range;
-//}
 
 std::vector<Cache::Node*> Cache::compLevel(int currentLevel, std::pair<int, int> &range)
 {
