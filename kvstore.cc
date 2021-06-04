@@ -50,6 +50,9 @@ KVStore::~KVStore()
  */
 void KVStore::put(uint64_t key, const std::string &s)
 {
+    if(isdebug == true){
+        mt.isdebug = true;
+    }
     if(mt.getByteSize() +  s.length() + 12 > 2086880){
 //        if(key >= 64500) {
 //        std::cout << "write into sst at   " << key << std::endl;
@@ -86,6 +89,9 @@ void KVStore::checkCompaction()
 
 void KVStore::makeSST(std::vector<memTable::dataNode> &vec)
 {
+    if(isdebug == true){
+        std::cout << "make sst" << std::endl;
+    }
     sstable st(vec);
     vec.clear();
     std::vector<memTable::dataNode>().swap(vec);

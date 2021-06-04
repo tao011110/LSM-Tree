@@ -36,6 +36,18 @@ memTable::~memTable()
 
 void memTable::put(uint64_t key, const std::string &s)
 {
+    Node *searchKey = search(key);
+    if(searchKey != nullptr){
+        if(isdebug == true){
+            std::cout << key << "  " << s.length() << "   byteSize  "  << byteSize << std::endl;
+        }
+        byteSize += (s.length() - (searchKey->value).length());
+        while(searchKey != nullptr){
+            searchKey->value = s;
+            searchKey = searchKey->down;
+        }
+        return;
+    }
     byteSize += (s.length() + 12);
 //    if(key >= 64562) {
 //        std::cout << "byteSize" <<  byteSize << std::endl;
@@ -153,6 +165,7 @@ bool memTable::del(uint64_t key, bool &isDeleted)
     std::string d = "~DELETED~";
     if(p != nullptr){
         if(p->value != d){
+            byteSize += (d.length() - (p->value).length());
             while(p != nullptr){
                 p->value = d;
                 p = p->down;

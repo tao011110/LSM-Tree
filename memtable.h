@@ -52,6 +52,7 @@ public:
     };
 
     std::vector<dataNode> writeBack();
+    bool isdebug = false;
 };
 
 #endif // MEMTABLE_H
