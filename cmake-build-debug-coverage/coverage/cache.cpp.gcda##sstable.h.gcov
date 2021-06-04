@@ -1,0 +1,87 @@
+        -:    0:Source:D:/PROGRAM_CPP/LSM-2/sstable.h
+        -:    0:Graph:D:\PROGRAM_CPP\LSM-2\cmake-build-debug-coverage\CMakeFiles\LSM_2persistence.cc.dir\cache.cpp.gcno
+        -:    0:Data:D:\PROGRAM_CPP\LSM-2\cmake-build-debug-coverage\CMakeFiles\LSM_2persistence.cc.dir\cache.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#ifndef SSTABLE_H
+        -:    2:#define SSTABLE_H
+        -:    3:#include <string>
+        -:    4:#include <vector>
+        -:    5:#include <fstream>
+        -:    6:#include "memtable.h"
+        -:    7:#include "bloomfilter.h"
+        -:    8:
+        -:    9:class sstable
+        -:   10:{
+        -:   11:private:
+        -:   12:    std::pair<uint64_t, uint32_t> *index;
+        -:   13:    std::string *data;
+        -:   14:    struct Header{
+        -:   15:        uint64_t time;
+        -:   16:        uint64_t num;
+        -:   17:        uint64_t min;
+        -:   18:        uint64_t max;
+        -:   19:    };
+        -:   20:
+        -:   21:public:
+        -:   22:    explicit sstable(std::vector<memTable::dataNode> &vec);
+        -:   23:    ~sstable();
+        -:   24:    uint32_t get(uint64_t key);
+        -:   25:    void reset();
+        -:   26:    bool check(uint64_t key);
+        -:   27:    void setTime(uint64_t time){
+        -:   28:        header.time = time;
+        -:   29:    }
+        -:   30:    void setNum(uint64_t num){
+        -:   31:        header.num = num;
+        -:   32:    }
+        -:   33:    void setMax(uint64_t max){
+        -:   34:        header.max = max;
+        -:   35:    }
+        -:   36:    void setMin(uint64_t min){
+        -:   37:        header.min = min;
+        -:   38:    }
+function _ZN7sstable7getTimeEv called 157 returned 100% blocks executed 100%
+      157:   39:    uint64_t getTime(){
+      157:   40:        return header.time;
+      157:   40-block  0
+        -:   41:    }
+function _ZN7sstable6getNumEv called 157 returned 100% blocks executed 100%
+      157:   42:    uint64_t getNum(){
+      157:   43:        return header.num;
+      157:   43-block  0
+        -:   44:    }
+function _ZN7sstable6getMaxEv called 157 returned 100% blocks executed 100%
+      157:   45:    uint64_t getMax(){
+      157:   46:        return header.max;
+      157:   46-block  0
+        -:   47:    }
+function _ZN7sstable6getMinEv called 157 returned 100% blocks executed 100%
+      157:   48:    uint64_t getMin(){
+      157:   49:        return header.min;
+      157:   49-block  0
+        -:   50:    }
+        -:   51:    void makeFileSST(std::string path);
+function _ZN7sstable8getIndexEPSt4pairIyjE called 157 returned 100% blocks executed 100%
+      157:   52:    void getIndex(std::pair<uint64_t, uint32_t> *newindex){
+    55994:   53:        for(uint64_t i = 0; i < header.num; i++){
+      157:   53-block  0
+    55994:   53-block  1
+branch  0 taken 55837 (fallthrough)
+branch  1 taken 157
+    55837:   54:            newindex[i].first = index[i].first;
+    55837:   55:            newindex[i].second = index[i].second;
+    55837:   55-block  0
+        -:   56:        }
+      157:   57:    }
+function _ZN7sstable5getBfEP11BloomFilter called 157 returned 100% blocks executed 100%
+      157:   58:    void getBf(BloomFilter *newbf){
+      157:   59:        bf.getBf(newbf);
+      157:   59-block  0
+call    0 returned 157
+      157:   60:    }
+        -:   61:    Header header{};
+        -:   62:    BloomFilter bf;
+        -:   63:};
+        -:   64:
+        -:   65:#endif // SSTABLE_H

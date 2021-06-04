@@ -261,15 +261,19 @@ std::vector<Cache::Node*> Cache::compLevel(int currentLevel, std::pair<int, int>
 {
     std::vector<Node*> handle;
     if(currentLevel < levelVec.size()) {
-        Node *tmp = levelVec[currentLevel];
-        while (tmp->next != nullptr) {
-            Node *del = tmp->next;
-            tmp->next = del->next;
+        Node *tmp = levelVec[currentLevel]->next;
+        while (tmp != nullptr) {
+            Node *del = tmp;
+            tmp = del->next;
             handle.push_back(del);
         }
         levelVec[currentLevel]->next = nullptr;
     }
     range = findRange(handle);
+    uint64_t handle_size = handle.size();
+    for(int i = 0; i < handle_size; i++){
+        handle[i]->next = nullptr;
+    }
 
     return handle;
 }

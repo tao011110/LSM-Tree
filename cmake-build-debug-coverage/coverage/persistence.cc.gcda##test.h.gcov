@@ -1,0 +1,168 @@
+        -:    0:Source:D:/PROGRAM_CPP/LSM-2/test.h
+        -:    0:Graph:D:\PROGRAM_CPP\LSM-2\cmake-build-debug-coverage\CMakeFiles\LSM_2persistence.cc.dir\persistence.cc.gcno
+        -:    0:Data:D:\PROGRAM_CPP\LSM-2\cmake-build-debug-coverage\CMakeFiles\LSM_2persistence.cc.dir\persistence.cc.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#pragma once
+        -:    2:
+        -:    3:#include <iostream>
+        -:    4:#include <cstdint>
+        -:    5:#include <string>
+        -:    6:
+        -:    7:#include "kvstore.h"
+        -:    8:
+        -:    9:class Test {
+        -:   10:protected:
+        -:   11:	static const std::string not_found;
+        -:   12:
+        -:   13:	uint64_t nr_tests;
+        -:   14:	uint64_t nr_passed_tests;
+        -:   15:	uint64_t nr_phases;
+        -:   16:	uint64_t nr_passed_phases;
+        -:   17:
+        -:   18:#define EXPECT(exp, got) expect<decltype(got)>((exp), (got), __FILE__, __LINE__)
+        -:   19:	template<typename T>
+   13213*:   20:	bool expect(const T &exp, const T &got,
+        -:   21:		    const std::string &file, int line)
+        -:   22:	{
+   13213*:   23:		++nr_tests;
+   13213*:   24:		if (exp == got) {
+   13213*:   25:			++nr_passed_tests;
+   13213*:   26:			return true;
+        -:   27:		}
+    #####:   28:		if (verbose) {
+        -:   29:			//std::cerr << ", got " << got << std::endl;
+        -:   30:		}
+    #####:   31:		return false;
+        -:   32:	}
+------------------
+_ZN4Test6expectIbEEbRKT_S3_RKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEi:
+function _ZN4Test6expectIbEEbRKT_S3_RKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEi called 0 returned 0% blocks executed 0%
+    #####:   20:	bool expect(const T &exp, const T &got,
+        -:   21:		    const std::string &file, int line)
+        -:   22:	{
+    #####:   23:		++nr_tests;
+    #####:   24:		if (exp == got) {
+    %%%%%:   24-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:   25:			++nr_passed_tests;
+    #####:   26:			return true;
+    %%%%%:   26-block  0
+        -:   27:		}
+    #####:   28:		if (verbose) {
+    %%%%%:   28-block  0
+        -:   29:			//std::cerr << ", got " << got << std::endl;
+        -:   30:		}
+    #####:   31:		return false;
+    %%%%%:   31-block  0
+        -:   32:	}
+------------------
+_ZN4Test6expectINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEbRKT_S9_RKS6_i:
+function _ZN4Test6expectINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEbRKT_S9_RKS6_i called 13213 returned 100% blocks executed 67%
+    13213:   20:	bool expect(const T &exp, const T &got,
+        -:   21:		    const std::string &file, int line)
+        -:   22:	{
+    13213:   23:		++nr_tests;
+    13213:   24:		if (exp == got) {
+    13213:   24-block  0
+call    0 returned 13213
+branch  1 taken 13213 (fallthrough)
+branch  2 taken 0
+    13213:   25:			++nr_passed_tests;
+    13213:   26:			return true;
+    13213:   26-block  0
+        -:   27:		}
+    #####:   28:		if (verbose) {
+    %%%%%:   28-block  0
+        -:   29:			//std::cerr << ", got " << got << std::endl;
+        -:   30:		}
+    #####:   31:		return false;
+    %%%%%:   31-block  0
+        -:   32:	}
+------------------
+        -:   33:
+function _ZN4Test5phaseEv called 0 returned 0% blocks executed 0%
+    #####:   34:	void phase(void)
+        -:   35:	{
+        -:   36:		// Report
+    #####:   37:		std::cout << "  Phase " << (nr_phases+1) << ": ";
+    %%%%%:   37-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+    #####:   38:		std::cout << nr_passed_tests << "/" << nr_tests << " ";
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+        -:   39:
+        -:   40:		// Count
+    #####:   41:		++nr_phases;
+    #####:   42:		if (nr_tests == nr_passed_tests) {
+branch  0 never executed
+branch  1 never executed
+    #####:   43:			++nr_passed_phases;
+    #####:   44:			std::cout << "[PASS]" << std::endl;
+    %%%%%:   44-block  0
+call    0 never executed
+call    1 never executed
+        -:   45:		} else
+    #####:   46:			std::cout << "[FAIL]" << std::endl;
+    %%%%%:   46-block  0
+call    0 never executed
+call    1 never executed
+        -:   47:
+    #####:   48:		std::cout.flush();
+    %%%%%:   48-block  0
+call    0 never executed
+        -:   49:
+        -:   50:		// Reset
+    #####:   51:		nr_tests = 0;
+    #####:   52:		nr_passed_tests = 0;
+    #####:   53:	}
+        -:   54:
+function _ZN4Test6reportEv called 0 returned 0% blocks executed 0%
+    #####:   55:	void report(void)
+        -:   56:	{
+    #####:   57:		std::cout << nr_passed_phases << "/" << nr_phases << " passed.";
+    %%%%%:   57-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+    #####:   58:		std::cout << std::endl;
+call    0 never executed
+    #####:   59:		std::cout.flush();
+call    0 never executed
+        -:   60:
+    #####:   61:		nr_phases = 0;
+    #####:   62:		nr_passed_phases = 0;
+    #####:   63:	}
+        -:   64:
+        -:   65:	class KVStore store;
+        -:   66:	bool verbose;
+        -:   67:
+        -:   68:public:
+function _ZN4TestC2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEb called 1 returned 100% blocks executed 100%
+        1:   69:	Test(const std::string &dir, bool v=true): store(dir), verbose(v)
+        1:   69-block  0
+call    0 returned 1
+        -:   70:    {
+        1:   71:		nr_tests = 0;
+        1:   72:		nr_passed_tests = 0;
+        1:   73:		nr_phases = 0;
+        1:   74:        nr_passed_phases = 0;
+        1:   75:	}
+        -:   76:
+function _ZN4Test10start_testEPv called 0 returned 0% blocks executed 0%
+    #####:   77:    virtual void start_test(void *args = NULL)
+        -:   78:    {
+    #####:   79:        std::cout << "No test is implemented." << std::endl;
+    %%%%%:   79-block  0
+call    0 never executed
+call    1 never executed
+    #####:   80:    }
+        -:   81:
+        -:   82:};
+        -:   83:const std::string Test::not_found = "";

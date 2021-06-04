@@ -1,0 +1,484 @@
+        -:    0:Source:D:/PROGRAM_CPP/LSM-2/memtable.cpp
+        -:    0:Graph:D:\PROGRAM_CPP\LSM-2\cmake-build-debug-coverage\CMakeFiles\LSM_2persistence.cc.dir\memtable.cpp.gcno
+        -:    0:Data:D:\PROGRAM_CPP\LSM-2\cmake-build-debug-coverage\CMakeFiles\LSM_2persistence.cc.dir\memtable.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include "memtable.h"
+        -:    2:
+function _ZN8memTableC2Ev called 1 returned 100% blocks executed 67%
+        1:    3:memTable::memTable()
+        -:    4:{
+        1:    5:    head = new Node;
+        1:    5-block  0
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+    $$$$$:    5-block  1
+call    4 never executed
+        1:    6:    tail = new Node;
+        1:    6-block  0
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+    $$$$$:    6-block  1
+call    4 never executed
+        1:    7:    tophead = head;
+        1:    8:    head->right = tail;
+        1:    9:    head->down = nullptr;
+        1:   10:    head->up = nullptr;
+        1:   11:    tail->right = nullptr;
+        1:   12:    tail->down = nullptr;
+        1:   13:    tail->up = nullptr;
+        1:   14:    byteSize = 0;
+        1:   15:    size = 0;
+        1:   16:}
+        1:   16-block  0
+        -:   17:
+function _ZN8memTableD2Ev called 0 returned 0% blocks executed 0%
+    #####:   18:memTable::~memTable()
+        -:   19:{
+    #####:   20:    Node *tmp = head;
+    %%%%%:   20-block  0
+    #####:   21:    while(tmp != nullptr) {
+    %%%%%:   21-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:   22:        Node *delp = tmp->up;
+    %%%%%:   22-block  0
+    #####:   23:        while (delp != nullptr) {
+    %%%%%:   23-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:   24:            Node *delq = delp->up;
+    #####:   25:            delete delp;
+    %%%%%:   25-block  0
+branch  0 never executed
+branch  1 never executed
+    %%%%%:   25-block  1
+call    2 never executed
+call    3 never executed
+    #####:   26:            delp = delq;
+    %%%%%:   26-block  0
+        -:   27:        }
+    #####:   28:        delp = tmp->right;
+    #####:   29:        delete tmp;
+    %%%%%:   29-block  0
+branch  0 never executed
+branch  1 never executed
+    %%%%%:   29-block  1
+call    2 never executed
+call    3 never executed
+    #####:   30:        tmp = delp;
+    %%%%%:   30-block  0
+        -:   31:    }
+    #####:   32:    head = nullptr;
+    #####:   33:    tail = nullptr;
+    #####:   34:    tophead = nullptr;
+    #####:   35:}
+        -:   36:
+function _ZN8memTable3putEyRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 13213 returned 100% blocks executed 42%
+    13213:   37:void memTable::put(uint64_t key, const std::string &s)
+        -:   38:{
+    13213:   39:    byteSize += (s.length() + 12);
+    13213:   39-block  0
+call    0 returned 13213
+        -:   40://    if(key >= 64562) {
+        -:   41://        std::cout << "byteSize" <<  byteSize << std::endl;
+        -:   42://    }
+    13213:   43:    Node *q = new Node;
+call    0 returned 13213
+call    1 returned 13213
+branch  2 taken 13213 (fallthrough)
+branch  3 taken 0 (throw)
+    $$$$$:   43-block  0
+call    4 never executed
+    13213:   44:    if(empty()){
+    13213:   44-block  0
+call    0 returned 13213
+branch  1 taken 42 (fallthrough)
+branch  2 taken 13171
+       42:   45:        q->right = head->right;
+       42:   46:        head->right = q;
+       42:   47:        q->down = nullptr;
+       42:   48:        q->up = nullptr;
+       42:   49:        q->key = key;
+       42:   50:        q->value = s;
+       42:   50-block  0
+call    0 returned 42
+        -:   51:    }
+        -:   52:    else{
+    13171:   53:        Node *p = tophead;
+    13171:   53-block  0
+   13171*:   54:        while(p){
+    13171:   54-block  0
+branch  0 taken 13171 (fallthrough)
+branch  1 taken 0
+  4008564:   55:            while(p->right && p->right->key <= key){
+  4008564:   55-block  0
+branch  0 taken 4008564 (fallthrough)
+branch  1 taken 0
+  4008564:   55-block  1
+branch  2 taken 3995393 (fallthrough)
+branch  3 taken 13171
+  3995393:   56:                p = p->right;
+  3995393:   56-block  0
+        -:   57:            }
+    13171:   58:            if(p->key == key){
+    13171:   58-block  0
+branch  0 taken 0 (fallthrough)
+branch  1 taken 13171
+    #####:   59:                while(p != nullptr){
+    %%%%%:   59-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:   60:                    p->value = s;
+    %%%%%:   60-block  0
+call    0 never executed
+    #####:   61:                    p = p->down;
+        -:   62:                }
+    #####:   63:                break;
+    %%%%%:   63-block  0
+        -:   64:            }
+   13171*:   65:            if(p->down == nullptr || p->right->key > key){
+    13171:   65-block  0
+branch  0 taken 0 (fallthrough)
+branch  1 taken 13171
+    %%%%%:   65-block  1
+branch  2 never executed
+branch  3 never executed
+        -:   66:                break;
+        -:   67:            }
+    #####:   68:            p = p->down;
+    %%%%%:   68-block  0
+        -:   69:        }
+    13171:   70:        if(p != nullptr){
+    13171:   70-block  0
+branch  0 taken 13171 (fallthrough)
+branch  1 taken 0
+    13171:   71:            q->right = p->right;
+    13171:   72:            p->right = q;
+    13171:   73:            q->down = nullptr;
+    13171:   74:            q->up = nullptr;
+    13171:   75:            q->key = key;
+    13171:   76:            q->value = s;
+    13171:   76-block  0
+call    0 returned 13171
+        -:   77:        }
+        -:   78:    }
+    13213:   79:    size++;
+    13213:   80:    Node * h = head;
+    13213:   81:    Node * t = tail;
+    13213:   81-block  0
+        -:   82:
+   13213*:   83:    while(rand() % 1){
+    13213:   83-block  0
+call    0 returned 13213
+branch  1 taken 0 (fallthrough)
+branch  2 taken 13213
+    #####:   84:        Node *tmp = new Node;
+    %%%%%:   84-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    $$$$$:   84-block  1
+call    4 never executed
+    #####:   85:        tmp->key = q->key;
+    #####:   86:        tmp->value = q->value;
+    %%%%%:   86-block  0
+call    0 never executed
+    #####:   87:        tmp->down = q;
+    #####:   88:        q->up = tmp;
+    #####:   89:        tmp->up = nullptr;
+    #####:   90:        if(h->up == nullptr){
+branch  0 never executed
+branch  1 never executed
+    #####:   91:            Node * headtower = new Node;
+    %%%%%:   91-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    $$$$$:   91-block  1
+call    4 never executed
+    #####:   92:            headtower->down = h;
+    #####:   93:            headtower->up = nullptr;
+    #####:   94:            h->up = headtower;
+    #####:   95:            headtower->right = tmp;
+    #####:   96:            Node * tailtower = new Node;
+    %%%%%:   96-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    $$$$$:   96-block  1
+call    4 never executed
+    #####:   97:            tailtower->down = t;
+    #####:   98:            tailtower->up = nullptr;
+    #####:   99:            t->up = tailtower;
+    #####:  100:            tmp->right = tailtower;
+    #####:  101:            tophead = headtower;
+    %%%%%:  101-block  0
+        -:  102:        }
+        -:  103:        else{
+    #####:  104:            Node *p = h->up;
+    %%%%%:  104-block  0
+    #####:  105:            while(p->right != t->up && p->right->key < tmp->key){
+    %%%%%:  105-block  0
+branch  0 never executed
+branch  1 never executed
+    %%%%%:  105-block  1
+branch  2 never executed
+branch  3 never executed
+    #####:  106:                p = p->right;
+    %%%%%:  106-block  0
+        -:  107:            }
+    #####:  108:            tmp->right = p->right;
+    #####:  109:            p->right = tmp;
+    %%%%%:  109-block  0
+        -:  110:        }
+    #####:  111:        h = h->up;
+    #####:  112:        t = t->up;
+    %%%%%:  112-block  0
+        -:  113:    }
+    13213:  114:}
+    13213:  114-block  0
+        -:  115:
+function _ZN8memTable6searchEy called 13213 returned 100% blocks executed 90%
+    13213:  116:memTable::Node* memTable::search(uint64_t key)
+        -:  117:{
+    13213:  118:    Node *p = tophead;
+    13213:  118-block  0
+   13213*:  119:    while(p){
+    13213:  119-block  0
+branch  0 taken 13213 (fallthrough)
+branch  1 taken 0
+  4021819:  120:        while(p->right && p->right->key <= key){
+  4021819:  120-block  0
+branch  0 taken 4021819 (fallthrough)
+branch  1 taken 0
+  4021819:  120-block  1
+branch  2 taken 4008606 (fallthrough)
+branch  3 taken 13213
+  4008606:  121:            p = p->right;
+  4008606:  121-block  0
+        -:  122:        }
+    13213:  123:        if(p->key == key){
+    13213:  123-block  0
+branch  0 taken 13213 (fallthrough)
+branch  1 taken 0
+    13213:  124:            break;
+    13213:  124-block  0
+        -:  125:        }
+    #####:  126:        p = p->down;
+    %%%%%:  126-block  0
+        -:  127:    }
+    13213:  128:    return p;
+    13213:  128-block  0
+        -:  129:}
+        -:  130:
+function _ZN8memTable3getB5cxx11EyRb called 13213 returned 100% blocks executed 71%
+    13213:  131:std::string memTable::get(uint64_t key, bool &isDelete)
+        -:  132:{
+    13213:  133:    std::string val = "";
+    13213:  133-block  0
+call    0 returned 13213
+call    1 returned 13213
+branch  2 taken 13213 (fallthrough)
+branch  3 taken 0 (throw)
+    $$$$$:  133-block  1
+call    4 never executed
+    13213:  134:    if(empty()){
+call    0 returned 13213
+branch  1 taken 0 (fallthrough)
+branch  2 taken 13213
+    #####:  135:        return val;
+    %%%%%:  135-block  0
+        -:  136:    }
+    13213:  137:    Node* p = search(key);
+    13213:  137-block  0
+call    0 returned 13213
+    13213:  138:    if(p != nullptr){
+branch  0 taken 13213 (fallthrough)
+branch  1 taken 0
+    13213:  139:        if(p->value != "~DELETED~"){
+    13213:  139-block  0
+call    0 returned 13213
+branch  1 taken 13213 (fallthrough)
+branch  2 taken 0 (throw)
+    13213:  139-block  1
+branch  3 taken 13213 (fallthrough)
+branch  4 taken 0
+    13213:  140:            val = p->value;
+    13213:  140-block  0
+call    0 returned 13213
+branch  1 taken 13213 (fallthrough)
+branch  2 taken 0 (throw)
+        -:  141:        }
+        -:  142:        else{
+    #####:  143:            isDelete = true;
+    %%%%%:  143-block  0
+        -:  144:        }
+        -:  145:    }
+        -:  146:
+    13213:  147:    return val;
+    13213:  147-block  0
+        -:  148:}
+        -:  149:
+function _ZN8memTable3delEyRb called 0 returned 0% blocks executed 0%
+    #####:  150:bool memTable::del(uint64_t key, bool &isDeleted)
+        -:  151:{
+    #####:  152:    Node *p = search(key);
+    %%%%%:  152-block  0
+call    0 never executed
+    #####:  153:    std::string d = "~DELETED~";
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    %%%%%:  153-block  0
+call    4 never executed
+    $$$$$:  153-block  1
+    $$$$$:  153-block  2
+call    5 never executed
+    #####:  154:    if(p != nullptr){
+branch  0 never executed
+branch  1 never executed
+    #####:  155:        if(p->value != d){
+    %%%%%:  155-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  156:            while(p != nullptr){
+    %%%%%:  156-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:  157:                p->value = d;
+    %%%%%:  157-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  158:                p = p->down;
+    %%%%%:  158-block  0
+        -:  159:            }
+        -:  160:        }
+        -:  161:        else{
+    #####:  162:            isDeleted = true;
+    %%%%%:  162-block  0
+        -:  163:        }
+    #####:  164:        return true;
+    %%%%%:  164-block  0
+        -:  165:    }
+        -:  166:    else{
+    #####:  167:        return false;
+    %%%%%:  167-block  0
+        -:  168:    }
+        -:  169:}
+        -:  170:
+function _ZN8memTable5resetEv called 43 returned 100% blocks executed 67%
+       43:  171:void memTable::reset()
+        -:  172:{
+       43:  173:    size = 0;
+       43:  174:    Node *tmp = head;
+       43:  174-block  0
+    13342:  175:    while(tmp != nullptr){
+    13342:  175-block  0
+branch  0 taken 13299 (fallthrough)
+branch  1 taken 43
+    13299:  176:        Node *delp = tmp->up;
+    13299:  176-block  0
+   13299*:  177:        while(delp != nullptr){
+    13299:  177-block  0
+branch  0 taken 0 (fallthrough)
+branch  1 taken 13299
+    #####:  178:            Node *delq =delp->up;
+    #####:  179:            delete delp;
+    %%%%%:  179-block  0
+branch  0 never executed
+branch  1 never executed
+    %%%%%:  179-block  1
+call    2 never executed
+call    3 never executed
+    #####:  180:            delp = delq;
+    %%%%%:  180-block  0
+        -:  181:        }
+    13299:  182:        delp = tmp->right;
+    13299:  183:        delete tmp;
+    13299:  183-block  0
+branch  0 taken 13299 (fallthrough)
+branch  1 taken 0
+    13299:  183-block  1
+call    2 returned 13299
+call    3 returned 13299
+    13299:  184:        tmp = delp;
+    13299:  184-block  0
+        -:  185:    }
+       43:  186:    head = new Node;
+       43:  186-block  0
+call    0 returned 43
+call    1 returned 43
+branch  2 taken 43 (fallthrough)
+branch  3 taken 0 (throw)
+    $$$$$:  186-block  1
+call    4 never executed
+       43:  187:    tail = new Node;
+       43:  187-block  0
+call    0 returned 43
+call    1 returned 43
+branch  2 taken 43 (fallthrough)
+branch  3 taken 0 (throw)
+    $$$$$:  187-block  1
+call    4 never executed
+       43:  188:    head->right = tail;
+       43:  189:    head->down = nullptr;
+       43:  190:    head->up = nullptr;
+       43:  191:    tail->right = nullptr;
+       43:  192:    tail->down = nullptr;
+       43:  193:    tail->up = nullptr;
+       43:  194:    tophead = head;
+       43:  195:    byteSize = 0;
+       43:  196:    size = 0;
+       43:  197:}
+       43:  197-block  0
+        -:  198:
+function _ZN8memTable9writeBackEv called 42 returned 100% blocks executed 75%
+       42:  199:std::vector<memTable::dataNode> memTable::writeBack()
+        -:  200:{
+        -:  201:    //从head开始遍历，将所有数据写入sstable
+       42:  202:    std::vector<dataNode> vec;
+       42:  202-block  0
+call    0 returned 42
+       42:  203:    Node *p = head->right;
+    13255:  204:    while(p != tail && p != nullptr){
+    13255:  204-block  0
+branch  0 taken 13213 (fallthrough)
+branch  1 taken 42
+    13213:  204-block  1
+branch  2 taken 13213 (fallthrough)
+branch  3 taken 0
+    13213:  205:        dataNode tmp;
+    13213:  205-block  0
+call    0 returned 13213
+    $$$$$:  205-block  1
+call    1 never executed
+    13213:  206:        tmp.val = p->value;
+call    0 returned 13213
+branch  1 taken 13213 (fallthrough)
+branch  2 taken 0 (throw)
+    13213:  207:        tmp.key = p->key;
+    13213:  208:        vec.push_back(tmp);
+    13213:  208-block  0
+call    0 returned 13213
+branch  1 taken 13213 (fallthrough)
+branch  2 taken 0 (throw)
+    13213:  209:        p = p->right;
+    13213:  209-block  0
+call    0 returned 13213
+        -:  210:    }
+        -:  211:
+       42:  212:    return vec;
+       42:  212-block  0
+       42:  212-block  1
+        -:  213:}

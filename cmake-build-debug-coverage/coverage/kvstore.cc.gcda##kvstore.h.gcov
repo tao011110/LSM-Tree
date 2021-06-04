@@ -1,0 +1,61 @@
+        -:    0:Source:D:/PROGRAM_CPP/LSM-2/kvstore.h
+        -:    0:Graph:D:\PROGRAM_CPP\LSM-2\cmake-build-debug-coverage\CMakeFiles\LSM_2persistence.cc.dir\kvstore.cc.gcno
+        -:    0:Data:D:\PROGRAM_CPP\LSM-2\cmake-build-debug-coverage\CMakeFiles\LSM_2persistence.cc.dir\kvstore.cc.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#pragma once
+        -:    2:
+        -:    3:#include "kvstore_api.h"
+        -:    4:#include "memtable.h"
+        -:    5:#include "sstable.h"
+        -:    6:#include "cache.h"
+        -:    7:#include <fstream>
+        -:    8:#include <cmath>
+        -:    9:#include <algorithm>
+        -:   10:
+        -:   11:
+        -:   12:class KVStore : public KVStoreAPI {
+        -:   13:	// You can add your implementation here
+        -:   14:private:
+        -:   15:    struct node{
+        -:   16:        uint64_t key;
+        -:   17:        std::string val;
+        -:   18:        uint64_t time;
+        -:   19:        int size;
+function _ZN7KVStore4nodeC1Ev called 42915 returned 100% blocks executed 100%
+    42915:   20:        node(){}
+    42915:   20-block  0
+call    0 returned 42915
+function _ZN7KVStore4nodeD1Ev called 760854 returned 100% blocks executed 100%
+   760854:   21:        ~node(){}
+   760854:   21-block  0
+call    0 returned 760854
+        -:   22:    };
+        -:   23:    memTable mt;
+        -:   24:    Cache cache;
+        -:   25:    uint64_t time = 1;
+        -:   26:    uint64_t compactionTime = 0;
+        -:   27:    int currentLevel = 0;
+        -:   28:    int currentNum = 0;
+        -:   29:    int maxLevel = 0;
+        -:   30:    bool isCompaction = false;
+        -:   31:
+        -:   32:public:
+        -:   33:	KVStore(const std::string &dir);
+        -:   34:
+        -:   35:	~KVStore();
+        -:   36:
+        -:   37:	void put(uint64_t key, const std::string &s) override;
+        -:   38:
+        -:   39:	std::string get(uint64_t key) override;
+        -:   40:
+        -:   41:	bool del(uint64_t key) override;
+        -:   42:
+        -:   43:	void reset() override;
+        -:   44:
+        -:   45:    void compaction(std::vector<std::string> &vec);
+        -:   46:
+        -:   47:    void makeSST(std::vector<memTable::dataNode> &vec);
+        -:   48:
+        -:   49:    void checkCompaction();
+        -:   50:};

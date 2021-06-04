@@ -99,6 +99,9 @@ void KVStore::makeSST(std::vector<memTable::dataNode> &vec)
     std::string path = "data/level-";
 
     std::string tmppath = path + std::to_string(currentLevel);
+//    if(isCompaction == true){
+//        std::cout << tmppath + ("/" + std::to_string(currentNum) + ".sst") << std::endl;
+//    }
     currentNum++;
 
     if(utils::dirExists(tmppath)){
@@ -114,12 +117,17 @@ void KVStore::makeSST(std::vector<memTable::dataNode> &vec)
         st.makeFileSST(tmppath);
         cache.add(tmppath, st, currentLevel);
     }
-    //std::cout << "make  " << tmppath << std::endl;
+
+    if(isdebug == true) {
+        std::cout << "make  " << tmppath << std::endl;
+    }
 }
 
-//首先，读出所需sstable的index，有相交？两边按照迭代合并index；然后，得到header，再有bf，最后有data；最后放入
 void KVStore::compaction(std::vector<std::string> &v)
 {
+    if(isdebug == true) {
+        std::cout << "compaction " << std::endl;
+    }
     bool isDeepest = false;
     if(maxLevel == currentLevel){
         isDeepest = true;
@@ -319,14 +327,21 @@ void KVStore::compaction(std::vector<std::string> &v)
         }
         const char *delFile = path.data();
         utils::rmfile(delFile);
+        if(isdebug == true) {
+            std::cout << "next  delete  " << path << std::endl;
+        }
     }
 
     //删除已有的sstable
     for(uint64_t i = 0; i < curvec_size; i++){
         std::string s = curvec[i]->path;
-        //std::cout << "delete  " << s << std::endl;
         const char *delFile = s.data();
         utils::rmfile(delFile);
+        if(isdebug == true) {
+            std::cout << "last  delete  " << s << "  " << std::endl;
+        }
+        delete curvec[i];
+        curvec[i] = nullptr;
     }
 
 //    std::vector<node> mergeResult;
@@ -514,7 +529,6 @@ void KVStore::compaction(std::vector<std::string> &v)
 
     comp_size = comp.size();
     for(uint64_t i = 0; i < comp_size; i++){
-        comp[i]->next = nullptr;
         delete comp[i];
         comp[i] = nullptr;
     }

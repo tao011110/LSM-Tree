@@ -1,0 +1,67 @@
+        -:    0:Source:D:/PROGRAM_CPP/LSM-2/cache.h
+        -:    0:Graph:D:\PROGRAM_CPP\LSM-2\cmake-build-debug-coverage\CMakeFiles\LSM_2persistence.cc.dir\cache.cpp.gcno
+        -:    0:Data:D:\PROGRAM_CPP\LSM-2\cmake-build-debug-coverage\CMakeFiles\LSM_2persistence.cc.dir\cache.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#ifndef CACHE_H
+        -:    2:#define CACHE_H
+        -:    3:#include <string>
+        -:    4:#include <fstream>
+        -:    5:#include <cmath>
+        -:    6:#include "MurmurHash3.h"
+        -:    7:#include "bloomfilter.h"
+        -:    8:#include "sstable.h"
+        -:    9:
+        -:   10:class Cache
+        -:   11:{
+        -:   12:public:
+        -:   13:    struct Node{
+        -:   14:        std::string path;
+        -:   15:        uint64_t time;
+        -:   16:        uint64_t num;
+        -:   17:        uint64_t max;
+        -:   18:        uint64_t min;
+        -:   19:        BloomFilter bf;
+        -:   20:        std::pair<uint64_t, uint32_t> *index;       //索引区，用来存储有序的索引数据，包含所有的键及对应的值在文件中的 offset (无符号 32 位整型)。
+        -:   21:        Node *next;
+function _ZN5Cache4NodeC1Ev called 5 returned 100% blocks executed 86%
+        5:   22:        Node(){
+        5:   22-block  0
+call    0 returned 5
+call    1 returned 5
+branch  2 taken 5 (fallthrough)
+branch  3 taken 0 (throw)
+    $$$$$:   22-block  1
+call    4 never executed
+        5:   23:            index = new std::pair<uint64_t, uint32_t>;
+        5:   23-block  0
+call    0 returned 5
+branch  1 taken 5 (fallthrough)
+branch  2 taken 0 (throw)
+        5:   23-block  1
+call    3 returned 5
+        5:   24:            next = nullptr;
+        5:   25:        }
+        -:   26:        Node(std::string &p, sstable &st);
+        -:   27:        Node(std::string &p);
+        -:   28:        ~Node();
+        -:   29:        uint64_t getOffsetIndex(uint64_t key, bool &flag);
+        -:   30:        std::string nodeGet(uint64_t key,  bool &flag);
+        -:   31:    };
+        -:   32:    //Node *head;
+        -:   33:    Cache();
+        -:   34:    ~Cache();
+        -:   35:    std::string get(uint64_t key);
+        -:   36:    bool del(uint64_t key);
+        -:   37:    void add(std::string &p, sstable &st, int level);
+        -:   38:    void reset();
+        -:   39:    std::pair<int, int> findRange(std::vector<Node*> &);
+        -:   40:    std::vector<Cache::Node*> compLevel(int currentLevel, std::pair<int, int> &range);
+        -:   41:    void addNode(Node *addition, int level);
+        -:   42:    void fileToNode(int level, std::string);
+        -:   43:
+        -:   44:private:
+        -:   45:    std::vector<Node*> levelVec;
+        -:   46:};
+        -:   47:
+        -:   48:#endif // CACHE_H

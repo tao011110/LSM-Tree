@@ -1,0 +1,84 @@
+        -:    0:Source:D:/PROGRAM_CPP/LSM-2/memtable.h
+        -:    0:Graph:D:\PROGRAM_CPP\LSM-2\cmake-build-debug-coverage\CMakeFiles\LSM_2persistence.cc.dir\memtable.cpp.gcno
+        -:    0:Data:D:\PROGRAM_CPP\LSM-2\cmake-build-debug-coverage\CMakeFiles\LSM_2persistence.cc.dir\memtable.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#ifndef MEMTABLE_H
+        -:    2:#define MEMTABLE_H
+        -:    3:#include <cstdint>
+        -:    4:#include <string>
+        -:    5:#include <iostream>
+        -:    6:#include <vector>
+        -:    7:
+        -:    8:class memTable
+        -:    9:{
+        -:   10:private:
+        -:   11:    struct Node{
+        -:   12:        uint64_t key;
+        -:   13:        std::string value;
+        -:   14:        Node *right, *down, *up;
+        -:   15:        Node(Node* R, Node *D, Node *U, uint64_t k, std::string v){
+        -:   16:            right = R;
+        -:   17:            down = D;
+        -:   18:            up = U;
+        -:   19:            key = k;
+        -:   20:            value = v;
+        -:   21:        }
+function _ZN8memTable4NodeC1Ev called 13301 returned 100% blocks executed 71%
+    13301:   22:        Node(): key(-1), right(nullptr), down(nullptr), up(nullptr), value("") {}
+    13301:   22-block  0
+call    0 returned 13301
+call    1 returned 13301
+branch  2 taken 13301 (fallthrough)
+branch  3 taken 0 (throw)
+    13301:   22-block  1
+call    4 returned 13301
+    $$$$$:   22-block  2
+call    5 never executed
+function _ZN8memTable4NodeD1Ev called 13299 returned 100% blocks executed 100%
+    13299:   23:        ~Node(){}
+    13299:   23-block  0
+call    0 returned 13299
+        -:   24:    };
+        -:   25:    Node *head, *tail, *tophead;
+        -:   26:
+        -:   27:    int size = 0;
+        -:   28:    int byteSize = 0;
+        -:   29:
+        -:   30:public:
+        -:   31:    memTable();
+        -:   32:    ~memTable();
+        -:   33:    void put(uint64_t key, const std::string &s);
+        -:   34:    Node* search(uint64_t key);
+        -:   35:    std::string get(uint64_t key, bool &isDelete);
+        -:   36:    bool del(uint64_t key, bool &isDeleted);
+        -:   37:    void reset();
+function _ZN8memTable5emptyEv called 26426 returned 100% blocks executed 100%
+    26426:   38:    bool empty(){
+    26426:   39:        if(size == 0){
+    26426:   39-block  0
+branch  0 taken 42 (fallthrough)
+branch  1 taken 26384
+       42:   40:            return true;
+       42:   40-block  0
+        -:   41:        }
+    26384:   42:        else return false;
+    26384:   42-block  0
+        -:   43:    }
+        -:   44:    int getByteSize(){
+        -:   45:        return byteSize;
+        -:   46:    }
+        -:   47:
+        -:   48:    struct dataNode{
+        -:   49:        uint64_t key;
+        -:   50:        std::string val;
+function _ZN8memTable8dataNodeC1Ev called 0 returned 0% blocks executed 0%
+    #####:   51:        dataNode(){}
+    %%%%%:   51-block  0
+call    0 never executed
+        -:   52:    };
+        -:   53:
+        -:   54:    std::vector<dataNode> writeBack();
+        -:   55:};
+        -:   56:
+        -:   57:#endif // MEMTABLE_H

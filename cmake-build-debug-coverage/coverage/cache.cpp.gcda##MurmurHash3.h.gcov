@@ -1,0 +1,186 @@
+        -:    0:Source:D:/PROGRAM_CPP/LSM-2/MurmurHash3.h
+        -:    0:Graph:D:\PROGRAM_CPP\LSM-2\cmake-build-debug-coverage\CMakeFiles\LSM_2persistence.cc.dir\cache.cpp.gcno
+        -:    0:Data:D:\PROGRAM_CPP\LSM-2\cmake-build-debug-coverage\CMakeFiles\LSM_2persistence.cc.dir\cache.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#pragma once
+        -:    2:#if defined(_MSC_VER) && (_MSC_VER < 1600)
+        -:    3:
+        -:    4:typedef unsigned char uint8_t;
+        -:    5:typedef unsigned int uint32_t;
+        -:    6:typedef unsigned __int64 uint64_t;
+        -:    7:
+        -:    8:#define FORCE_INLINE	__forceinline
+        -:    9:
+        -:   10:#include <stdlib.h>
+        -:   11:
+        -:   12:#define ROTL64(x,y)	_rotl64(x,y)
+        -:   13:
+        -:   14:#define BIG_CONSTANT(x) (x)
+        -:   15:
+        -:   16:// Other compilers
+        -:   17:
+        -:   18:#else	// defined(_MSC_VER)
+        -:   19:
+        -:   20:#include <stdint.h>
+        -:   21:
+        -:   22:#define	FORCE_INLINE inline __attribute__((always_inline))
+        -:   23:
+function _Z6rotl64ya called 98752 returned 100% blocks executed 100%
+    98752:   24:inline uint64_t rotl64 ( uint64_t x, int8_t r )
+        -:   25:{
+    98752:   26:  return (x << r) | (x >> (64 - r));
+    98752:   26-block  0
+        -:   27:}
+        -:   28:
+        -:   29:#define ROTL64(x,y)	rotl64(x,y)
+        -:   30:
+        -:   31:#define BIG_CONSTANT(x) (x##LLU)
+        -:   32:
+        -:   33:#endif // !defined(_MSC_VER)
+        -:   34:
+        -:   35:FORCE_INLINE uint64_t getblock64 ( const uint64_t * p, int i )
+        -:   36:{
+    #####:   37:  return p[i];
+        -:   38:}
+        -:   39:
+        -:   40:FORCE_INLINE uint64_t fmix64 ( uint64_t k )
+        -:   41:{
+    85830:   42:  k ^= k >> 33;
+    85830:   43:  k *= BIG_CONSTANT(0xff51afd7ed558ccd);
+    85830:   44:  k ^= k >> 33;
+    85830:   45:  k *= BIG_CONSTANT(0xc4ceb9fe1a85ec53);
+    85830:   46:  k ^= k >> 33;
+        -:   47:
+    85830:   48:  return k;
+        -:   49:}
+        -:   50:
+        -:   51:
+        -:   52:/**
+        -:   53:* Murmur hash function
+        -:   54:* @param key hash target.
+        -:   55:* @param len byte number of key.
+        -:   56:* @param seed use 1.
+        -:   57:* @param out 128bit, use as 4 unsigned int.
+        -:   58:* Example
+        -:   59:  long long key = 103122;
+        -:   60:  unsigned int hash[4] = {0};
+        -:   61:  MurmurHash3_x64_128(&key, sizeof(key), 1, hash);
+        -:   62:*/
+function _ZL19MurmurHash3_x64_128PKvijPv called 42915 returned 100% blocks executed 50%
+    42915:   63:static inline void MurmurHash3_x64_128 ( const void * key, const int len,
+        -:   64:                           const uint32_t seed, void * out )
+        -:   65:{
+    42915:   66:  const uint8_t * data = (const uint8_t*)key;
+    42915:   67:  const int nblocks = len / 16;
+        -:   68:
+    42915:   69:  uint64_t h1 = seed;
+    42915:   70:  uint64_t h2 = seed;
+        -:   71:
+    42915:   72:  const uint64_t c1 = BIG_CONSTANT(0x87c37b91114253d5);
+    42915:   73:  const uint64_t c2 = BIG_CONSTANT(0x4cf5ad432745937f);
+        -:   74:
+    42915:   75:  const uint64_t * blocks = (const uint64_t *)(data);
+        -:   76:
+   42915*:   77:  for(int i = 0; i < nblocks; i++)
+    42915:   77-block  0
+    42915:   77-block  1
+branch  0 taken 0 (fallthrough)
+branch  1 taken 42915
+        -:   78:  {
+    #####:   79:    uint64_t k1 = getblock64(blocks,i*2+0);
+    %%%%%:   79-block  0
+    #####:   80:    uint64_t k2 = getblock64(blocks,i*2+1);
+    %%%%%:   80-block  0
+        -:   81:
+    #####:   82:    k1 *= c1; k1  = ROTL64(k1,31); k1 *= c2; h1 ^= k1;
+    %%%%%:   82-block  0
+call    0 never executed
+        -:   83:
+    #####:   84:    h1 = ROTL64(h1,27); h1 += h2; h1 = h1*5+0x52dce729;
+call    0 never executed
+        -:   85:
+    #####:   86:    k2 *= c2; k2  = ROTL64(k2,33); k2 *= c1; h2 ^= k2;
+call    0 never executed
+        -:   87:
+    #####:   88:    h2 = ROTL64(h2,31); h2 += h1; h2 = h2*5+0x38495ab5;
+call    0 never executed
+        -:   89:  }
+        -:   90:
+    42915:   91:  const uint8_t * tail = (const uint8_t*)(data + nblocks*16);
+        -:   92:
+    42915:   93:  uint64_t k1 = 0;
+    42915:   94:  uint64_t k2 = 0;
+        -:   95:
+    42915:   96:  switch(len & 15)
+    42915:   96-block  0
+branch  0 taken 0
+branch  1 taken 0
+branch  2 taken 0
+branch  3 taken 0
+branch  4 taken 0
+branch  5 taken 0
+branch  6 taken 0
+branch  7 taken 42915
+branch  8 taken 0
+branch  9 taken 0
+branch 10 taken 0
+branch 11 taken 0
+branch 12 taken 0
+branch 13 taken 0
+branch 14 taken 0
+branch 15 taken 0
+        -:   97:  {
+    #####:   98:  case 15: k2 ^= ((uint64_t)tail[14]) << 48;
+    %%%%%:   98-block  0
+    #####:   99:  case 14: k2 ^= ((uint64_t)tail[13]) << 40;
+    %%%%%:   99-block  0
+    #####:  100:  case 13: k2 ^= ((uint64_t)tail[12]) << 32;
+    %%%%%:  100-block  0
+    #####:  101:  case 12: k2 ^= ((uint64_t)tail[11]) << 24;
+    %%%%%:  101-block  0
+    #####:  102:  case 11: k2 ^= ((uint64_t)tail[10]) << 16;
+    %%%%%:  102-block  0
+    #####:  103:  case 10: k2 ^= ((uint64_t)tail[ 9]) << 8;
+    %%%%%:  103-block  0
+    #####:  104:  case  9: k2 ^= ((uint64_t)tail[ 8]) << 0;
+    #####:  105:           k2 *= c2; k2  = ROTL64(k2,33); k2 *= c1; h2 ^= k2;
+    %%%%%:  105-block  0
+call    0 never executed
+        -:  106:
+    42915:  107:  case  8: k1 ^= ((uint64_t)tail[ 7]) << 56;
+    42915:  107-block  0
+    42915:  108:  case  7: k1 ^= ((uint64_t)tail[ 6]) << 48;
+    42915:  108-block  0
+    42915:  109:  case  6: k1 ^= ((uint64_t)tail[ 5]) << 40;
+    42915:  109-block  0
+    42915:  110:  case  5: k1 ^= ((uint64_t)tail[ 4]) << 32;
+    42915:  110-block  0
+    42915:  111:  case  4: k1 ^= ((uint64_t)tail[ 3]) << 24;
+    42915:  111-block  0
+    42915:  112:  case  3: k1 ^= ((uint64_t)tail[ 2]) << 16;
+    42915:  112-block  0
+    42915:  113:  case  2: k1 ^= ((uint64_t)tail[ 1]) << 8;
+    42915:  113-block  0
+    42915:  114:  case  1: k1 ^= ((uint64_t)tail[ 0]) << 0;
+    42915:  115:           k1 *= c1; k1  = ROTL64(k1,31); k1 *= c2; h1 ^= k1;
+    42915:  115-block  0
+call    0 returned 42915
+        -:  116:  };
+        -:  117:
+    42915:  118:  h1 ^= len; h2 ^= len;
+        -:  119:
+    42915:  120:  h1 += h2;
+    42915:  121:  h2 += h1;
+    42915:  121-block  0
+        -:  122:
+    42915:  123:  h1 = fmix64(h1);
+    42915:  123-block  0
+    42915:  124:  h2 = fmix64(h2);
+        -:  125:
+    42915:  126:  h1 += h2;
+    42915:  127:  h2 += h1;
+        -:  128:
+    42915:  129:  ((uint64_t*)out)[0] = h1;
+    42915:  130:  ((uint64_t*)out)[1] = h2;
+    42915:  131:}

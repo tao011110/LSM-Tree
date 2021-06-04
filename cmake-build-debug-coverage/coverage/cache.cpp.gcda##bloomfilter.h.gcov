@@ -1,0 +1,40 @@
+        -:    0:Source:D:/PROGRAM_CPP/LSM-2/bloomfilter.h
+        -:    0:Graph:D:\PROGRAM_CPP\LSM-2\cmake-build-debug-coverage\CMakeFiles\LSM_2persistence.cc.dir\cache.cpp.gcno
+        -:    0:Data:D:\PROGRAM_CPP\LSM-2\cmake-build-debug-coverage\CMakeFiles\LSM_2persistence.cc.dir\cache.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#ifndef BLOOMFILTER_H
+        -:    2:#define BLOOMFILTER_H
+        -:    3:
+        -:    4:#include <cstdint>
+        -:    5:#include <string.h>
+        -:    6:#include <iostream>
+        -:    7:#include <fstream>
+        -:    8:
+        -:    9:class BloomFilter
+        -:   10:{
+        -:   11:private:
+        -:   12:    uint32_t set[2560];     //Because the Bloom Filter is 10280 bytes, the size of the set is 10280 / 4 = 2560
+        -:   13:
+        -:   14:public:
+        -:   15:    BloomFilter();
+        -:   16:    bool match(uint32_t hashVal[]);
+        -:   17:    void setVal(uint32_t hashVal[]);
+function _ZN11BloomFilter5getBfEPS_ called 157 returned 100% blocks executed 100%
+      157:   18:    void getBf(BloomFilter *newbf){
+   402077:   19:        for(int i = 0; i < 2560; i++){
+      157:   19-block  0
+   402077:   19-block  1
+branch  0 taken 401920 (fallthrough)
+branch  1 taken 157
+   401920:   20:            newbf->set[i] = set[i];
+   401920:   20-block  0
+        -:   21:        }
+      157:   22:    }
+        -:   23:    uint32_t getSet(int i){
+        -:   24:        return set[i];
+        -:   25:    }
+        -:   26:    void getFromFile(std::ifstream &file);
+        -:   27:};
+        -:   28:
+        -:   29:#endif // BLOOMFILTER_H

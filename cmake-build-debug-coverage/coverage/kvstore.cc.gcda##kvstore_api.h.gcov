@@ -1,0 +1,47 @@
+        -:    0:Source:D:/PROGRAM_CPP/LSM-2/kvstore_api.h
+        -:    0:Graph:D:\PROGRAM_CPP\LSM-2\cmake-build-debug-coverage\CMakeFiles\LSM_2persistence.cc.dir\kvstore.cc.gcno
+        -:    0:Data:D:\PROGRAM_CPP\LSM-2\cmake-build-debug-coverage\CMakeFiles\LSM_2persistence.cc.dir\kvstore.cc.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#pragma once
+        -:    2:
+        -:    3:#include <cstdint>
+        -:    4:#include <string>
+        -:    5:
+        -:    6:class KVStoreAPI {
+        -:    7:public:
+        -:    8:	/**
+        -:    9:	 * You should put all sstables under `dir`.
+        -:   10:	 * Please create one sub-directory for each level, and put sstables
+        -:   11:	 * there. Please refer to the c++ filesystem library
+        -:   12:	 * (https://en.cppreference.com/w/cpp/filesystem).
+        -:   13:	 */
+function _ZN10KVStoreAPIC2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 1 returned 100% blocks executed 100%
+        1:   14:    KVStoreAPI(const std::string &dir) { }
+        -:   15:	KVStoreAPI() = delete;
+        -:   16:
+        -:   17:	/**
+        -:   18:	 * Insert/Update the key-value pair.
+        -:   19:	 * No return values for simplicity.
+        -:   20:	 */
+        -:   21:	virtual void put(uint64_t key, const std::string &s) = 0;
+        -:   22:
+        -:   23:	/**
+        -:   24:	 * Returns the (string) value of the given key.
+        -:   25:	 * An empty string indicates not found.
+        -:   26:	 */
+        -:   27:	virtual std::string get(uint64_t key) = 0;
+        -:   28:
+        -:   29:	/**
+        -:   30:	 * Delete the given key-value pair if it exists.
+        -:   31:	 * Returns false iff the key is not found.
+        -:   32:	 */
+        -:   33:	virtual bool del(uint64_t key) = 0;
+        -:   34:
+        -:   35:	/**
+        -:   36:	 * This resets the kvstore. All key-value pairs should be removed,
+        -:   37:	 * including memtable and all sstables files.
+        -:   38:	 */
+        -:   39:	virtual void reset() = 0;
+        -:   40:};
+        -:   41:

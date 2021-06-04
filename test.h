@@ -17,19 +17,18 @@ protected:
 
 #define EXPECT(exp, got) expect<decltype(got)>((exp), (got), __FILE__, __LINE__)
 	template<typename T>
-	void expect(const T &exp, const T &got,
+	bool expect(const T &exp, const T &got,
 		    const std::string &file, int line)
 	{
 		++nr_tests;
 		if (exp == got) {
 			++nr_passed_tests;
-			return;
+			return true;
 		}
 		if (verbose) {
-			std::cerr << "TEST Error @" << file << ":" << line;
-			std::cerr << ", expected " << exp;
-			std::cerr << ", got " << got << std::endl;
+			//std::cerr << ", got " << got << std::endl;
 		}
+		return false;
 	}
 
 	void phase(void)

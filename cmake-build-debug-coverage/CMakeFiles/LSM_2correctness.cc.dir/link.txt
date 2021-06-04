@@ -1,0 +1,3 @@
+"D:\CLion 2021.1.1\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\LSM_2correctness.cc.dir/objects.a
+D:\mingw64\bin\ar.exe cr CMakeFiles\LSM_2correctness.cc.dir/objects.a @CMakeFiles\LSM_2correctness.cc.dir\objects1.rsp
+D:\mingw64\bin\g++.exe --coverage -g -Wl,--whole-archive CMakeFiles\LSM_2correctness.cc.dir/objects.a -Wl,--no-whole-archive -o LSM_2correctness.cc.exe -Wl,--out-implib,libLSM_2correctness.cc.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\LSM_2correctness.cc.dir\linklibs.rsp

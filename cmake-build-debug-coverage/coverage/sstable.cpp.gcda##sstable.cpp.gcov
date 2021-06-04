@@ -1,0 +1,224 @@
+        -:    0:Source:D:/PROGRAM_CPP/LSM-2/sstable.cpp
+        -:    0:Graph:D:\PROGRAM_CPP\LSM-2\cmake-build-debug-coverage\CMakeFiles\LSM_2persistence.cc.dir\sstable.cpp.gcno
+        -:    0:Data:D:\PROGRAM_CPP\LSM-2\cmake-build-debug-coverage\CMakeFiles\LSM_2persistence.cc.dir\sstable.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include "sstable.h"
+        -:    2:#include "MurmurHash3.h"
+        -:    3:
+function _ZN7sstableC2ERSt6vectorIN8memTable8dataNodeESaIS2_EE called 157 returned 100% blocks executed 86%
+      157:    4:sstable::sstable(std::vector<memTable::dataNode> &vec)
+      157:    4-block  0
+call    0 returned 157
+        -:    5:{
+        -:    6:    //std::cout << "vecsize " << std::endl;
+      157:    7:    uint64_t size = vec.size();
+call    0 returned 157
+      157:    8:    header.time = 0;
+      157:    9:    header.num = size;
+      157:   10:    header.min = vec[0].key;
+call    0 returned 157
+      157:   11:    header.max = vec[size - 1].key;
+call    0 returned 157
+      157:   12:    uint32_t hash[4] = {0};
+   55994*:   13:    index = new std::pair<uint64_t, uint32_t>[size];
+branch  0 taken 157 (fallthrough)
+branch  1 taken 0
+      157:   13-block  0
+    %%%%%:   13-block  1
+call    2 never executed
+      157:   13-block  2
+call    3 returned 157
+branch  4 taken 157 (fallthrough)
+branch  5 taken 0 (throw)
+      157:   13-block  3
+    55994:   13-block  4
+branch  6 taken 55837 (fallthrough)
+branch  7 taken 157
+    55837:   13-block  5
+call    8 returned 55837
+   55994*:   14:    data = new std::string[size];
+      157:   14-block  0
+branch  0 taken 157 (fallthrough)
+branch  1 taken 0
+      157:   14-block  1
+    %%%%%:   14-block  2
+      157:   14-block  3
+call    2 returned 157
+branch  3 taken 157 (fallthrough)
+branch  4 taken 0 (throw)
+      157:   14-block  4
+    55994:   14-block  5
+branch  5 taken 55837 (fallthrough)
+branch  6 taken 157
+    55837:   14-block  6
+call    7 returned 55837
+      157:   15:    uint32_t offset = 10272 + size * 12;
+      157:   16:    uint32_t lastOffset = 0;
+    55994:   17:    for(uint64_t i = 0; i < size; i++){
+      157:   17-block  0
+    55994:   17-block  1
+branch  0 taken 55837 (fallthrough)
+branch  1 taken 157
+    55837:   18:        uint64_t pairKey = vec[i].key;
+    55837:   18-block  0
+call    0 returned 55837
+   111674:   19:        std::string pairVal = vec[i].val;
+call    0 returned 55837
+call    1 returned 55837
+branch  2 taken 55837 (fallthrough)
+branch  3 taken 0 (throw)
+    55837:   19-block  0
+call    4 returned 55837
+    $$$$$:   19-block  1
+call    5 never executed
+    55837:   20:        uint64_t key = pairKey;
+    55837:   21:        MurmurHash3_x64_128(&key, sizeof(pairKey), 1, hash);
+    55837:   21-block  0
+call    0 returned 55837
+    55837:   22:        bf.setVal(hash);
+call    0 returned 55837
+branch  1 taken 55837 (fallthrough)
+branch  2 taken 0 (throw)
+    55837:   23:        index[i].first = pairKey;
+    55837:   24:        offset += lastOffset;
+    55837:   25:        lastOffset = pairVal.length();
+    55837:   25-block  0
+call    0 returned 55837
+        -:   26:        //std::cout << pairVal<< "  lastOffset " <<lastOffset <<std::endl;
+    55837:   27:        index[i].second = offset;
+    55837:   28:        data[i] = pairVal;
+call    0 returned 55837
+branch  1 taken 55837 (fallthrough)
+branch  2 taken 0 (throw)
+        -:   29:    }
+      157:   30:}
+      157:   30-block  0
+        -:   31:
+function _ZN7sstableD2Ev called 157 returned 100% blocks executed 100%
+      314:   32:sstable::~sstable()
+        -:   33:{
+      157:   34:    delete[] index;
+      157:   34-block  0
+branch  0 taken 157 (fallthrough)
+branch  1 taken 0
+      157:   34-block  1
+call    2 returned 157
+    55994:   35:    delete[] data;
+      157:   35-block  0
+branch  0 taken 157 (fallthrough)
+branch  1 taken 0
+      157:   35-block  1
+    55994:   35-block  2
+branch  2 taken 55837 (fallthrough)
+branch  3 taken 157
+    55837:   35-block  3
+call    4 returned 55837
+      157:   35-block  4
+call    5 returned 157
+      157:   36:}
+        -:   37:
+        -:   38:////使用二分查找在索引中找到对应的offset，若返回-1，则未找到。
+        -:   39://uint32_t sstable::get(uint64_t key)
+        -:   40://{
+        -:   41://    int left = 0, right = header.num, mid = (left + right) / 2;
+        -:   42://    while(left <= right){
+        -:   43://        if(index[mid].first == key){
+        -:   44://            return index[mid].second;
+        -:   45://        }
+        -:   46://        if(index[mid].first < key){
+        -:   47://            left = mid + 1;
+        -:   48://        }
+        -:   49://        else{
+        -:   50://            right = mid - 1;
+        -:   51://        }
+        -:   52://    }
+        -:   53://    return -1;
+        -:   54://}
+        -:   55:
+function _ZN7sstable11makeFileSSTENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 157 returned 100% blocks executed 90%
+      157:   56:void sstable::makeFileSST(std::string path)
+        -:   57:{
+      314:   58:    std::ofstream file(path, std::ios::out|std::ios::binary);
+      157:   58-block  0
+call    0 returned 157
+call    1 returned 157
+branch  2 taken 157 (fallthrough)
+branch  3 taken 0 (throw)
+      157:   58-block  1
+call    4 returned 157
+    $$$$$:   58-block  2
+call    5 never executed
+      157:   59:    file.write(reinterpret_cast<char*>(&header), 32);
+      157:   59-block  0
+call    0 returned 157
+branch  1 taken 157 (fallthrough)
+branch  2 taken 0 (throw)
+      157:   60:    file.write(reinterpret_cast<char*>(&bf), 10240);
+      157:   60-block  0
+call    0 returned 157
+branch  1 taken 157 (fallthrough)
+branch  2 taken 0 (throw)
+    55994:   61:    for(uint64_t i = 0; i < header.num; i++){
+      157:   61-block  0
+    55994:   61-block  1
+branch  0 taken 55837 (fallthrough)
+branch  1 taken 157
+    55837:   61-block  2
+    55837:   62:        file.write(reinterpret_cast<char*>(&index[i].first), sizeof(index[i].first));
+    55837:   62-block  0
+call    0 returned 55837
+branch  1 taken 55837 (fallthrough)
+branch  2 taken 0 (throw)
+    55837:   63:        file.write(reinterpret_cast<char*>(&index[i].second), sizeof(index[i].second));
+    55837:   63-block  0
+call    0 returned 55837
+branch  1 taken 55837 (fallthrough)
+branch  2 taken 0 (throw)
+        -:   64:    }
+    55994:   65:    for(uint64_t i = 0; i < header.num; i++){
+      157:   65-block  0
+    55994:   65-block  1
+branch  0 taken 55837 (fallthrough)
+branch  1 taken 157
+    55837:   65-block  2
+    55837:   66:        file.write(data[i].c_str(), data[i].length());
+    55837:   66-block  0
+call    0 returned 55837
+call    1 returned 55837
+call    2 returned 55837
+branch  3 taken 55837 (fallthrough)
+branch  4 taken 0 (throw)
+        -:   67:    }
+      157:   68:    file.close();
+      157:   68-block  0
+call    0 returned 157
+branch  1 taken 157 (fallthrough)
+branch  2 taken 0 (throw)
+      157:   69:}
+        -:   70:
+function _ZN7sstable5resetEv called 0 returned 0% blocks executed 0%
+    #####:   71:void sstable::reset()
+        -:   72:{
+        -:   73:
+    #####:   74:}
+        -:   75:
+function _ZN7sstable5checkEy called 0 returned 0% blocks executed 0%
+    #####:   76:bool sstable::check(uint64_t key)
+        -:   77:{
+    #####:   78:    uint32_t *hash[4] = {0};
+    #####:   79:    MurmurHash3_x64_128(&key, sizeof(key), 1, hash);
+    %%%%%:   79-block  0
+call    0 never executed
+    #####:   80:    bf.setVal(*hash);
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   81:    return bf.match(*hash);
+    %%%%%:   81-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    %%%%%:   81-block  1
+    %%%%%:   81-block  2
+        -:   82:}

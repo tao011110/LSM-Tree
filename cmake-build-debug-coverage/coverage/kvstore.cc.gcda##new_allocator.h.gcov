@@ -1,0 +1,642 @@
+        -:    0:Source:D:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/ext/new_allocator.h
+        -:    0:Graph:D:\PROGRAM_CPP\LSM-2\cmake-build-debug-coverage\CMakeFiles\LSM_2persistence.cc.dir\kvstore.cc.gcno
+        -:    0:Data:D:\PROGRAM_CPP\LSM-2\cmake-build-debug-coverage\CMakeFiles\LSM_2persistence.cc.dir\kvstore.cc.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:// Allocator that wraps operator new -*- C++ -*-
+        -:    2:
+        -:    3:// Copyright (C) 2001-2018 Free Software Foundation, Inc.
+        -:    4://
+        -:    5:// This file is part of the GNU ISO C++ Library.  This library is free
+        -:    6:// software; you can redistribute it and/or modify it under the
+        -:    7:// terms of the GNU General Public License as published by the
+        -:    8:// Free Software Foundation; either version 3, or (at your option)
+        -:    9:// any later version.
+        -:   10:
+        -:   11:// This library is distributed in the hope that it will be useful,
+        -:   12:// but WITHOUT ANY WARRANTY; without even the implied warranty of
+        -:   13:// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+        -:   14:// GNU General Public License for more details.
+        -:   15:
+        -:   16:// Under Section 7 of GPL version 3, you are granted additional
+        -:   17:// permissions described in the GCC Runtime Library Exception, version
+        -:   18:// 3.1, as published by the Free Software Foundation.
+        -:   19:
+        -:   20:// You should have received a copy of the GNU General Public License and
+        -:   21:// a copy of the GCC Runtime Library Exception along with this program;
+        -:   22:// see the files COPYING3 and COPYING.RUNTIME respectively.  If not, see
+        -:   23:// <http://www.gnu.org/licenses/>.
+        -:   24:
+        -:   25:/** @file ext/new_allocator.h
+        -:   26: *  This file is a GNU extension to the Standard C++ Library.
+        -:   27: */
+        -:   28:
+        -:   29:#ifndef _NEW_ALLOCATOR_H
+        -:   30:#define _NEW_ALLOCATOR_H 1
+        -:   31:
+        -:   32:#include <bits/c++config.h>
+        -:   33:#include <new>
+        -:   34:#include <bits/functexcept.h>
+        -:   35:#include <bits/move.h>
+        -:   36:#if __cplusplus >= 201103L
+        -:   37:#include <type_traits>
+        -:   38:#endif
+        -:   39:
+        -:   40:namespace __gnu_cxx _GLIBCXX_VISIBILITY(default)
+        -:   41:{
+        -:   42:_GLIBCXX_BEGIN_NAMESPACE_VERSION
+        -:   43:
+        -:   44:  using std::size_t;
+        -:   45:  using std::ptrdiff_t;
+        -:   46:
+        -:   47:  /**
+        -:   48:   *  @brief  An allocator that uses global new, as per [20.4].
+        -:   49:   *  @ingroup allocators
+        -:   50:   *
+        -:   51:   *  This is precisely the allocator defined in the C++ Standard.
+        -:   52:   *    - all allocation calls operator new
+        -:   53:   *    - all deallocation calls operator delete
+        -:   54:   *
+        -:   55:   *  @tparam  _Tp  Type of allocated object.
+        -:   56:   */
+        -:   57:  template<typename _Tp>
+        -:   58:    class new_allocator
+        -:   59:    {
+        -:   60:    public:
+        -:   61:      typedef size_t     size_type;
+        -:   62:      typedef ptrdiff_t  difference_type;
+        -:   63:      typedef _Tp*       pointer;
+        -:   64:      typedef const _Tp* const_pointer;
+        -:   65:      typedef _Tp&       reference;
+        -:   66:      typedef const _Tp& const_reference;
+        -:   67:      typedef _Tp        value_type;
+        -:   68:
+        -:   69:      template<typename _Tp1>
+        -:   70:	struct rebind
+        -:   71:	{ typedef new_allocator<_Tp1> other; };
+        -:   72:
+        -:   73:#if __cplusplus >= 201103L
+        -:   74:      // _GLIBCXX_RESOLVE_LIB_DEFECTS
+        -:   75:      // 2103. propagate_on_container_move_assignment
+        -:   76:      typedef std::true_type propagate_on_container_move_assignment;
+        -:   77:#endif
+        -:   78:
+    2115*:   79:      new_allocator() _GLIBCXX_USE_NOEXCEPT { }
+------------------
+_ZN9__gnu_cxx13new_allocatorIN7KVStore4nodeEEC2Ev:
+function _ZN9__gnu_cxx13new_allocatorIN7KVStore4nodeEEC2Ev called 616 returned 100% blocks executed 100%
+      616:   79:      new_allocator() _GLIBCXX_USE_NOEXCEPT { }
+------------------
+_ZN9__gnu_cxx13new_allocatorISt6vectorIN7KVStore4nodeESaIS3_EEEC2Ev:
+function _ZN9__gnu_cxx13new_allocatorISt6vectorIN7KVStore4nodeESaIS3_EEEC2Ev called 231 returned 100% blocks executed 100%
+      231:   79:      new_allocator() _GLIBCXX_USE_NOEXCEPT { }
+------------------
+_ZN9__gnu_cxx13new_allocatorIPN5Cache4NodeEEC2Ev:
+function _ZN9__gnu_cxx13new_allocatorIPN5Cache4NodeEEC2Ev called 0 returned 0% blocks executed 0%
+    #####:   79:      new_allocator() _GLIBCXX_USE_NOEXCEPT { }
+------------------
+_ZN9__gnu_cxx13new_allocatorIiEC2Ev:
+function _ZN9__gnu_cxx13new_allocatorIiEC2Ev called 40 returned 100% blocks executed 100%
+       40:   79:      new_allocator() _GLIBCXX_USE_NOEXCEPT { }
+------------------
+_ZN9__gnu_cxx13new_allocatorIN8memTable8dataNodeEEC2Ev:
+function _ZN9__gnu_cxx13new_allocatorIN8memTable8dataNodeEEC2Ev called 471 returned 100% blocks executed 100%
+      471:   79:      new_allocator() _GLIBCXX_USE_NOEXCEPT { }
+------------------
+_ZN9__gnu_cxx13new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEC2Ev:
+function _ZN9__gnu_cxx13new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEC2Ev called 757 returned 100% blocks executed 100%
+      757:   79:      new_allocator() _GLIBCXX_USE_NOEXCEPT { }
+------------------
+_ZN9__gnu_cxx13new_allocatorIcEC2Ev:
+function _ZN9__gnu_cxx13new_allocatorIcEC2Ev called 0 returned 0% blocks executed 0%
+    #####:   79:      new_allocator() _GLIBCXX_USE_NOEXCEPT { }
+------------------
+        -:   80:
+    1370*:   81:      new_allocator(const new_allocator&) _GLIBCXX_USE_NOEXCEPT { }
+------------------
+_ZN9__gnu_cxx13new_allocatorIPN5Cache4NodeEEC2ERKS4_:
+function _ZN9__gnu_cxx13new_allocatorIPN5Cache4NodeEEC2ERKS4_ called 80 returned 100% blocks executed 100%
+       80:   81:      new_allocator(const new_allocator&) _GLIBCXX_USE_NOEXCEPT { }
+------------------
+_ZN9__gnu_cxx13new_allocatorIN7KVStore4nodeEEC2ERKS3_:
+function _ZN9__gnu_cxx13new_allocatorIN7KVStore4nodeEEC2ERKS3_ called 1290 returned 100% blocks executed 100%
+     1290:   81:      new_allocator(const new_allocator&) _GLIBCXX_USE_NOEXCEPT { }
+------------------
+_ZN9__gnu_cxx13new_allocatorIcEC2ERKS1_:
+function _ZN9__gnu_cxx13new_allocatorIcEC2ERKS1_ called 0 returned 0% blocks executed 0%
+    #####:   81:      new_allocator(const new_allocator&) _GLIBCXX_USE_NOEXCEPT { }
+------------------
+        -:   82:
+        -:   83:      template<typename _Tp1>
+        -:   84:	new_allocator(const new_allocator<_Tp1>&) _GLIBCXX_USE_NOEXCEPT { }
+        -:   85:
+    3391*:   86:      ~new_allocator() _GLIBCXX_USE_NOEXCEPT { }
+------------------
+_ZN9__gnu_cxx13new_allocatorISt6vectorIN7KVStore4nodeESaIS3_EEED2Ev:
+function _ZN9__gnu_cxx13new_allocatorISt6vectorIN7KVStore4nodeESaIS3_EEED2Ev called 229 returned 100% blocks executed 100%
+      229:   86:      ~new_allocator() _GLIBCXX_USE_NOEXCEPT { }
+------------------
+_ZN9__gnu_cxx13new_allocatorIPN5Cache4NodeEED2Ev:
+function _ZN9__gnu_cxx13new_allocatorIPN5Cache4NodeEED2Ev called 0 returned 0% blocks executed 0%
+    #####:   86:      ~new_allocator() _GLIBCXX_USE_NOEXCEPT { }
+------------------
+_ZN9__gnu_cxx13new_allocatorIiED2Ev:
+function _ZN9__gnu_cxx13new_allocatorIiED2Ev called 38 returned 100% blocks executed 100%
+       38:   86:      ~new_allocator() _GLIBCXX_USE_NOEXCEPT { }
+------------------
+_ZN9__gnu_cxx13new_allocatorIN8memTable8dataNodeEED2Ev:
+function _ZN9__gnu_cxx13new_allocatorIN8memTable8dataNodeEED2Ev called 470 returned 100% blocks executed 100%
+      470:   86:      ~new_allocator() _GLIBCXX_USE_NOEXCEPT { }
+------------------
+_ZN9__gnu_cxx13new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEED2Ev:
+function _ZN9__gnu_cxx13new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEED2Ev called 753 returned 100% blocks executed 100%
+      753:   86:      ~new_allocator() _GLIBCXX_USE_NOEXCEPT { }
+------------------
+_ZN9__gnu_cxx13new_allocatorIN7KVStore4nodeEED2Ev:
+function _ZN9__gnu_cxx13new_allocatorIN7KVStore4nodeEED2Ev called 1901 returned 100% blocks executed 100%
+     1901:   86:      ~new_allocator() _GLIBCXX_USE_NOEXCEPT { }
+------------------
+_ZN9__gnu_cxx13new_allocatorIcED2Ev:
+function _ZN9__gnu_cxx13new_allocatorIcED2Ev called 0 returned 0% blocks executed 0%
+    #####:   86:      ~new_allocator() _GLIBCXX_USE_NOEXCEPT { }
+------------------
+        -:   87:
+        -:   88:      pointer
+        -:   89:      address(reference __x) const _GLIBCXX_NOEXCEPT
+        -:   90:      { return std::__addressof(__x); }
+        -:   91:
+        -:   92:      const_pointer
+        -:   93:      address(const_reference __x) const _GLIBCXX_NOEXCEPT
+        -:   94:      { return std::__addressof(__x); }
+        -:   95:
+        -:   96:      // NB: __n is permitted to be 0.  The C++ standard says nothing
+        -:   97:      // about what the return value is when __n == 0.
+        -:   98:      pointer
+    5720*:   99:      allocate(size_type __n, const void* = static_cast<const void*>(0))
+        -:  100:      {
+    5720*:  101:	if (__n > this->max_size())
+    #####:  102:	  std::__throw_bad_alloc();
+        -:  103:
+        -:  104:#if __cpp_aligned_new
+        -:  105:	if (alignof(_Tp) > __STDCPP_DEFAULT_NEW_ALIGNMENT__)
+        -:  106:	  {
+        -:  107:	    std::align_val_t __al = std::align_val_t(alignof(_Tp));
+        -:  108:	    return static_cast<_Tp*>(::operator new(__n * sizeof(_Tp), __al));
+        -:  109:	  }
+        -:  110:#endif
+    5720*:  111:	return static_cast<_Tp*>(::operator new(__n * sizeof(_Tp)));
+        -:  112:      }
+------------------
+_ZN9__gnu_cxx13new_allocatorIN8memTable8dataNodeEE8allocateEyPKv:
+function _ZN9__gnu_cxx13new_allocatorIN8memTable8dataNodeEE8allocateEyPKv called 1513 returned 100% blocks executed 83%
+     1513:   99:      allocate(size_type __n, const void* = static_cast<const void*>(0))
+        -:  100:      {
+     1513:  101:	if (__n > this->max_size())
+     1513:  101-block  0
+call    0 returned 1513
+branch  1 taken 0 (fallthrough)
+branch  2 taken 1513
+    #####:  102:	  std::__throw_bad_alloc();
+    %%%%%:  102-block  0
+call    0 never executed
+        -:  103:
+        -:  104:#if __cpp_aligned_new
+        -:  105:	if (alignof(_Tp) > __STDCPP_DEFAULT_NEW_ALIGNMENT__)
+        -:  106:	  {
+        -:  107:	    std::align_val_t __al = std::align_val_t(alignof(_Tp));
+        -:  108:	    return static_cast<_Tp*>(::operator new(__n * sizeof(_Tp), __al));
+        -:  109:	  }
+        -:  110:#endif
+     1513:  111:	return static_cast<_Tp*>(::operator new(__n * sizeof(_Tp)));
+     1513:  111-block  0
+call    0 returned 1513
+        -:  112:      }
+------------------
+_ZN9__gnu_cxx13new_allocatorISt6vectorIN7KVStore4nodeESaIS3_EEE8allocateEyPKv:
+function _ZN9__gnu_cxx13new_allocatorISt6vectorIN7KVStore4nodeESaIS3_EEE8allocateEyPKv called 229 returned 100% blocks executed 83%
+      229:   99:      allocate(size_type __n, const void* = static_cast<const void*>(0))
+        -:  100:      {
+      229:  101:	if (__n > this->max_size())
+      229:  101-block  0
+call    0 returned 229
+branch  1 taken 0 (fallthrough)
+branch  2 taken 229
+    #####:  102:	  std::__throw_bad_alloc();
+    %%%%%:  102-block  0
+call    0 never executed
+        -:  103:
+        -:  104:#if __cpp_aligned_new
+        -:  105:	if (alignof(_Tp) > __STDCPP_DEFAULT_NEW_ALIGNMENT__)
+        -:  106:	  {
+        -:  107:	    std::align_val_t __al = std::align_val_t(alignof(_Tp));
+        -:  108:	    return static_cast<_Tp*>(::operator new(__n * sizeof(_Tp), __al));
+        -:  109:	  }
+        -:  110:#endif
+      229:  111:	return static_cast<_Tp*>(::operator new(__n * sizeof(_Tp)));
+      229:  111-block  0
+call    0 returned 229
+        -:  112:      }
+------------------
+_ZN9__gnu_cxx13new_allocatorIN7KVStore4nodeEE8allocateEyPKv:
+function _ZN9__gnu_cxx13new_allocatorIN7KVStore4nodeEE8allocateEyPKv called 2694 returned 100% blocks executed 83%
+     2694:   99:      allocate(size_type __n, const void* = static_cast<const void*>(0))
+        -:  100:      {
+     2694:  101:	if (__n > this->max_size())
+     2694:  101-block  0
+call    0 returned 2694
+branch  1 taken 0 (fallthrough)
+branch  2 taken 2694
+    #####:  102:	  std::__throw_bad_alloc();
+    %%%%%:  102-block  0
+call    0 never executed
+        -:  103:
+        -:  104:#if __cpp_aligned_new
+        -:  105:	if (alignof(_Tp) > __STDCPP_DEFAULT_NEW_ALIGNMENT__)
+        -:  106:	  {
+        -:  107:	    std::align_val_t __al = std::align_val_t(alignof(_Tp));
+        -:  108:	    return static_cast<_Tp*>(::operator new(__n * sizeof(_Tp), __al));
+        -:  109:	  }
+        -:  110:#endif
+     2694:  111:	return static_cast<_Tp*>(::operator new(__n * sizeof(_Tp)));
+     2694:  111-block  0
+call    0 returned 2694
+        -:  112:      }
+------------------
+_ZN9__gnu_cxx13new_allocatorIPN5Cache4NodeEE8allocateEyPKv:
+function _ZN9__gnu_cxx13new_allocatorIPN5Cache4NodeEE8allocateEyPKv called 0 returned 0% blocks executed 0%
+    #####:   99:      allocate(size_type __n, const void* = static_cast<const void*>(0))
+        -:  100:      {
+    #####:  101:	if (__n > this->max_size())
+    %%%%%:  101-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  102:	  std::__throw_bad_alloc();
+    %%%%%:  102-block  0
+call    0 never executed
+        -:  103:
+        -:  104:#if __cpp_aligned_new
+        -:  105:	if (alignof(_Tp) > __STDCPP_DEFAULT_NEW_ALIGNMENT__)
+        -:  106:	  {
+        -:  107:	    std::align_val_t __al = std::align_val_t(alignof(_Tp));
+        -:  108:	    return static_cast<_Tp*>(::operator new(__n * sizeof(_Tp), __al));
+        -:  109:	  }
+        -:  110:#endif
+    #####:  111:	return static_cast<_Tp*>(::operator new(__n * sizeof(_Tp)));
+    %%%%%:  111-block  0
+call    0 never executed
+        -:  112:      }
+------------------
+_ZN9__gnu_cxx13new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEyPKv:
+function _ZN9__gnu_cxx13new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEyPKv called 1121 returned 100% blocks executed 83%
+     1121:   99:      allocate(size_type __n, const void* = static_cast<const void*>(0))
+        -:  100:      {
+     1121:  101:	if (__n > this->max_size())
+     1121:  101-block  0
+call    0 returned 1121
+branch  1 taken 0 (fallthrough)
+branch  2 taken 1121
+    #####:  102:	  std::__throw_bad_alloc();
+    %%%%%:  102-block  0
+call    0 never executed
+        -:  103:
+        -:  104:#if __cpp_aligned_new
+        -:  105:	if (alignof(_Tp) > __STDCPP_DEFAULT_NEW_ALIGNMENT__)
+        -:  106:	  {
+        -:  107:	    std::align_val_t __al = std::align_val_t(alignof(_Tp));
+        -:  108:	    return static_cast<_Tp*>(::operator new(__n * sizeof(_Tp), __al));
+        -:  109:	  }
+        -:  110:#endif
+     1121:  111:	return static_cast<_Tp*>(::operator new(__n * sizeof(_Tp)));
+     1121:  111-block  0
+call    0 returned 1121
+        -:  112:      }
+------------------
+_ZN9__gnu_cxx13new_allocatorIiE8allocateEyPKv:
+function _ZN9__gnu_cxx13new_allocatorIiE8allocateEyPKv called 163 returned 100% blocks executed 83%
+      163:   99:      allocate(size_type __n, const void* = static_cast<const void*>(0))
+        -:  100:      {
+      163:  101:	if (__n > this->max_size())
+      163:  101-block  0
+call    0 returned 163
+branch  1 taken 0 (fallthrough)
+branch  2 taken 163
+    #####:  102:	  std::__throw_bad_alloc();
+    %%%%%:  102-block  0
+call    0 never executed
+        -:  103:
+        -:  104:#if __cpp_aligned_new
+        -:  105:	if (alignof(_Tp) > __STDCPP_DEFAULT_NEW_ALIGNMENT__)
+        -:  106:	  {
+        -:  107:	    std::align_val_t __al = std::align_val_t(alignof(_Tp));
+        -:  108:	    return static_cast<_Tp*>(::operator new(__n * sizeof(_Tp), __al));
+        -:  109:	  }
+        -:  110:#endif
+      163:  111:	return static_cast<_Tp*>(::operator new(__n * sizeof(_Tp)));
+      163:  111-block  0
+call    0 returned 163
+        -:  112:      }
+------------------
+        -:  113:
+        -:  114:      // __p is not permitted to be a null pointer.
+        -:  115:      void
+    5715*:  116:      deallocate(pointer __p, size_type)
+        -:  117:      {
+        -:  118:#if __cpp_aligned_new
+        -:  119:	if (alignof(_Tp) > __STDCPP_DEFAULT_NEW_ALIGNMENT__)
+        -:  120:	  {
+        -:  121:	    ::operator delete(__p, std::align_val_t(alignof(_Tp)));
+        -:  122:	    return;
+        -:  123:	  }
+        -:  124:#endif
+    5715*:  125:	::operator delete(__p);
+    5715*:  126:      }
+------------------
+_ZN9__gnu_cxx13new_allocatorIN7KVStore4nodeEE10deallocateEPS2_y:
+function _ZN9__gnu_cxx13new_allocatorIN7KVStore4nodeEE10deallocateEPS2_y called 2692 returned 100% blocks executed 100%
+     2692:  116:      deallocate(pointer __p, size_type)
+        -:  117:      {
+        -:  118:#if __cpp_aligned_new
+        -:  119:	if (alignof(_Tp) > __STDCPP_DEFAULT_NEW_ALIGNMENT__)
+        -:  120:	  {
+        -:  121:	    ::operator delete(__p, std::align_val_t(alignof(_Tp)));
+        -:  122:	    return;
+        -:  123:	  }
+        -:  124:#endif
+     2692:  125:	::operator delete(__p);
+     2692:  125-block  0
+call    0 returned 2692
+     2692:  126:      }
+------------------
+_ZN9__gnu_cxx13new_allocatorIPN5Cache4NodeEE10deallocateEPS3_y:
+function _ZN9__gnu_cxx13new_allocatorIPN5Cache4NodeEE10deallocateEPS3_y called 0 returned 0% blocks executed 0%
+    #####:  116:      deallocate(pointer __p, size_type)
+        -:  117:      {
+        -:  118:#if __cpp_aligned_new
+        -:  119:	if (alignof(_Tp) > __STDCPP_DEFAULT_NEW_ALIGNMENT__)
+        -:  120:	  {
+        -:  121:	    ::operator delete(__p, std::align_val_t(alignof(_Tp)));
+        -:  122:	    return;
+        -:  123:	  }
+        -:  124:#endif
+    #####:  125:	::operator delete(__p);
+    %%%%%:  125-block  0
+call    0 never executed
+    #####:  126:      }
+------------------
+_ZN9__gnu_cxx13new_allocatorIiE10deallocateEPiy:
+function _ZN9__gnu_cxx13new_allocatorIiE10deallocateEPiy called 161 returned 100% blocks executed 100%
+      161:  116:      deallocate(pointer __p, size_type)
+        -:  117:      {
+        -:  118:#if __cpp_aligned_new
+        -:  119:	if (alignof(_Tp) > __STDCPP_DEFAULT_NEW_ALIGNMENT__)
+        -:  120:	  {
+        -:  121:	    ::operator delete(__p, std::align_val_t(alignof(_Tp)));
+        -:  122:	    return;
+        -:  123:	  }
+        -:  124:#endif
+      161:  125:	::operator delete(__p);
+      161:  125-block  0
+call    0 returned 161
+      161:  126:      }
+------------------
+_ZN9__gnu_cxx13new_allocatorIN8memTable8dataNodeEE10deallocateEPS2_y:
+function _ZN9__gnu_cxx13new_allocatorIN8memTable8dataNodeEE10deallocateEPS2_y called 1513 returned 100% blocks executed 100%
+     1513:  116:      deallocate(pointer __p, size_type)
+        -:  117:      {
+        -:  118:#if __cpp_aligned_new
+        -:  119:	if (alignof(_Tp) > __STDCPP_DEFAULT_NEW_ALIGNMENT__)
+        -:  120:	  {
+        -:  121:	    ::operator delete(__p, std::align_val_t(alignof(_Tp)));
+        -:  122:	    return;
+        -:  123:	  }
+        -:  124:#endif
+     1513:  125:	::operator delete(__p);
+     1513:  125-block  0
+call    0 returned 1513
+     1513:  126:      }
+------------------
+_ZN9__gnu_cxx13new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE10deallocateEPS6_y:
+function _ZN9__gnu_cxx13new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE10deallocateEPS6_y called 1121 returned 100% blocks executed 100%
+     1121:  116:      deallocate(pointer __p, size_type)
+        -:  117:      {
+        -:  118:#if __cpp_aligned_new
+        -:  119:	if (alignof(_Tp) > __STDCPP_DEFAULT_NEW_ALIGNMENT__)
+        -:  120:	  {
+        -:  121:	    ::operator delete(__p, std::align_val_t(alignof(_Tp)));
+        -:  122:	    return;
+        -:  123:	  }
+        -:  124:#endif
+     1121:  125:	::operator delete(__p);
+     1121:  125-block  0
+call    0 returned 1121
+     1121:  126:      }
+------------------
+_ZN9__gnu_cxx13new_allocatorISt6vectorIN7KVStore4nodeESaIS3_EEE10deallocateEPS5_y:
+function _ZN9__gnu_cxx13new_allocatorISt6vectorIN7KVStore4nodeESaIS3_EEE10deallocateEPS5_y called 228 returned 100% blocks executed 100%
+      228:  116:      deallocate(pointer __p, size_type)
+        -:  117:      {
+        -:  118:#if __cpp_aligned_new
+        -:  119:	if (alignof(_Tp) > __STDCPP_DEFAULT_NEW_ALIGNMENT__)
+        -:  120:	  {
+        -:  121:	    ::operator delete(__p, std::align_val_t(alignof(_Tp)));
+        -:  122:	    return;
+        -:  123:	  }
+        -:  124:#endif
+      228:  125:	::operator delete(__p);
+      228:  125-block  0
+call    0 returned 228
+      228:  126:      }
+------------------
+        -:  127:
+        -:  128:      size_type
+   16020*:  129:      max_size() const _GLIBCXX_USE_NOEXCEPT
+   16020*:  130:      { return size_t(-1) / sizeof(_Tp); }
+------------------
+_ZNK9__gnu_cxx13new_allocatorIN8memTable8dataNodeEE8max_sizeEv:
+function _ZNK9__gnu_cxx13new_allocatorIN8memTable8dataNodeEE8max_sizeEv called 4539 returned 100% blocks executed 100%
+     4539:  129:      max_size() const _GLIBCXX_USE_NOEXCEPT
+     4539:  130:      { return size_t(-1) / sizeof(_Tp); }
+     4539:  130-block  0
+------------------
+_ZNK9__gnu_cxx13new_allocatorISt6vectorIN7KVStore4nodeESaIS3_EEE8max_sizeEv:
+function _ZNK9__gnu_cxx13new_allocatorISt6vectorIN7KVStore4nodeESaIS3_EEE8max_sizeEv called 687 returned 100% blocks executed 100%
+      687:  129:      max_size() const _GLIBCXX_USE_NOEXCEPT
+      687:  130:      { return size_t(-1) / sizeof(_Tp); }
+      687:  130-block  0
+------------------
+_ZNK9__gnu_cxx13new_allocatorIN7KVStore4nodeEE8max_sizeEv:
+function _ZNK9__gnu_cxx13new_allocatorIN7KVStore4nodeEE8max_sizeEv called 6942 returned 100% blocks executed 100%
+     6942:  129:      max_size() const _GLIBCXX_USE_NOEXCEPT
+     6942:  130:      { return size_t(-1) / sizeof(_Tp); }
+     6942:  130-block  0
+------------------
+_ZNK9__gnu_cxx13new_allocatorIPN5Cache4NodeEE8max_sizeEv:
+function _ZNK9__gnu_cxx13new_allocatorIPN5Cache4NodeEE8max_sizeEv called 0 returned 0% blocks executed 0%
+    #####:  129:      max_size() const _GLIBCXX_USE_NOEXCEPT
+    #####:  130:      { return size_t(-1) / sizeof(_Tp); }
+    %%%%%:  130-block  0
+------------------
+_ZNK9__gnu_cxx13new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8max_sizeEv:
+function _ZNK9__gnu_cxx13new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8max_sizeEv called 3363 returned 100% blocks executed 100%
+     3363:  129:      max_size() const _GLIBCXX_USE_NOEXCEPT
+     3363:  130:      { return size_t(-1) / sizeof(_Tp); }
+     3363:  130-block  0
+------------------
+_ZNK9__gnu_cxx13new_allocatorIiE8max_sizeEv:
+function _ZNK9__gnu_cxx13new_allocatorIiE8max_sizeEv called 489 returned 100% blocks executed 100%
+      489:  129:      max_size() const _GLIBCXX_USE_NOEXCEPT
+      489:  130:      { return size_t(-1) / sizeof(_Tp); }
+      489:  130-block  0
+------------------
+        -:  131:
+        -:  132:#if __cplusplus >= 201103L
+        -:  133:      template<typename _Up, typename... _Args>
+        -:  134:	void
+  146186*:  135:	construct(_Up* __p, _Args&&... __args)
+  146186*:  136:	{ ::new((void *)__p) _Up(std::forward<_Args>(__args)...); }
+------------------
+_ZN9__gnu_cxx13new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE9constructIS6_JS6_EEEvPT_DpOT0_:
+function _ZN9__gnu_cxx13new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE9constructIS6_JS6_EEEvPT_DpOT0_ called 1907 returned 100% blocks executed 100%
+     1907:  135:	construct(_Up* __p, _Args&&... __args)
+     1907:  136:	{ ::new((void *)__p) _Up(std::forward<_Args>(__args)...); }
+     1907:  136-block  0
+call    0 returned 1907
+call    1 returned 1907
+call    2 returned 1907
+------------------
+_ZN9__gnu_cxx13new_allocatorIN8memTable8dataNodeEE9constructIS2_JRKS2_EEEvPT_DpOT0_:
+function _ZN9__gnu_cxx13new_allocatorIN8memTable8dataNodeEE9constructIS2_JRKS2_EEEvPT_DpOT0_ called 55837 returned 100% blocks executed 83%
+    55837:  135:	construct(_Up* __p, _Args&&... __args)
+    55837:  136:	{ ::new((void *)__p) _Up(std::forward<_Args>(__args)...); }
+    55837:  136-block  0
+call    0 returned 55837
+call    1 returned 55837
+call    2 returned 55837
+branch  3 taken 55837 (fallthrough)
+branch  4 taken 0 (throw)
+    55837:  136-block  1
+    $$$$$:  136-block  2
+call    5 never executed
+------------------
+_ZN9__gnu_cxx13new_allocatorISt6vectorIN7KVStore4nodeESaIS3_EEE9constructIS5_JRKS5_EEEvPT_DpOT0_:
+function _ZN9__gnu_cxx13new_allocatorISt6vectorIN7KVStore4nodeESaIS3_EEE9constructIS5_JRKS5_EEEvPT_DpOT0_ called 229 returned 100% blocks executed 83%
+      229:  135:	construct(_Up* __p, _Args&&... __args)
+      229:  136:	{ ::new((void *)__p) _Up(std::forward<_Args>(__args)...); }
+      229:  136-block  0
+call    0 returned 229
+call    1 returned 229
+call    2 returned 229
+branch  3 taken 229 (fallthrough)
+branch  4 taken 0 (throw)
+      229:  136-block  1
+    $$$$$:  136-block  2
+call    5 never executed
+------------------
+_ZN9__gnu_cxx13new_allocatorIN7KVStore4nodeEE9constructIS2_JRKS2_EEEvPT_DpOT0_:
+function _ZN9__gnu_cxx13new_allocatorIN7KVStore4nodeEE9constructIS2_JRKS2_EEEvPT_DpOT0_ called 87789 returned 100% blocks executed 83%
+    87789:  135:	construct(_Up* __p, _Args&&... __args)
+    87789:  136:	{ ::new((void *)__p) _Up(std::forward<_Args>(__args)...); }
+    87789:  136-block  0
+call    0 returned 87789
+call    1 returned 87789
+call    2 returned 87789
+branch  3 taken 87789 (fallthrough)
+branch  4 taken 0 (throw)
+    87789:  136-block  1
+    $$$$$:  136-block  2
+call    5 never executed
+------------------
+_ZN9__gnu_cxx13new_allocatorIPN5Cache4NodeEE9constructIS3_JRKS3_EEEvPT_DpOT0_:
+function _ZN9__gnu_cxx13new_allocatorIPN5Cache4NodeEE9constructIS3_JRKS3_EEEvPT_DpOT0_ called 0 returned 0% blocks executed 0%
+    #####:  135:	construct(_Up* __p, _Args&&... __args)
+    #####:  136:	{ ::new((void *)__p) _Up(std::forward<_Args>(__args)...); }
+    %%%%%:  136-block  0
+call    0 never executed
+call    1 never executed
+------------------
+_ZN9__gnu_cxx13new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE9constructIS6_JRKS6_EEEvPT_DpOT0_:
+function _ZN9__gnu_cxx13new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE9constructIS6_JRKS6_EEEvPT_DpOT0_ called 118 returned 100% blocks executed 83%
+      118:  135:	construct(_Up* __p, _Args&&... __args)
+      118:  136:	{ ::new((void *)__p) _Up(std::forward<_Args>(__args)...); }
+      118:  136-block  0
+call    0 returned 118
+call    1 returned 118
+call    2 returned 118
+branch  3 taken 118 (fallthrough)
+branch  4 taken 0 (throw)
+      118:  136-block  1
+    $$$$$:  136-block  2
+call    5 never executed
+------------------
+_ZN9__gnu_cxx13new_allocatorIiE9constructIiJRKiEEEvPT_DpOT0_:
+function _ZN9__gnu_cxx13new_allocatorIiE9constructIiJRKiEEEvPT_DpOT0_ called 306 returned 100% blocks executed 100%
+      306:  135:	construct(_Up* __p, _Args&&... __args)
+      306:  136:	{ ::new((void *)__p) _Up(std::forward<_Args>(__args)...); }
+      306:  136-block  0
+call    0 returned 306
+call    1 returned 306
+------------------
+        -:  137:
+        -:  138:      template<typename _Up>
+        -:  139:	void
+     346*:  140:	destroy(_Up* __p) { __p->~_Up(); }
+------------------
+_ZN9__gnu_cxx13new_allocatorIN8memTable8dataNodeEE7destroyIS2_EEvPT_:
+function _ZN9__gnu_cxx13new_allocatorIN8memTable8dataNodeEE7destroyIS2_EEvPT_ called 0 returned 0% blocks executed 0%
+    #####:  140:	destroy(_Up* __p) { __p->~_Up(); }
+    %%%%%:  140-block  0
+call    0 never executed
+------------------
+_ZN9__gnu_cxx13new_allocatorIN7KVStore4nodeEE7destroyIS2_EEvPT_:
+function _ZN9__gnu_cxx13new_allocatorIN7KVStore4nodeEE7destroyIS2_EEvPT_ called 0 returned 0% blocks executed 0%
+    #####:  140:	destroy(_Up* __p) { __p->~_Up(); }
+    %%%%%:  140-block  0
+call    0 never executed
+------------------
+_ZN9__gnu_cxx13new_allocatorIPN5Cache4NodeEE7destroyIS3_EEvPT_:
+function _ZN9__gnu_cxx13new_allocatorIPN5Cache4NodeEE7destroyIS3_EEvPT_ called 0 returned 0% blocks executed 0%
+    #####:  140:	destroy(_Up* __p) { __p->~_Up(); }
+------------------
+_ZN9__gnu_cxx13new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE7destroyIS6_EEvPT_:
+function _ZN9__gnu_cxx13new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE7destroyIS6_EEvPT_ called 118 returned 100% blocks executed 100%
+      118:  140:	destroy(_Up* __p) { __p->~_Up(); }
+      118:  140-block  0
+call    0 returned 118
+------------------
+_ZN9__gnu_cxx13new_allocatorIiE7destroyIiEEvPT_:
+function _ZN9__gnu_cxx13new_allocatorIiE7destroyIiEEvPT_ called 0 returned 0% blocks executed 0%
+    #####:  140:	destroy(_Up* __p) { __p->~_Up(); }
+------------------
+_ZN9__gnu_cxx13new_allocatorISt6vectorIN7KVStore4nodeESaIS3_EEE7destroyIS5_EEvPT_:
+function _ZN9__gnu_cxx13new_allocatorISt6vectorIN7KVStore4nodeESaIS3_EEE7destroyIS5_EEvPT_ called 228 returned 100% blocks executed 100%
+      228:  140:	destroy(_Up* __p) { __p->~_Up(); }
+      228:  140-block  0
+call    0 returned 228
+------------------
+        -:  141:#else
+        -:  142:      // _GLIBCXX_RESOLVE_LIB_DEFECTS
+        -:  143:      // 402. wrong new expression in [some_] allocator::construct
+        -:  144:      void
+        -:  145:      construct(pointer __p, const _Tp& __val)
+        -:  146:      { ::new((void *)__p) _Tp(__val); }
+        -:  147:
+        -:  148:      void
+        -:  149:      destroy(pointer __p) { __p->~_Tp(); }
+        -:  150:#endif
+        -:  151:    };
+        -:  152:
+        -:  153:  template<typename _Tp>
+        -:  154:    inline bool
+        -:  155:    operator==(const new_allocator<_Tp>&, const new_allocator<_Tp>&)
+        -:  156:    { return true; }
+        -:  157:
+        -:  158:  template<typename _Tp>
+        -:  159:    inline bool
+        -:  160:    operator!=(const new_allocator<_Tp>&, const new_allocator<_Tp>&)
+        -:  161:    { return false; }
+        -:  162:
+        -:  163:_GLIBCXX_END_NAMESPACE_VERSION
+        -:  164:} // namespace
+        -:  165:
+        -:  166:#endif

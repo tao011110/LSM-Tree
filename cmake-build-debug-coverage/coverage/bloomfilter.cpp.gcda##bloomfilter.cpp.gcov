@@ -1,0 +1,68 @@
+        -:    0:Source:D:/PROGRAM_CPP/LSM-2/bloomfilter.cpp
+        -:    0:Graph:D:\PROGRAM_CPP\LSM-2\cmake-build-debug-coverage\CMakeFiles\LSM_2persistence.cc.dir\bloomfilter.cpp.gcno
+        -:    0:Data:D:\PROGRAM_CPP\LSM-2\cmake-build-debug-coverage\CMakeFiles\LSM_2persistence.cc.dir\bloomfilter.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include "bloomfilter.h"
+        -:    2:
+function _ZN11BloomFilterC2Ev called 319 returned 100% blocks executed 100%
+      319:    3:BloomFilter::BloomFilter()
+        -:    4:{
+      319:    5:    memset(set, 0, sizeof(set));
+      319:    6:}
+        -:    7:
+function _ZN11BloomFilter5matchEPj called 42915 returned 100% blocks executed 89%
+    42915:    8:bool BloomFilter::match(uint32_t hashVal[])
+        -:    9:{
+    42915:   10:    bool flag = true;
+   214575:   11:    for(int i = 0; i < 4; i++){
+    42915:   11-block  0
+   214575:   11-block  1
+branch  0 taken 171660 (fallthrough)
+branch  1 taken 42915
+   171660:   12:        uint32_t val = hashVal[i];
+   171660:   13:        uint32_t tmpval = val % 81920;
+   171660:   14:        uint32_t index = tmpval / 32;
+   171660:   15:        uint32_t offset = tmpval % 32;
+   171660:   16:        uint32_t mask = ((uint32_t)1) << offset;
+  171660*:   17:        flag = flag && (mask == (set[index] & mask));
+   171660:   17-block  0
+branch  0 taken 171660 (fallthrough)
+branch  1 taken 0
+   171660:   17-block  1
+branch  2 taken 171660 (fallthrough)
+branch  3 taken 0
+   171660:   17-block  2
+    %%%%%:   17-block  3
+   171660:   17-block  4
+        -:   18:    }
+        -:   19:
+    42915:   20:    return flag;
+    42915:   20-block  0
+        -:   21:}
+        -:   22:
+function _ZN11BloomFilter6setValEPj called 55837 returned 100% blocks executed 100%
+    55837:   23:void BloomFilter::setVal(uint32_t hashVal[])
+        -:   24:{
+   279185:   25:    for(int i = 0; i < 4; i++){
+    55837:   25-block  0
+   279185:   25-block  1
+branch  0 taken 223348 (fallthrough)
+branch  1 taken 55837
+   223348:   26:        uint32_t val = hashVal[i];
+   223348:   27:        uint32_t tmpval = val % 81920;
+   223348:   28:        uint32_t index = tmpval / 32;
+   223348:   29:        uint32_t offset = tmpval % 32;
+   223348:   30:        uint32_t num = ((uint32_t)1) << offset;
+   223348:   31:        set[index] = num | set[index];
+   223348:   31-block  0
+        -:   32:    }
+    55837:   33:}
+        -:   34:
+function _ZN11BloomFilter11getFromFileERSt14basic_ifstreamIcSt11char_traitsIcEE called 0 returned 0% blocks executed 0%
+    #####:   35:void BloomFilter::getFromFile(std::ifstream &file)
+        -:   36:{
+    #####:   37:    file.read((char *)set, 10240);
+    %%%%%:   37-block  0
+call    0 never executed
+    #####:   38:}

@@ -1,0 +1,727 @@
+        -:    0:Source:D:/PROGRAM_CPP/LSM-2/cache.cpp
+        -:    0:Graph:D:\PROGRAM_CPP\LSM-2\cmake-build-debug-coverage\CMakeFiles\LSM_2persistence.cc.dir\cache.cpp.gcno
+        -:    0:Data:D:\PROGRAM_CPP\LSM-2\cmake-build-debug-coverage\CMakeFiles\LSM_2persistence.cc.dir\cache.cpp.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include "cache.h"
+        -:    2:
+function _ZN5CacheC2Ev called 1 returned 100% blocks executed 100%
+        1:    3:Cache::Cache()
+        1:    3-block  0
+call    0 returned 1
+        -:    4:{
+        -:    5:
+        1:    6:}
+        -:    7:
+function _ZN5CacheD2Ev called 0 returned 0% blocks executed 0%
+    #####:    8:Cache::~Cache()
+call    0 never executed
+        -:    9:{
+    #####:   10:    reset();
+    %%%%%:   10-block  0
+call    0 never executed
+    #####:   11:}
+        -:   12:
+function _ZN5Cache4NodeC2ERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEER7sstable called 157 returned 100% blocks executed 90%
+      157:   13:Cache::Node ::Node(std::string &p, sstable &st)
+      157:   13-block  0
+call    0 returned 157
+call    1 returned 157
+branch  2 taken 157 (fallthrough)
+branch  3 taken 0 (throw)
+    $$$$$:   13-block  1
+call    4 never executed
+        -:   14:{
+      157:   15:    path = p;
+      157:   15-block  0
+call    0 returned 157
+branch  1 taken 157 (fallthrough)
+branch  2 taken 0 (throw)
+      157:   16:    time = st.getTime();
+      157:   16-block  0
+call    0 returned 157
+      157:   17:    num = st.getNum();
+call    0 returned 157
+      157:   18:    max = st.getMax();
+call    0 returned 157
+      157:   19:    min = st.getMin();
+call    0 returned 157
+   55994*:   20:    index = new std::pair<uint64_t, uint32_t>[num];
+branch  0 taken 157 (fallthrough)
+branch  1 taken 0
+      157:   20-block  0
+    %%%%%:   20-block  1
+call    2 never executed
+      157:   20-block  2
+call    3 returned 157
+branch  4 taken 157 (fallthrough)
+branch  5 taken 0 (throw)
+      157:   20-block  3
+    55994:   20-block  4
+branch  6 taken 55837 (fallthrough)
+branch  7 taken 157
+    55837:   20-block  5
+call    8 returned 55837
+      157:   21:    st.getBf(&bf);
+      157:   21-block  0
+call    0 returned 157
+      157:   22:    st.getIndex(index);
+call    0 returned 157
+      157:   23:    next = nullptr;
+      157:   24:}
+        -:   25:
+function _ZN5Cache4NodeC2ERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 0 returned 0% blocks executed 0%
+    #####:   26:Cache::Node ::Node(std::string &p)
+    %%%%%:   26-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    $$$$$:   26-block  1
+call    4 never executed
+        -:   27:{
+    #####:   28:    std::ifstream file;
+    %%%%%:   28-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    %%%%%:   28-block  1
+call    3 never executed
+    $$$$$:   28-block  2
+call    4 never executed
+    #####:   29:    path = p;
+    %%%%%:   29-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:   30:    //std::cout << "path  " << p << std::endl;
+    #####:   31:    file.open(p, std::ios::in | std::ios::binary);
+    %%%%%:   31-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    #####:   32:    file.read((char *)&time, 8);
+    %%%%%:   32-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:   33:    //std::cout << "time  " << time << std::endl;
+    #####:   34:    file.read((char *)&num, 8);
+    %%%%%:   34-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:   35:    //std::cout << "num  " << num << std::endl;
+    #####:   36:    file.read((char *)&min, 8);
+    %%%%%:   36-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:   37:    //std::cout << "min  " << min << std::endl;
+    #####:   38:    file.read((char *)&max, 8);
+    %%%%%:   38-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:   39:    //std::cout << "max  " << max << std::endl;
+    #####:   40:    bf.getFromFile(file);
+    %%%%%:   40-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:   41:
+    #####:   42:    index = new std::pair<uint64_t, uint32_t>[num];
+    %%%%%:   42-block  0
+branch  0 never executed
+branch  1 never executed
+    %%%%%:   42-block  1
+    %%%%%:   42-block  2
+call    2 never executed
+    %%%%%:   42-block  3
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    %%%%%:   42-block  4
+    %%%%%:   42-block  5
+branch  6 never executed
+branch  7 never executed
+    %%%%%:   42-block  6
+call    8 never executed
+    #####:   43:    for(int i = 0; i < num; i++){
+    %%%%%:   43-block  0
+    %%%%%:   43-block  1
+branch  0 never executed
+branch  1 never executed
+    #####:   44:        uint64_t key = 0;
+    #####:   45:        uint32_t offset = 0;
+    #####:   46:        file.read((char*)&key, 8);
+    %%%%%:   46-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   47:        file.read((char*)&offset, 4);
+    %%%%%:   47-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   48:        index[i] = std::pair<uint64_t, uint32_t>(key, offset);
+    %%%%%:   48-block  0
+call    0 never executed
+call    1 never executed
+        -:   49:    }
+        -:   50:
+    #####:   51:    file.close();
+    %%%%%:   51-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:   52:    //std::cout << "num  " << num << std::endl;
+    #####:   53:}
+        -:   54:
+function _ZN5Cache4NodeD2Ev called 0 returned 0% blocks executed 0%
+    #####:   55:Cache::Node ::~Node()
+        -:   56:{
+    #####:   57:    delete[] index;
+    %%%%%:   57-block  0
+branch  0 never executed
+branch  1 never executed
+    %%%%%:   57-block  1
+call    2 never executed
+    #####:   58:    index = nullptr;
+    %%%%%:   58-block  0
+call    0 never executed
+    #####:   59:}
+        -:   60:
+function _ZN5Cache10fileToNodeEiNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 0 returned 0% blocks executed 0%
+    #####:   61:void Cache::fileToNode(int level, std::string p)
+        -:   62:{
+    #####:   63:    Node *addition = new Node(p);
+    %%%%%:   63-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    $$$$$:   63-block  1
+call    4 never executed
+    #####:   64:    addition->next = nullptr;
+    #####:   65:    addNode(addition, level);
+    %%%%%:   65-block  0
+call    0 never executed
+    #####:   66:}
+        -:   67:
+function _ZN5Cache3addERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEER7sstablei called 157 returned 100% blocks executed 83%
+      157:   68:void Cache::add(std::string &p, sstable &st, int level)
+        -:   69:{
+      157:   70:    Node *addition = new Node(p, st);
+      157:   70-block  0
+call    0 returned 157
+call    1 returned 157
+branch  2 taken 157 (fallthrough)
+branch  3 taken 0 (throw)
+    $$$$$:   70-block  1
+call    4 never executed
+      157:   71:    addition->next = nullptr;
+      157:   72:    addNode(addition, level);
+      157:   72-block  0
+call    0 returned 157
+      157:   73:}
+        -:   74:
+function _ZN5Cache7addNodeEPNS_4NodeEi called 591 returned 100% blocks executed 89%
+      591:   75:void Cache::addNode(Node *addition, int level)
+        -:   76:{
+      591:   77:    if(level >= levelVec.size()){
+      591:   77-block  0
+call    0 returned 591
+branch  1 taken 5 (fallthrough)
+branch  2 taken 586
+       10:   78:        while(level >= levelVec.size()) {
+       10:   78-block  0
+call    0 returned 10
+branch  1 taken 5 (fallthrough)
+branch  2 taken 5
+        5:   78-block  1
+        -:   79:            //std::cout << "new level " << level <<std::endl;
+        5:   80:            Node *head = new Node;
+        5:   80-block  0
+call    0 returned 5
+branch  1 taken 5 (fallthrough)
+branch  2 taken 0 (throw)
+        5:   80-block  1
+call    3 returned 5
+branch  4 taken 5 (fallthrough)
+branch  5 taken 0 (throw)
+    $$$$$:   80-block  2
+call    6 never executed
+        5:   81:            levelVec.push_back(head);
+        5:   81-block  0
+call    0 returned 5
+branch  1 taken 5 (fallthrough)
+branch  2 taken 0 (throw)
+        -:   82:        }
+        5:   83:        levelVec[levelVec.size() - 1]->next = addition;
+        5:   83-block  0
+call    0 returned 5
+call    1 returned 5
+        5:   84:        addition->next = nullptr;
+        -:   85:    }
+        -:   86:    else{
+      586:   87:        addition->next = levelVec[level]->next;
+      586:   87-block  0
+call    0 returned 586
+      586:   88:        levelVec[level]->next = addition;
+call    0 returned 586
+        -:   89:    }
+      591:   90:}
+      591:   90-block  0
+        -:   91:
+function _ZN5Cache4Node14getOffsetIndexEyRb called 42915 returned 100% blocks executed 90%
+    42915:   92:uint64_t Cache::Node ::getOffsetIndex(uint64_t key, bool &flag)
+        -:   93:{
+    42915:   94:    int left = 0, right = num - 1, mid = 0;
+    42915:   94-block  0
+   342789:   95:    while(left <= right){
+   342789:   95-block  0
+branch  0 taken 342789 (fallthrough)
+branch  1 taken 0
+   299874:   95-block  1
+   342789:   96:        mid = (left + right) / 2;
+   342789:   97:        if(index[mid].first == key){
+   342789:   97-block  0
+branch  0 taken 42915 (fallthrough)
+branch  1 taken 299874
+        -:   98:            //std::cout << "find " << std::endl;
+    42915:   99:            return mid;
+    42915:   99-block  0
+        -:  100:        }
+   299874:  101:        if(index[mid].first < key){
+   299874:  101-block  0
+branch  0 taken 156428 (fallthrough)
+branch  1 taken 143446
+   156428:  102:            left = mid + 1;
+   156428:  102-block  0
+        -:  103:        }
+        -:  104:        else{
+   143446:  105:            right = mid - 1;
+   143446:  105-block  0
+        -:  106:        }
+        -:  107:    }
+    #####:  108:    flag = false;
+    #####:  109:    return 0;
+    %%%%%:  109-block  0
+        -:  110:}
+        -:  111:
+function _ZN5Cache4Node7nodeGetB5cxx11EyRb called 42915 returned 99% blocks executed 55%
+    42915:  112:std::string Cache::Node ::nodeGet(uint64_t key, bool &flag)
+        -:  113:{
+    42915:  114:    if(key > max || key < min){
+    42915:  114-block  0
+branch  0 taken 42915 (fallthrough)
+branch  1 taken 0
+    42915:  114-block  1
+branch  2 taken 0 (fallthrough)
+branch  3 taken 42915
+        -:  115://        if(key >= 65338 && key <= 65462 && isF == true)
+        -:  116://            std::cout <<  key<< "  " << "max " << max << "  min   " << min << std::endl;
+    #####:  117:        flag = false;
+    #####:  118:        return "";
+    %%%%%:  118-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    %%%%%:  118-block  1
+call    4 never executed
+    $$$$$:  118-block  2
+call    5 never executed
+    $$$$$:  118-block  3
+        -:  119:    }
+        -:  120:    //std::cout << "key  wc" << key << std::endl;
+    42915:  121:    uint32_t hashVal[4] = {0};
+    42915:  122:    uint64_t tmpKey = key;
+    42915:  123:    MurmurHash3_x64_128(&tmpKey, sizeof(tmpKey), 1, hashVal);
+    42915:  123-block  0
+call    0 returned 42915
+        -:  124://    for(int i = 0; i < 4; i++){
+        -:  125://        std::cout << "hash " << hashVal[i] << std::endl;
+        -:  126://    }
+    42915:  127:    if(!bf.match(hashVal)){
+call    0 returned 42915
+branch  1 taken 42915 (fallthrough)
+branch  2 taken 0 (throw)
+    42915:  127-block  0
+branch  3 taken 0 (fallthrough)
+branch  4 taken 42915
+        -:  128://        if(key >= 65338 && key <= 65462 && isF == true)
+        -:  129://            std::cout <<key <<  "not bf" << std::endl;
+    #####:  130:        flag = false;
+    #####:  131:        return "";
+    %%%%%:  131-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    %%%%%:  131-block  1
+call    4 never executed
+    $$$$$:  131-block  2
+call    5 never executed
+    $$$$$:  131-block  3
+        -:  132:    }
+        -:  133://    if(key >= 65300) {
+        -:  134://        std::cout <<key << "  may nwe" << std::endl;
+        -:  135://    }
+    42915:  136:    uint64_t beginIndex = getOffsetIndex(key, flag);
+    42915:  136-block  0
+call    0 returned 42915
+        -:  137:    //std::cout << "key  " << key << std::endl;
+    42915:  138:    if(flag == false){
+branch  0 taken 0 (fallthrough)
+branch  1 taken 42915
+    #####:  139:        return "";
+    %%%%%:  139-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    %%%%%:  139-block  1
+call    4 never executed
+    $$$$$:  139-block  2
+call    5 never executed
+    $$$$$:  139-block  3
+        -:  140:    }
+        -:  141:    else{
+    42915:  142:        uint32_t beginOffset = index[beginIndex].second;
+    42915:  143:        uint32_t endOffset = 0;
+    85829:  144:        std::fstream file(path, std::ios::in|std::ios::binary);
+    42915:  144-block  0
+call    0 returned 42915
+call    1 returned 42915
+branch  2 taken 42915 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 42914
+    $$$$$:  144-block  1
+call    5 never executed
+    42915:  145:        if(beginIndex < num - 1){
+    42915:  145-block  0
+branch  0 taken 42799 (fallthrough)
+branch  1 taken 116
+    42799:  146:            endOffset = index[beginIndex + 1].second;
+    42799:  146-block  0
+        -:  147:        }
+        -:  148:        else{
+      116:  149:            file.seekg(0, std::ios::end);
+      116:  149-block  0
+call    0 returned 116
+branch  1 taken 116 (fallthrough)
+branch  2 taken 0 (throw)
+      116:  150:            endOffset = file.tellg();
+      116:  150-block  0
+call    0 returned 116
+branch  1 taken 116 (fallthrough)
+branch  2 taken 0 (throw)
+      116:  150-block  1
+call    3 returned 116
+        -:  151:        }
+        -:  152:        //std::cout << " beginOff " << beginOffset <<" endOff " << endOffset << std::endl;
+    42915:  153:        uint32_t size = endOffset - beginOffset;
+    42915:  154:        file.seekg(beginOffset, std::ios::beg);
+    42915:  154-block  0
+call    0 returned 42915
+branch  1 taken 42915 (fallthrough)
+branch  2 taken 0 (throw)
+    42915:  155:        char *str = new char[size + 1];
+    42915:  155-block  0
+call    0 returned 42915
+branch  1 taken 42915 (fallthrough)
+branch  2 taken 0 (throw)
+    42915:  156:        memset(str, '\0', size + 1);
+    42915:  157:        file.read(str, size);
+    42915:  157-block  0
+call    0 returned 42915
+branch  1 taken 42915 (fallthrough)
+branch  2 taken 0 (throw)
+    42915:  158:        file.seekg(10280, std::ios::beg);
+    42915:  158-block  0
+call    0 returned 42915
+branch  1 taken 42915 (fallthrough)
+branch  2 taken 0 (throw)
+        -:  159:        uint32_t s;
+        -:  160:
+    42915:  161:        file.read(reinterpret_cast<char*>(&s), 4);
+    42915:  161-block  0
+call    0 returned 42915
+branch  1 taken 42915 (fallthrough)
+branch  2 taken 0 (throw)
+        -:  162:        //std::cout << "my  " << s << std::endl;
+    42915:  163:        file.close();
+    42915:  163-block  0
+call    0 returned 42914
+branch  1 taken 42914 (fallthrough)
+branch  2 taken 0 (throw)
+    85828:  164:        std::string result = str;
+    42914:  164-block  0
+call    0 returned 42914
+call    1 returned 42914
+branch  2 taken 42914 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 42914
+    $$$$$:  164-block  1
+    42914:  165:        delete[] str;
+branch  0 taken 42914 (fallthrough)
+branch  1 taken 0
+    42914:  165-block  0
+call    2 returned 42914
+        -:  166://        if(result == ""){
+        -:  167://            std::cout << key << "   dont why" << std::endl;
+        -:  168://        }
+        -:  169:        //std::cout << "result  " <<result <<std::endl;
+        -:  170://        if(result == "~DELETED~"){
+        -:  171://            return "";
+        -:  172://        }
+        -:  173://        else{
+        -:  174://            return result;
+        -:  175://        }
+        -:  176://        if(key >= 65300) {
+        -:  177://            std::cout << key << "    there might be    " << result.length() << std::endl;
+        -:  178://        }
+    42914:  179:        return result;
+    42914:  179-block  0
+call    0 returned 42914
+        -:  180:    }
+        -:  181:}
+        -:  182:
+function _ZN5Cache3getB5cxx11Ey called 0 returned 0% blocks executed 0%
+    #####:  183:std::string Cache::get(uint64_t key)
+        -:  184:{
+    #####:  185:    uint64_t levelVec_size = levelVec.size();
+    %%%%%:  185-block  0
+call    0 never executed
+    #####:  186:    std::string result = "";
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    %%%%%:  186-block  0
+call    4 never executed
+    $$$$$:  186-block  1
+    $$$$$:  186-block  2
+call    5 never executed
+    #####:  187:    for(uint64_t i = 0; i < levelVec_size; i++){
+    %%%%%:  187-block  0
+branch  0 never executed
+branch  1 never executed
+    %%%%%:  187-block  1
+    #####:  188:        Node *tmp = levelVec[i]->next;
+    %%%%%:  188-block  0
+call    0 never executed
+    #####:  189:        while(tmp != nullptr){
+    %%%%%:  189-block  0
+branch  0 never executed
+branch  1 never executed
+    %%%%%:  189-block  1
+    #####:  190:            bool flag = true;
+        -:  191:            //std::cout << "tmp  " << tmp->path;
+    #####:  192:            result = tmp->nodeGet(key, flag);
+    %%%%%:  192-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    %%%%%:  192-block  1
+call    3 never executed
+call    4 never executed
+    #####:  193:            if(flag == false){
+branch  0 never executed
+branch  1 never executed
+    #####:  194:                tmp = tmp->next;
+    #####:  195:                continue;
+    %%%%%:  195-block  0
+        -:  196:            }
+        -:  197:            else{
+    #####:  198:                if(result != ""){
+    %%%%%:  198-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    %%%%%:  198-block  1
+branch  3 never executed
+branch  4 never executed
+        -:  199://                    if(key >= 65300) {
+        -:  200://                        std::cout << key << "   " << result.length() << result[0] << result[1] << std::endl;
+        -:  201://                    }
+    #####:  202:                    return result;
+    %%%%%:  202-block  0
+call    0 never executed
+        -:  203:                }
+        -:  204:                else{
+    #####:  205:                    tmp = tmp->next;
+    %%%%%:  205-block  0
+        -:  206:                }
+        -:  207:            }
+        -:  208:        }
+        -:  209:    }
+        -:  210://    if(key >= 65300) {
+        -:  211://        std::cout << key << "   " << result.length() << std::endl;
+        -:  212://    }
+        -:  213:
+    #####:  214:    return "";
+    %%%%%:  214-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    %%%%%:  214-block  1
+call    4 never executed
+    $$$$$:  214-block  2
+call    5 never executed
+    $$$$$:  214-block  3
+        -:  215:}
+        -:  216:
+function _ZN5Cache3delEy called 0 returned 0% blocks executed 0%
+    #####:  217:bool Cache::del(uint64_t key)
+        -:  218:{
+    #####:  219:    std::string result = get(key);
+    %%%%%:  219-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    %%%%%:  219-block  1
+call    3 never executed
+    #####:  220:    if(result == "" || result == "~DELETED~"){
+    %%%%%:  220-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    %%%%%:  220-block  1
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    %%%%%:  220-block  2
+    %%%%%:  220-block  3
+    %%%%%:  220-block  4
+branch  6 never executed
+branch  7 never executed
+    #####:  221:        return false;
+    %%%%%:  221-block  0
+        -:  222:    }
+        -:  223:
+    #####:  224:    return true;
+    %%%%%:  224-block  0
+        -:  225:}
+        -:  226:
+function _ZN5Cache5resetEv called 1 returned 100% blocks executed 47%
+        1:  227:void Cache::reset()
+        -:  228:{
+        1:  229:    uint64_t levelVec_size = levelVec.size();
+        1:  229-block  0
+call    0 returned 1
+       1*:  230:    for(uint64_t i = 0; i < levelVec_size; i++){
+        1:  230-block  0
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+    %%%%%:  230-block  1
+    #####:  231:        Node *del = levelVec[i];
+    %%%%%:  231-block  0
+call    0 never executed
+    #####:  232:        while(del != nullptr){
+    %%%%%:  232-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:  233:            Node *tmp = del->next;
+    #####:  234:            delete del;
+    %%%%%:  234-block  0
+branch  0 never executed
+branch  1 never executed
+    %%%%%:  234-block  1
+call    2 never executed
+call    3 never executed
+    #####:  235:            del = tmp;
+    %%%%%:  235-block  0
+        -:  236:        }
+        -:  237:    }
+        -:  238:
+        1:  239:    std::vector<Node*>().swap(levelVec);
+        1:  239-block  0
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+        1:  240:}
+        -:  241:
+function _ZN5Cache9findRangeERSt6vectorIPNS_4NodeESaIS2_EE called 80 returned 100% blocks executed 100%
+       80:  242:std::pair<int, int> Cache::findRange(std::vector<Node*> &vec)
+        -:  243:{
+       80:  244:    std::pair<int, int> result;
+       80:  245:    uint64_t max = 0, min =  UINT64_MAX - 1;
+      632:  246:    for(int i = 0; i < (int)vec.size(); i++){
+       80:  246-block  0
+      632:  246-block  1
+call    0 returned 632
+branch  1 taken 552 (fallthrough)
+branch  2 taken 80
+      552:  246-block  2
+      552:  247:        if(max < vec[i]->max){
+      552:  247-block  0
+call    0 returned 552
+branch  1 taken 76 (fallthrough)
+branch  2 taken 476
+       76:  248:            max = vec[i]->max;
+       76:  248-block  0
+call    0 returned 76
+        -:  249:        }
+      552:  250:        if(min > vec[i]->min){
+      552:  250-block  0
+call    0 returned 552
+branch  1 taken 552 (fallthrough)
+branch  2 taken 0
+      552:  251:            min = vec[i]->min;
+      552:  251-block  0
+call    0 returned 552
+        -:  252:        }
+        -:  253:    }
+       80:  254:    result.first = min;
+       80:  255:    result.second = max;
+        -:  256:
+       80:  257:    return result;
+       80:  257-block  0
+        -:  258:}
+        -:  259:
+function _ZN5Cache9compLevelEiRSt4pairIiiE called 80 returned 100% blocks executed 88%
+       80:  260:std::vector<Cache::Node*> Cache::compLevel(int currentLevel, std::pair<int, int> &range)
+        -:  261:{
+       80:  262:    std::vector<Node*> handle;
+       80:  262-block  0
+call    0 returned 80
+       80:  263:    if(currentLevel < levelVec.size()) {
+call    0 returned 80
+branch  1 taken 76 (fallthrough)
+branch  2 taken 4
+       76:  264:        Node *tmp = levelVec[currentLevel];
+       76:  264-block  0
+call    0 returned 76
+      628:  265:        while (tmp->next != nullptr) {
+      628:  265-block  0
+branch  0 taken 552 (fallthrough)
+branch  1 taken 76
+      552:  265-block  1
+      552:  266:            Node *del = tmp->next;
+      552:  267:            tmp->next = del->next;
+      552:  268:            handle.push_back(del);
+      552:  268-block  0
+call    0 returned 552
+branch  1 taken 552 (fallthrough)
+branch  2 taken 0 (throw)
+        -:  269:        }
+       76:  270:        levelVec[currentLevel]->next = nullptr;
+       76:  270-block  0
+call    0 returned 76
+        -:  271:    }
+       80:  272:    range = findRange(handle);
+       80:  272-block  0
+call    0 returned 80
+branch  1 taken 80 (fallthrough)
+branch  2 taken 0 (throw)
+       80:  272-block  1
+call    3 returned 80
+        -:  273:
+       80:  274:    return handle;
+       80:  274-block  0
+        -:  275:}

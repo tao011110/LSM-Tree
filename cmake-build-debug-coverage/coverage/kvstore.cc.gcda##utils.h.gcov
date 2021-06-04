@@ -1,0 +1,293 @@
+        -:    0:Source:D:/PROGRAM_CPP/LSM-2/utils.h
+        -:    0:Graph:D:\PROGRAM_CPP\LSM-2\cmake-build-debug-coverage\CMakeFiles\LSM_2persistence.cc.dir\kvstore.cc.gcno
+        -:    0:Data:D:\PROGRAM_CPP\LSM-2\cmake-build-debug-coverage\CMakeFiles\LSM_2persistence.cc.dir\kvstore.cc.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#pragma once
+        -:    2:
+        -:    3:#include <sstream>
+        -:    4:#include <sys/stat.h>
+        -:    5:#include <vector>
+        -:    6:#include <sys/types.h>
+        -:    7:
+        -:    8:#ifdef _WIN32
+        -:    9:#include <direct.h>
+        -:   10:#include <stdio.h>
+        -:   11:#include <io.h>
+        -:   12:#include <windows.h>
+        -:   13:#endif
+        -:   14:#if defined(__linux__) || defined(__MINGW32__) || defined(__APPLE__)
+        -:   15:#include <dirent.h>
+        -:   16:#include <unistd.h>
+        -:   17:#endif
+        -:   18:
+        -:   19:namespace utils{
+        -:   20:    /**
+        -:   21:     * Check whether directory exists
+        -:   22:     * @param path directory to be checked.
+        -:   23:     * @return ture if directory exists, false otherwise.
+        -:   24:     */
+function _ZN5utilsL9dirExistsENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 565 returned 100% blocks executed 100%
+      565:   25:    static inline bool dirExists(std::string path){
+        -:   26:        struct stat st;
+      565:   27:        int ret = stat(path.c_str(), &st);
+      565:   27-block  0
+call    0 returned 565
+call    1 returned 565
+branch  2 taken 565 (fallthrough)
+branch  3 taken 0 (throw)
+      565:   28:        return ret == 0 && st.st_mode & S_IFDIR;
+      565:   28-block  0
+branch  0 taken 474 (fallthrough)
+branch  1 taken 91
+      474:   28-block  1
+branch  2 taken 474 (fallthrough)
+branch  3 taken 0
+      474:   28-block  2
+       91:   28-block  3
+      565:   28-block  4
+      565:   28-block  5
+        -:   29:    }
+        -:   30:
+        -:   31:    /**
+        -:   32:     * list all filename in a directory
+        -:   33:     * @param path directory path.
+        -:   34:     * @param ret all files name in directory.
+        -:   35:     * @return files number.
+        -:   36:     */
+        -:   37:    #if defined(_WIN32) && !defined(__MINGW32__) 
+        -:   38:    static inline int scanDir(std::string path, std::vector<std::string> &ret){
+        -:   39:        std::string extendPath;
+        -:   40:        if(path[path.size() - 1] == '/'){
+        -:   41:            extendPath = path + "*";
+        -:   42:        }
+        -:   43:        else{
+        -:   44:            extendPath = path + "/*";
+        -:   45:        }
+        -:   46:        WIN32_FIND_DATAA fd;
+        -:   47:        HANDLE h = FindFirstFileA(extendPath.c_str(), &fd);
+        -:   48:        if(h == INVALID_HANDLE_VALUE){
+        -:   49:            return 0;
+        -:   50:        }
+        -:   51:        while(true){
+        -:   52:            std::string ss(fd.cFileName);
+        -:   53:            if(ss[0] != '.'){
+        -:   54:                ret.push_back(ss);
+        -:   55:            }
+        -:   56:            if(FindNextFile(h, &fd) ==false){
+        -:   57:                break;
+        -:   58:            }
+        -:   59:        }
+        -:   60:        FindClose(h);
+        -:   61:        return ret.size();
+        -:   62:    }
+        -:   63:    #endif
+        -:   64:    #if defined(__linux__) || defined(__MINGW32__) || defined(__APPLE__)
+function _ZN5utilsL7scanDirENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERSt6vectorIS5_SaIS5_EE called 319 returned 100% blocks executed 74%
+      319:   65:    static inline int scanDir(std::string path, std::vector<std::string> &ret){
+        -:   66:        DIR *dir;
+        -:   67:        struct dirent *rent;
+      319:   68:        dir = opendir(path.c_str());
+      319:   68-block  0
+call    0 returned 319
+call    1 returned 319
+        -:   69:        char s[100];
+     2862:   70:        while((rent = readdir(dir))){
+     2862:   70-block  0
+call    0 returned 2862
+branch  1 taken 2543 (fallthrough)
+branch  2 taken 319
+     2543:   70-block  1
+     2543:   71:            strcpy(s,rent->d_name);
+     2543:   72:            if (s[0] != '.'){
+     2543:   72-block  0
+branch  0 taken 1907 (fallthrough)
+branch  1 taken 636
+     1907:   73:                ret.push_back(s);
+     1907:   73-block  0
+call    0 returned 1907
+call    1 returned 1907
+branch  2 taken 1907 (fallthrough)
+branch  3 taken 0 (throw)
+     1907:   73-block  1
+call    4 returned 1907
+branch  5 taken 1907 (fallthrough)
+branch  6 taken 0 (throw)
+     1907:   73-block  2
+call    7 returned 1907
+call    8 returned 1907
+    $$$$$:   73-block  3
+call    9 never executed
+    $$$$$:   73-block  4
+    $$$$$:   73-block  5
+call   10 never executed
+    $$$$$:   73-block  6
+        -:   74:            }   
+        -:   75:        }
+      319:   76:        closedir(dir);
+      319:   76-block  0
+call    0 returned 319
+      319:   77:        return ret.size();
+call    0 returned 319
+      319:   77-block  0
+        -:   78:    }
+        -:   79:    #endif
+        -:   80:
+        -:   81:    /**
+        -:   82:     * Create directory
+        -:   83:     * @param path directory to be created.
+        -:   84:     * @return 0 if directory is created successfully, -1 otherwise.
+        -:   85:     */
+function _ZN5utilsL6_mkdirEPKc called 6 returned 100% blocks executed 100%
+        6:   86:    static inline int _mkdir(const char *path){
+        -:   87:        #ifdef _WIN32
+        6:   88:            return ::_mkdir(path);
+        6:   88-block  0
+call    0 returned 6
+        -:   89:        #else
+        -:   90:            return ::mkdir(path, 0775);
+        -:   91:        #endif
+        -:   92:    }
+        -:   93:
+        -:   94:    /**
+        -:   95:     * Create directory recursively
+        -:   96:     * @param path directory to be created.
+        -:   97:     * @return 0 if directory is created successfully, -1 otherwise.
+        -:   98:     */
+function _ZN5utilsL5mkdirEPKc called 5 returned 100% blocks executed 62%
+        5:   99:    static inline int mkdir(const char *path){
+       10:  100:        std::string currentPath = "";
+        5:  100-block  0
+call    0 returned 5
+call    1 returned 5
+branch  2 taken 5 (fallthrough)
+branch  3 taken 0 (throw)
+call    4 returned 5
+    $$$$$:  100-block  1
+    $$$$$:  100-block  2
+call    5 never executed
+       10:  101:        std::string dirName;
+call    0 returned 5
+call    1 returned 5
+    $$$$$:  101-block  0
+call    2 never executed
+       15:  102:        std::stringstream ss(path);
+call    0 returned 5
+call    1 returned 5
+call    2 returned 5
+branch  3 taken 5 (fallthrough)
+branch  4 taken 0 (throw)
+        5:  102-block  0
+call    5 returned 5
+branch  6 taken 5 (fallthrough)
+branch  7 taken 0 (throw)
+call    8 returned 5
+        5:  102-block  1
+call    9 returned 5
+    $$$$$:  102-block  2
+    $$$$$:  102-block  3
+    $$$$$:  102-block  4
+call   10 never executed
+        -:  103:
+       15:  104:        while (std::getline(ss, dirName, '/')){
+       15:  104-block  0
+call    0 returned 15
+branch  1 taken 15 (fallthrough)
+branch  2 taken 0 (throw)
+       15:  104-block  1
+call    3 returned 15
+branch  4 taken 15 (fallthrough)
+branch  5 taken 0 (throw)
+       15:  104-block  2
+branch  6 taken 10 (fallthrough)
+branch  7 taken 5
+       10:  104-block  3
+       10:  105:            currentPath += dirName;
+       10:  105-block  0
+call    0 returned 10
+branch  1 taken 10 (fallthrough)
+branch  2 taken 0 (throw)
+      10*:  106:            if (!dirExists(currentPath) && _mkdir(currentPath.c_str()) != 0){
+       10:  106-block  0
+call    0 returned 10
+branch  1 taken 10 (fallthrough)
+branch  2 taken 0 (throw)
+       10:  106-block  1
+call    3 returned 10
+branch  4 taken 10 (fallthrough)
+branch  5 taken 0 (throw)
+       10:  106-block  2
+branch  6 taken 6 (fallthrough)
+branch  7 taken 4
+        6:  106-block  3
+call    8 returned 6
+call    9 returned 6
+branch 10 taken 6 (fallthrough)
+branch 11 taken 0 (throw)
+        6:  106-block  4
+branch 12 taken 0 (fallthrough)
+branch 13 taken 6
+    %%%%%:  106-block  5
+       10:  106-block  6
+       10:  106-block  7
+branch 14 taken 10 (fallthrough)
+branch 15 taken 0
+       10:  106-block  8
+call   16 returned 10
+       10:  106-block  9
+branch 17 taken 0 (fallthrough)
+branch 18 taken 10
+    $$$$$:  106-block 10
+branch 19 never executed
+branch 20 never executed
+    $$$$$:  106-block 11
+call   21 never executed
+    $$$$$:  106-block 12
+    #####:  107:                return -1;
+    %%%%%:  107-block  0
+        -:  108:            }
+       10:  109:            currentPath += "/";
+       10:  109-block  0
+call    0 returned 10
+branch  1 taken 10 (fallthrough)
+branch  2 taken 0 (throw)
+        -:  110:        }
+        5:  111:        return 0;
+        5:  111-block  0
+        -:  112:    }
+        -:  113:
+        -:  114:    /**
+        -:  115:     * Delete a empty directory
+        -:  116:     * @param path directory to be deleted.
+        -:  117:     * @return 0 if delete successfully, -1 otherwise.
+        -:  118:     */
+function _ZN5utilsL5rmdirEPKc called 0 returned 0% blocks executed 0%
+    #####:  119:    static inline int rmdir(const char *path){
+        -:  120:        #ifdef _WIN32
+    #####:  121:            return ::_rmdir(path);
+    %%%%%:  121-block  0
+call    0 never executed
+        -:  122:        #else
+        -:  123:            return ::rmdir(path);
+        -:  124:        #endif
+        -:  125:    }
+        -:  126:
+        -:  127:    /**
+        -:  128:     * Delete a file
+        -:  129:     * @param path file to be deleted.
+        -:  130:     * @return 0 if delete successfully, -1 otherwise.
+        -:  131:     */
+function _ZN5utilsL6rmfileEPKc called 115 returned 100% blocks executed 100%
+      115:  132:    static inline int rmfile(const char *path){
+        -:  133:        #ifdef _WIN32
+      115:  134:            return ::_unlink(path);
+      115:  134-block  0
+call    0 returned 115
+        -:  135:        #else
+        -:  136:            return ::unlink(path);
+        -:  137:        #endif
+        -:  138:    }
+        -:  139:
+        -:  140:
+        -:  141:    
+        -:  142:}

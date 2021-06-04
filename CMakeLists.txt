@@ -7,7 +7,7 @@ file(GLOB SOURCES
         bloomfilter.cpp
         cache.h
         cache.cpp
-        #correctness.cc
+        # correctness.cc
         kvstore.h
         kvstore.cc
         kvstore_api.h
@@ -22,4 +22,4 @@ file(GLOB SOURCES
         # main.cpp
         )
 
-add_executable(LSM_2correctness.cc ${SOURCE_FILES}${SOURCES})
+add_executable(LSM_2persistence.cc ${SOURCE_FILES}${SOURCES})

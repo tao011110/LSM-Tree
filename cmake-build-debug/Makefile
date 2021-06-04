@@ -129,17 +129,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named LSM_2correctness.cc
+# Target rules for targets named LSM_2persistence.cc
 
 # Build rule for target.
-LSM_2correctness.cc: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 LSM_2correctness.cc
-.PHONY : LSM_2correctness.cc
+LSM_2persistence.cc: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 LSM_2persistence.cc
+.PHONY : LSM_2persistence.cc
 
 # fast build rule for target.
-LSM_2correctness.cc/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\LSM_2correctness.cc.dir\build.make CMakeFiles/LSM_2correctness.cc.dir/build
-.PHONY : LSM_2correctness.cc/fast
+LSM_2persistence.cc/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LSM_2persistence.cc.dir\build.make CMakeFiles/LSM_2persistence.cc.dir/build
+.PHONY : LSM_2persistence.cc/fast
 
 bloomfilter.obj: bloomfilter.cpp.obj
 
@@ -147,7 +147,7 @@ bloomfilter.obj: bloomfilter.cpp.obj
 
 # target to build an object file
 bloomfilter.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\LSM_2correctness.cc.dir\build.make CMakeFiles/LSM_2correctness.cc.dir/bloomfilter.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LSM_2persistence.cc.dir\build.make CMakeFiles/LSM_2persistence.cc.dir/bloomfilter.cpp.obj
 .PHONY : bloomfilter.cpp.obj
 
 bloomfilter.i: bloomfilter.cpp.i
@@ -156,7 +156,7 @@ bloomfilter.i: bloomfilter.cpp.i
 
 # target to preprocess a source file
 bloomfilter.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\LSM_2correctness.cc.dir\build.make CMakeFiles/LSM_2correctness.cc.dir/bloomfilter.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LSM_2persistence.cc.dir\build.make CMakeFiles/LSM_2persistence.cc.dir/bloomfilter.cpp.i
 .PHONY : bloomfilter.cpp.i
 
 bloomfilter.s: bloomfilter.cpp.s
@@ -165,7 +165,7 @@ bloomfilter.s: bloomfilter.cpp.s
 
 # target to generate assembly for a file
 bloomfilter.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\LSM_2correctness.cc.dir\build.make CMakeFiles/LSM_2correctness.cc.dir/bloomfilter.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LSM_2persistence.cc.dir\build.make CMakeFiles/LSM_2persistence.cc.dir/bloomfilter.cpp.s
 .PHONY : bloomfilter.cpp.s
 
 cache.obj: cache.cpp.obj
@@ -174,7 +174,7 @@ cache.obj: cache.cpp.obj
 
 # target to build an object file
 cache.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\LSM_2correctness.cc.dir\build.make CMakeFiles/LSM_2correctness.cc.dir/cache.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LSM_2persistence.cc.dir\build.make CMakeFiles/LSM_2persistence.cc.dir/cache.cpp.obj
 .PHONY : cache.cpp.obj
 
 cache.i: cache.cpp.i
@@ -183,7 +183,7 @@ cache.i: cache.cpp.i
 
 # target to preprocess a source file
 cache.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\LSM_2correctness.cc.dir\build.make CMakeFiles/LSM_2correctness.cc.dir/cache.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LSM_2persistence.cc.dir\build.make CMakeFiles/LSM_2persistence.cc.dir/cache.cpp.i
 .PHONY : cache.cpp.i
 
 cache.s: cache.cpp.s
@@ -192,7 +192,7 @@ cache.s: cache.cpp.s
 
 # target to generate assembly for a file
 cache.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\LSM_2correctness.cc.dir\build.make CMakeFiles/LSM_2correctness.cc.dir/cache.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LSM_2persistence.cc.dir\build.make CMakeFiles/LSM_2persistence.cc.dir/cache.cpp.s
 .PHONY : cache.cpp.s
 
 kvstore.obj: kvstore.cc.obj
@@ -201,7 +201,7 @@ kvstore.obj: kvstore.cc.obj
 
 # target to build an object file
 kvstore.cc.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\LSM_2correctness.cc.dir\build.make CMakeFiles/LSM_2correctness.cc.dir/kvstore.cc.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LSM_2persistence.cc.dir\build.make CMakeFiles/LSM_2persistence.cc.dir/kvstore.cc.obj
 .PHONY : kvstore.cc.obj
 
 kvstore.i: kvstore.cc.i
@@ -210,7 +210,7 @@ kvstore.i: kvstore.cc.i
 
 # target to preprocess a source file
 kvstore.cc.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\LSM_2correctness.cc.dir\build.make CMakeFiles/LSM_2correctness.cc.dir/kvstore.cc.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LSM_2persistence.cc.dir\build.make CMakeFiles/LSM_2persistence.cc.dir/kvstore.cc.i
 .PHONY : kvstore.cc.i
 
 kvstore.s: kvstore.cc.s
@@ -219,7 +219,7 @@ kvstore.s: kvstore.cc.s
 
 # target to generate assembly for a file
 kvstore.cc.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\LSM_2correctness.cc.dir\build.make CMakeFiles/LSM_2correctness.cc.dir/kvstore.cc.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LSM_2persistence.cc.dir\build.make CMakeFiles/LSM_2persistence.cc.dir/kvstore.cc.s
 .PHONY : kvstore.cc.s
 
 memtable.obj: memtable.cpp.obj
@@ -228,7 +228,7 @@ memtable.obj: memtable.cpp.obj
 
 # target to build an object file
 memtable.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\LSM_2correctness.cc.dir\build.make CMakeFiles/LSM_2correctness.cc.dir/memtable.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LSM_2persistence.cc.dir\build.make CMakeFiles/LSM_2persistence.cc.dir/memtable.cpp.obj
 .PHONY : memtable.cpp.obj
 
 memtable.i: memtable.cpp.i
@@ -237,7 +237,7 @@ memtable.i: memtable.cpp.i
 
 # target to preprocess a source file
 memtable.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\LSM_2correctness.cc.dir\build.make CMakeFiles/LSM_2correctness.cc.dir/memtable.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LSM_2persistence.cc.dir\build.make CMakeFiles/LSM_2persistence.cc.dir/memtable.cpp.i
 .PHONY : memtable.cpp.i
 
 memtable.s: memtable.cpp.s
@@ -246,7 +246,7 @@ memtable.s: memtable.cpp.s
 
 # target to generate assembly for a file
 memtable.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\LSM_2correctness.cc.dir\build.make CMakeFiles/LSM_2correctness.cc.dir/memtable.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LSM_2persistence.cc.dir\build.make CMakeFiles/LSM_2persistence.cc.dir/memtable.cpp.s
 .PHONY : memtable.cpp.s
 
 persistence.obj: persistence.cc.obj
@@ -255,7 +255,7 @@ persistence.obj: persistence.cc.obj
 
 # target to build an object file
 persistence.cc.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\LSM_2correctness.cc.dir\build.make CMakeFiles/LSM_2correctness.cc.dir/persistence.cc.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LSM_2persistence.cc.dir\build.make CMakeFiles/LSM_2persistence.cc.dir/persistence.cc.obj
 .PHONY : persistence.cc.obj
 
 persistence.i: persistence.cc.i
@@ -264,7 +264,7 @@ persistence.i: persistence.cc.i
 
 # target to preprocess a source file
 persistence.cc.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\LSM_2correctness.cc.dir\build.make CMakeFiles/LSM_2correctness.cc.dir/persistence.cc.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LSM_2persistence.cc.dir\build.make CMakeFiles/LSM_2persistence.cc.dir/persistence.cc.i
 .PHONY : persistence.cc.i
 
 persistence.s: persistence.cc.s
@@ -273,7 +273,7 @@ persistence.s: persistence.cc.s
 
 # target to generate assembly for a file
 persistence.cc.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\LSM_2correctness.cc.dir\build.make CMakeFiles/LSM_2correctness.cc.dir/persistence.cc.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LSM_2persistence.cc.dir\build.make CMakeFiles/LSM_2persistence.cc.dir/persistence.cc.s
 .PHONY : persistence.cc.s
 
 sstable.obj: sstable.cpp.obj
@@ -282,7 +282,7 @@ sstable.obj: sstable.cpp.obj
 
 # target to build an object file
 sstable.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\LSM_2correctness.cc.dir\build.make CMakeFiles/LSM_2correctness.cc.dir/sstable.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LSM_2persistence.cc.dir\build.make CMakeFiles/LSM_2persistence.cc.dir/sstable.cpp.obj
 .PHONY : sstable.cpp.obj
 
 sstable.i: sstable.cpp.i
@@ -291,7 +291,7 @@ sstable.i: sstable.cpp.i
 
 # target to preprocess a source file
 sstable.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\LSM_2correctness.cc.dir\build.make CMakeFiles/LSM_2correctness.cc.dir/sstable.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LSM_2persistence.cc.dir\build.make CMakeFiles/LSM_2persistence.cc.dir/sstable.cpp.i
 .PHONY : sstable.cpp.i
 
 sstable.s: sstable.cpp.s
@@ -300,7 +300,7 @@ sstable.s: sstable.cpp.s
 
 # target to generate assembly for a file
 sstable.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\LSM_2correctness.cc.dir\build.make CMakeFiles/LSM_2correctness.cc.dir/sstable.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LSM_2persistence.cc.dir\build.make CMakeFiles/LSM_2persistence.cc.dir/sstable.cpp.s
 .PHONY : sstable.cpp.s
 
 # Help Target
@@ -311,7 +311,7 @@ help:
 	@echo ... depend
 	@echo ... edit_cache
 	@echo ... rebuild_cache
-	@echo ... LSM_2correctness.cc
+	@echo ... LSM_2persistence.cc
 	@echo ... bloomfilter.obj
 	@echo ... bloomfilter.i
 	@echo ... bloomfilter.s

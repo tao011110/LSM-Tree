@@ -1,0 +1,1025 @@
+        -:    0:Source:D:/PROGRAM_CPP/LSM-2/persistence.cc
+        -:    0:Graph:D:\PROGRAM_CPP\LSM-2\cmake-build-debug-coverage\CMakeFiles\LSM_2persistence.cc.dir\persistence.cc.gcno
+        -:    0:Data:D:\PROGRAM_CPP\LSM-2\cmake-build-debug-coverage\CMakeFiles\LSM_2persistence.cc.dir\persistence.cc.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include <iostream>
+        -:    2:#include <cstdint>
+        -:    3:#include <string>
+        -:    4:#include <cassert>
+        -:    5:
+        -:    6:#include "test.h"
+        -:    7:
+        -:    8:class PersistenceTest : public Test {
+        -:    9:private:
+        -:   10:    const uint64_t TEST_MAX = 1024 * 32;
+function _ZN15PersistenceTest7prepareEy called 1 returned 0% blocks executed 10%
+        1:   11:    void prepare(uint64_t max)
+        -:   12:    {
+        -:   13:        uint64_t i;
+        -:   14:
+        -:   15:        // Clean up
+        1:   16:        store.reset();
+        1:   16-block  0
+call    0 returned 1
+        -:   17:
+        -:   18:        // Test multiple key-value pairs
+    13214:   19:        for (i = 0; i < max; ++i) {
+    13214:   19-block  0
+branch  0 taken 13214 (fallthrough)
+branch  1 taken 0
+    13214:   20:            store.put(i, std::string(i+1, 's'));
+    13214:   20-block  0
+call    0 returned 13214
+call    1 returned 13214
+branch  2 taken 13214 (fallthrough)
+branch  3 taken 0 (throw)
+    13214:   20-block  1
+call    4 returned 13213
+branch  5 taken 13213 (fallthrough)
+branch  6 taken 0 (throw)
+    13213:   20-block  2
+call    7 returned 13213
+call    8 returned 13213
+    $$$$$:   20-block  3
+call    9 never executed
+    $$$$$:   20-block  4
+    $$$$$:   20-block  5
+call   10 never executed
+    $$$$$:   20-block  6
+call   11 never executed
+    13213:   21:            EXPECT(std::string(i+1, 's'), store.get(i));
+call    0 returned 13213
+call    1 returned 13213
+branch  2 taken 13213 (fallthrough)
+branch  3 taken 0 (throw)
+    13213:   21-block  0
+call    4 returned 13213
+branch  5 taken 13213 (fallthrough)
+branch  6 taken 0 (throw)
+    13213:   21-block  1
+call    7 returned 13213
+call    8 returned 13213
+branch  9 taken 13213 (fallthrough)
+branch 10 taken 0 (throw)
+    13213:   21-block  2
+call   11 returned 13213
+call   12 returned 13213
+call   13 returned 13213
+call   14 returned 13213
+call   15 returned 13213
+call   16 returned 13213
+    $$$$$:   21-block  3
+call   17 never executed
+    $$$$$:   21-block  4
+    $$$$$:   21-block  5
+call   18 never executed
+    $$$$$:   21-block  6
+    $$$$$:   21-block  7
+call   19 never executed
+    $$$$$:   21-block  8
+    $$$$$:   21-block  9
+call   20 never executed
+    $$$$$:   21-block 10
+call   21 never executed
+        -:   22:        }
+    #####:   23:        phase();
+    %%%%%:   23-block  0
+call    0 never executed
+        -:   24:
+        -:   25:        // Test after all insertions
+    #####:   26:        for (i = 0; i < max; ++i)
+    %%%%%:   26-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:   27:            EXPECT(std::string(i+1, 's'), store.get(i));
+    %%%%%:   27-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    %%%%%:   27-block  1
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+    %%%%%:   27-block  2
+call    7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+    %%%%%:   27-block  3
+call   11 never executed
+call   12 never executed
+call   13 never executed
+call   14 never executed
+call   15 never executed
+call   16 never executed
+    $$$$$:   27-block  4
+call   17 never executed
+    $$$$$:   27-block  5
+    $$$$$:   27-block  6
+call   18 never executed
+    $$$$$:   27-block  7
+    $$$$$:   27-block  8
+call   19 never executed
+    $$$$$:   27-block  9
+    $$$$$:   27-block 10
+call   20 never executed
+    $$$$$:   27-block 11
+call   21 never executed
+    #####:   28:        phase();
+    %%%%%:   28-block  0
+call    0 never executed
+        -:   29:
+        -:   30:        // Test deletions
+    #####:   31:        for (i = 0; i < max; i+=2)
+    %%%%%:   31-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:   32:            EXPECT(true, store.del(i));
+    %%%%%:   32-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    %%%%%:   32-block  1
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+    %%%%%:   32-block  2
+call    7 never executed
+call    8 never executed
+call    9 never executed
+    $$$$$:   32-block  3
+call   10 never executed
+    $$$$$:   32-block  4
+    $$$$$:   32-block  5
+call   11 never executed
+    $$$$$:   32-block  6
+call   12 never executed
+        -:   33:
+        -:   34:        // Prepare data for Test Mode
+    #####:   35:        for (i = 0; i < max; ++i) {
+    %%%%%:   35-block  0
+    %%%%%:   35-block  1
+branch  0 never executed
+branch  1 never executed
+    %%%%%:   35-block  2
+    #####:   36:            switch (i & 3) {
+    %%%%%:   36-block  0
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+    #####:   37:                case 0:
+    #####:   38:                    EXPECT(not_found, store.get(i));
+    %%%%%:   38-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    %%%%%:   38-block  1
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+    %%%%%:   38-block  2
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+    $$$$$:   38-block  3
+call   11 never executed
+    $$$$$:   38-block  4
+    $$$$$:   38-block  5
+call   12 never executed
+    $$$$$:   38-block  6
+call   13 never executed
+    #####:   39:                    store.put(i, std::string(i+1, 't'));
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    %%%%%:   39-block  0
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+    %%%%%:   39-block  1
+call    7 never executed
+call    8 never executed
+    $$$$$:   39-block  2
+call    9 never executed
+    $$$$$:   39-block  3
+    $$$$$:   39-block  4
+call   10 never executed
+    $$$$$:   39-block  5
+call   11 never executed
+    #####:   40:                    break;
+    #####:   41:                case 1:
+    #####:   42:                    EXPECT(std::string(i+1, 's'), store.get(i));
+    %%%%%:   42-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    %%%%%:   42-block  1
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+    %%%%%:   42-block  2
+call    7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+    %%%%%:   42-block  3
+call   11 never executed
+call   12 never executed
+call   13 never executed
+call   14 never executed
+call   15 never executed
+call   16 never executed
+    $$$$$:   42-block  4
+call   17 never executed
+    $$$$$:   42-block  5
+    $$$$$:   42-block  6
+call   18 never executed
+    $$$$$:   42-block  7
+    $$$$$:   42-block  8
+call   19 never executed
+    $$$$$:   42-block  9
+    $$$$$:   42-block 10
+call   20 never executed
+    $$$$$:   42-block 11
+call   21 never executed
+    #####:   43:                    store.put(i, std::string(i+1, 't'));
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    %%%%%:   43-block  0
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+    %%%%%:   43-block  1
+call    7 never executed
+call    8 never executed
+    $$$$$:   43-block  2
+call    9 never executed
+    $$$$$:   43-block  3
+    $$$$$:   43-block  4
+call   10 never executed
+    $$$$$:   43-block  5
+call   11 never executed
+    #####:   44:                    break;
+    #####:   45:                case 2:
+    #####:   46:                    EXPECT(not_found, store.get(i));
+    %%%%%:   46-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    %%%%%:   46-block  1
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+    %%%%%:   46-block  2
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+    $$$$$:   46-block  3
+call   11 never executed
+    $$$$$:   46-block  4
+    $$$$$:   46-block  5
+call   12 never executed
+    $$$$$:   46-block  6
+call   13 never executed
+    #####:   47:                    break;
+    #####:   48:                case 3:
+    #####:   49:                    EXPECT(std::string(i+1, 's'), store.get(i));
+    %%%%%:   49-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    %%%%%:   49-block  1
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+    %%%%%:   49-block  2
+call    7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+    %%%%%:   49-block  3
+call   11 never executed
+call   12 never executed
+call   13 never executed
+call   14 never executed
+call   15 never executed
+call   16 never executed
+    $$$$$:   49-block  4
+call   17 never executed
+    $$$$$:   49-block  5
+    $$$$$:   49-block  6
+call   18 never executed
+    $$$$$:   49-block  7
+    $$$$$:   49-block  8
+call   19 never executed
+    $$$$$:   49-block  9
+    $$$$$:   49-block 10
+call   20 never executed
+    $$$$$:   49-block 11
+call   21 never executed
+    #####:   50:                    break;
+    #####:   51:                default:
+    #####:   52:                    assert(0);
+    %%%%%:   52-block  0
+call    0 never executed
+        -:   53:            }
+        -:   54:        }
+        -:   55:
+    #####:   56:        phase();
+    %%%%%:   56-block  0
+call    0 never executed
+        -:   57:
+    #####:   58:        report();
+call    0 never executed
+        -:   59:
+        -:   60:        /**
+        -:   61:         * Write 10MB data to drain previous data out of memory.
+        -:   62:         */
+    #####:   63:        for (i = 0; i <= 10240; ++i)
+    %%%%%:   63-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:   64:            store.put(max + i, std::string(1024, 'x'));
+    %%%%%:   64-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    %%%%%:   64-block  1
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+    %%%%%:   64-block  2
+call    7 never executed
+call    8 never executed
+    $$$$$:   64-block  3
+call    9 never executed
+    $$$$$:   64-block  4
+    $$$$$:   64-block  5
+call   10 never executed
+        -:   65:
+        -:   66:        std::cout << "Data is ready, please press ctrl-c/ctrl-d to"
+    #####:   67:                     " terminate this program!" << std::endl;
+    %%%%%:   67-block  0
+call    0 never executed
+call    1 never executed
+    #####:   68:        std::cout.flush();
+call    0 never executed
+    #####:   69:        test(max);
+call    0 never executed
+        -:   70://        while (true) {
+        -:   71://            volatile int dummy;
+        -:   72://            for (i = 0; i <= 1024; ++i) {
+        -:   73://                // The loop slows down the program
+        -:   74://                for (i = 0; i <= 1000; ++i)
+        -:   75://                    dummy = i;
+        -:   76://
+        -:   77://                store.del(max + i);
+        -:   78://
+        -:   79://                for (i = 0; i <= 1000; ++i)
+        -:   80://                    dummy = i;
+        -:   81://
+        -:   82://                store.put(max + i, std::string(1024, '.'));
+        -:   83://
+        -:   84://                for (i = 0; i <= 1000; ++i)
+        -:   85://                    dummy = i;
+        -:   86://
+        -:   87://                store.put(max + i, std::string(512, 'x'));
+        -:   88://            }
+        -:   89://        }
+    #####:   90:    }
+        -:   91:
+function _ZN15PersistenceTest4testEy called 0 returned 0% blocks executed 0%
+    #####:   92:    void test(uint64_t max)
+        -:   93:    {
+        -:   94:        uint64_t i;
+        -:   95:        // Test data
+    #####:   96:        for (i = 0; i < max; ++i) {
+    %%%%%:   96-block  0
+    %%%%%:   96-block  1
+branch  0 never executed
+branch  1 never executed
+    %%%%%:   96-block  2
+    #####:   97:            switch (i & 3) {
+    %%%%%:   97-block  0
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+    #####:   98:                case 0: {
+    #####:   99:                    bool flag = EXPECT(std::string(i + 1, 't'), store.get(i));
+    %%%%%:   99-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    %%%%%:   99-block  1
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+    %%%%%:   99-block  2
+call    7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+    %%%%%:   99-block  3
+call   11 never executed
+call   12 never executed
+call   13 never executed
+call   14 never executed
+call   15 never executed
+call   16 never executed
+    $$$$$:   99-block  4
+call   17 never executed
+    $$$$$:   99-block  5
+    $$$$$:   99-block  6
+call   18 never executed
+    $$$$$:   99-block  7
+    $$$$$:   99-block  8
+call   19 never executed
+    $$$$$:   99-block  9
+    $$$$$:   99-block 10
+call   20 never executed
+    $$$$$:   99-block 11
+call   21 never executed
+    #####:  100:                    if(flag == false){
+branch  0 never executed
+branch  1 never executed
+    #####:  101:                        std::cout <<store.get(i).length() << "  w  " << i + 1 << std::endl;
+    %%%%%:  101-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+    %%%%%:  101-block  1
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+    %%%%%:  101-block  2
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+    %%%%%:  101-block  3
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+    %%%%%:  101-block  4
+call   14 never executed
+    $$$$$:  101-block  5
+call   15 never executed
+    $$$$$:  101-block  6
+call   16 never executed
+        -:  102:                    }
+    #####:  103:                    break;
+    %%%%%:  103-block  0
+        -:  104:                }
+    #####:  105:                case 1: {
+    #####:  106:                    bool flag = EXPECT(std::string(i + 1, 't'), store.get(i));
+    %%%%%:  106-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    %%%%%:  106-block  1
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+    %%%%%:  106-block  2
+call    7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+    %%%%%:  106-block  3
+call   11 never executed
+call   12 never executed
+call   13 never executed
+call   14 never executed
+call   15 never executed
+call   16 never executed
+    $$$$$:  106-block  4
+call   17 never executed
+    $$$$$:  106-block  5
+    $$$$$:  106-block  6
+call   18 never executed
+    $$$$$:  106-block  7
+    $$$$$:  106-block  8
+call   19 never executed
+    $$$$$:  106-block  9
+    $$$$$:  106-block 10
+call   20 never executed
+    $$$$$:  106-block 11
+call   21 never executed
+    #####:  107:                    if(flag == false){
+branch  0 never executed
+branch  1 never executed
+    #####:  108:                        std::cout <<store.get(i).length() << "  ww  " << i + 1 << std::endl;
+    %%%%%:  108-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+    %%%%%:  108-block  1
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+    %%%%%:  108-block  2
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+    %%%%%:  108-block  3
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+    %%%%%:  108-block  4
+call   14 never executed
+    $$$$$:  108-block  5
+call   15 never executed
+    $$$$$:  108-block  6
+call   16 never executed
+        -:  109:                    }
+    #####:  110:                    break;
+    %%%%%:  110-block  0
+        -:  111:                }
+    #####:  112:                case 2: {
+    #####:  113:                    bool flag = EXPECT(not_found, store.get(i));
+    %%%%%:  113-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    %%%%%:  113-block  1
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+    %%%%%:  113-block  2
+call    7 never executed
+call    8 never executed
+call    9 never executed
+call   10 never executed
+    $$$$$:  113-block  3
+call   11 never executed
+    $$$$$:  113-block  4
+    $$$$$:  113-block  5
+call   12 never executed
+    $$$$$:  113-block  6
+call   13 never executed
+    #####:  114:                    if(flag == false){
+branch  0 never executed
+branch  1 never executed
+    #####:  115:                        std::cout <<store.get(i).length() << "  www  " << i + 1 << std::endl;
+    %%%%%:  115-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+    %%%%%:  115-block  1
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+    %%%%%:  115-block  2
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+    %%%%%:  115-block  3
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+    %%%%%:  115-block  4
+call   14 never executed
+    $$$$$:  115-block  5
+call   15 never executed
+    $$$$$:  115-block  6
+call   16 never executed
+        -:  116:                    }
+    #####:  117:                    break;
+    %%%%%:  117-block  0
+        -:  118:                }
+    #####:  119:                case 3: {
+    #####:  120:                    bool flag = EXPECT(std::string(i + 1, 's'), store.get(i));
+    %%%%%:  120-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    %%%%%:  120-block  1
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+    %%%%%:  120-block  2
+call    7 never executed
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+    %%%%%:  120-block  3
+call   11 never executed
+call   12 never executed
+call   13 never executed
+call   14 never executed
+call   15 never executed
+call   16 never executed
+    $$$$$:  120-block  4
+call   17 never executed
+    $$$$$:  120-block  5
+    $$$$$:  120-block  6
+call   18 never executed
+    $$$$$:  120-block  7
+    $$$$$:  120-block  8
+call   19 never executed
+    $$$$$:  120-block  9
+    $$$$$:  120-block 10
+call   20 never executed
+    $$$$$:  120-block 11
+call   21 never executed
+    #####:  121:                    if(flag == false){
+branch  0 never executed
+branch  1 never executed
+    #####:  122:                        std::cout << store.get(i).length() <<"  wwww  " << i + 1 << std::endl;
+    %%%%%:  122-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+branch  3 never executed
+branch  4 never executed
+    %%%%%:  122-block  1
+call    5 never executed
+branch  6 never executed
+branch  7 never executed
+    %%%%%:  122-block  2
+call    8 never executed
+branch  9 never executed
+branch 10 never executed
+    %%%%%:  122-block  3
+call   11 never executed
+branch 12 never executed
+branch 13 never executed
+    %%%%%:  122-block  4
+call   14 never executed
+    $$$$$:  122-block  5
+call   15 never executed
+        -:  123:                    }
+    #####:  124:                    break;
+    %%%%%:  124-block  0
+        -:  125:                }
+    #####:  126:                default:
+    #####:  127:                    assert(0);
+    %%%%%:  127-block  0
+call    0 never executed
+        -:  128:            }
+        -:  129:        }
+        -:  130:
+    #####:  131:        phase();
+    %%%%%:  131-block  0
+call    0 never executed
+        -:  132:
+    #####:  133:        report();
+call    0 never executed
+    #####:  134:    }
+        -:  135:
+        -:  136:public:
+function _ZN15PersistenceTestC1ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEb called 1 returned 100% blocks executed 100%
+        1:  137:    PersistenceTest(const std::string &dir, bool v=true) : Test(dir, v)
+        1:  137-block  0
+call    0 returned 1
+        -:  138:    {
+        1:  139:    }
+        -:  140:
+function _ZN15PersistenceTest10start_testEPv called 1 returned 0% blocks executed 71%
+        1:  141:    void start_test(void *args = NULL) override
+        -:  142:    {
+       1*:  143:        bool testmode = (args && *static_cast<bool *>(args));
+        1:  143-block  0
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:  143-block  1
+branch  2 taken 0 (fallthrough)
+branch  3 taken 1
+    %%%%%:  143-block  2
+        1:  143-block  3
+        -:  144:
+        1:  145:        std::cout << "KVStore Persistence Test" << std::endl;
+        1:  145-block  0
+call    0 returned 1
+call    1 returned 1
+        -:  146:
+        1:  147:        if (testmode) {
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+    #####:  148:            std::cout << "<<Test Mode>>" << std::endl;
+    %%%%%:  148-block  0
+call    0 never executed
+call    1 never executed
+    #####:  149:            test(TEST_MAX);
+call    0 never executed
+        -:  150:        } else {
+        1:  151:            std::cout << "<<Preparation Mode>>" << std::endl;
+        1:  151-block  0
+call    0 returned 1
+call    1 returned 1
+        1:  152:            prepare(TEST_MAX);
+call    0 returned 0
+        -:  153:        }
+    #####:  154:    }
+        -:  155:};
+        -:  156:
+function _Z5usagePKcS0_S0_ called 1 returned 100% blocks executed 100%
+        1:  157:void usage(const char *prog, const char *verb, const char *mode)
+        -:  158:{
+        1:  159:    std::cout << "Usage: " << prog  << " [-t] [-v]" << std::endl;
+        1:  159-block  0
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+call    3 returned 1
+        -:  160:    std::cout << "  -t: test mode for persistence test,"
+        -:  161:                 " if -t is not given, the program only prepares data for test."
+        1:  162:                 " [currently " << mode << "]" << std::endl;
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+call    3 returned 1
+        1:  163:    std::cout << "  -v: print extra info for failed tests [currently ";
+call    0 returned 1
+        1:  164:    std::cout << verb << "]" << std::endl;
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+        1:  165:    std::cout << std::endl;
+call    0 returned 1
+        1:  166:    std::cout << " NOTE: A normal usage is as follows:" << std::endl;
+call    0 returned 1
+call    1 returned 1
+        1:  167:    std::cout << "    1. invoke `" << prog << "`;" << std::endl;
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+call    3 returned 1
+        1:  168:    std::cout << "    2. terminate (kill) the program when data is ready;";
+call    0 returned 1
+        1:  169:    std::cout << std::endl;
+call    0 returned 1
+        1:  170:    std::cout << "    3. invoke `" << prog << "-t ` to test." << std::endl;
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+call    3 returned 1
+        1:  171:    std::cout << std::endl;
+call    0 returned 1
+        1:  172:    std::cout.flush();
+call    0 returned 1
+        1:  173:}
+        -:  174:
+        -:  175:
+function main called 1 returned 0% blocks executed 13%
+        1:  176:int main(int argc, char *argv[])
+        -:  177:{
+        1:  178:    bool verbose = true;
+        1:  179:    bool testmode = false;
+        -:  180:
+        1:  181:    if (argc == 2) {
+        1:  181-block  0
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+    #####:  182:        verbose = std::string(argv[1]) == "-v";
+    %%%%%:  182-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    %%%%%:  182-block  1
+call    4 never executed
+call    5 never executed
+call    6 never executed
+    $$$$$:  182-block  2
+call    7 never executed
+    $$$$$:  182-block  3
+    #####:  183:        testmode = std::string(argv[1]) == "-t";
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    %%%%%:  183-block  0
+call    4 never executed
+call    5 never executed
+call    6 never executed
+    $$$$$:  183-block  1
+call    7 never executed
+    $$$$$:  183-block  2
+        1:  184:    } else if (argc == 3) {
+        1:  184-block  0
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+    #####:  185:        verbose = std::string(argv[1]) == "-v" ||
+    %%%%%:  185-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    %%%%%:  185-block  1
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+branch  7 never executed
+branch  8 never executed
+    %%%%%:  185-block  2
+    %%%%%:  185-block  3
+    %%%%%:  185-block  4
+call    9 never executed
+    %%%%%:  185-block  5
+branch 10 never executed
+branch 11 never executed
+    %%%%%:  185-block  6
+call   12 never executed
+    $$$$$:  185-block  7
+branch 13 never executed
+branch 14 never executed
+    $$$$$:  185-block  8
+call   15 never executed
+    $$$$$:  185-block  9
+    $$$$$:  185-block 10
+branch 16 never executed
+branch 17 never executed
+    $$$$$:  185-block 11
+call   18 never executed
+    $$$$$:  185-block 12
+    #####:  186:                  std::string(argv[2]) == "-v";
+    %%%%%:  186-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    %%%%%:  186-block  1
+call    4 never executed
+    %%%%%:  186-block  2
+branch  5 never executed
+branch  6 never executed
+    %%%%%:  186-block  3
+call    7 never executed
+    %%%%%:  186-block  4
+branch  8 never executed
+branch  9 never executed
+    %%%%%:  186-block  5
+call   10 never executed
+    %%%%%:  186-block  6
+branch 11 never executed
+branch 12 never executed
+    $$$$$:  186-block  7
+branch 13 never executed
+branch 14 never executed
+    $$$$$:  186-block  8
+call   15 never executed
+    $$$$$:  186-block  9
+    $$$$$:  186-block 10
+branch 16 never executed
+branch 17 never executed
+    $$$$$:  186-block 11
+call   18 never executed
+    $$$$$:  186-block 12
+    #####:  187:        testmode = std::string(argv[1]) == "-t" ||
+    %%%%%:  187-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    %%%%%:  187-block  1
+call    4 never executed
+branch  5 never executed
+branch  6 never executed
+branch  7 never executed
+branch  8 never executed
+    %%%%%:  187-block  2
+    %%%%%:  187-block  3
+    %%%%%:  187-block  4
+call    9 never executed
+    %%%%%:  187-block  5
+branch 10 never executed
+branch 11 never executed
+    %%%%%:  187-block  6
+call   12 never executed
+    %%%%%:  187-block  7
+    $$$$$:  187-block  8
+branch 13 never executed
+branch 14 never executed
+    $$$$$:  187-block  9
+call   15 never executed
+    $$$$$:  187-block 10
+    $$$$$:  187-block 11
+branch 16 never executed
+branch 17 never executed
+    $$$$$:  187-block 12
+call   18 never executed
+    $$$$$:  187-block 13
+    #####:  188:                   std::string(argv[2]) == "-t";
+    %%%%%:  188-block  0
+call    0 never executed
+call    1 never executed
+branch  2 never executed
+branch  3 never executed
+    %%%%%:  188-block  1
+call    4 never executed
+    %%%%%:  188-block  2
+branch  5 never executed
+branch  6 never executed
+    %%%%%:  188-block  3
+call    7 never executed
+    %%%%%:  188-block  4
+branch  8 never executed
+branch  9 never executed
+    %%%%%:  188-block  5
+call   10 never executed
+    %%%%%:  188-block  6
+branch 11 never executed
+branch 12 never executed
+    $$$$$:  188-block  7
+branch 13 never executed
+branch 14 never executed
+    $$$$$:  188-block  8
+call   15 never executed
+    $$$$$:  188-block  9
+    $$$$$:  188-block 10
+branch 16 never executed
+branch 17 never executed
+    $$$$$:  188-block 11
+call   18 never executed
+    $$$$$:  188-block 12
+        1:  189:    } else if (argc > 3) {
+        1:  189-block  0
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+    #####:  190:        std::cerr << "Too many arguments." << std::endl;
+    %%%%%:  190-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    %%%%%:  190-block  1
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  191:        usage(argv[0], "OFF", "Preparation Mode");
+    %%%%%:  191-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  192:        exit(-1);
+    %%%%%:  192-block  0
+call    0 never executed
+        -:  193:    }
+       1*:  194:    usage(argv[0], verbose ? "ON" : "OFF",
+        1:  194-block  0
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+    %%%%%:  194-block  1
+        1:  194-block  2
+        1:  194-block  3
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0
+        1:  194-block  4
+    %%%%%:  194-block  5
+        1:  194-block  6
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+        -:  195:          testmode ? "Test Mode" : "Preparation Mode");
+        -:  196:
+       2*:  197:    PersistenceTest test("./data", verbose);
+        1:  197-block  0
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+        1:  197-block  1
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+    $$$$$:  197-block  2
+    $$$$$:  197-block  3
+    $$$$$:  197-block  4
+call    8 never executed
+        -:  198:
+        1:  199:    test.start_test(static_cast<void *>(&testmode));
+call    0 returned 0
+branch  1 taken 0 (fallthrough)
+branch  2 taken 0 (throw)
+        -:  200:
+    #####:  201:    return 0;
+    %%%%%:  201-block  0
+call    0 never executed
+        -:  202:}

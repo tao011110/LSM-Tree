@@ -198,6 +198,7 @@ private:
     {
         uint64_t i;
 
+        store.isdebug = false;
         // Test a single key
         EXPECT(not_found, store.get(1));
         store.put(1, "SE");
@@ -214,7 +215,7 @@ private:
             EXPECT(std::string(i+1, 's'), store.get(i));
         }
         phase();
-
+        //store.isdebug = true;
         // Test after all insertions
         for (i = 0; i < max; ++i)
             EXPECT(std::string(i+1, 's'), store.get(i));
@@ -223,14 +224,19 @@ private:
         // Test deletions
         for (i = 0; i < max; i+=2)
             EXPECT(true, store.del(i));
-
+        std::cout << "finish part 1" <<std::endl;
         for (i = 0; i < max; ++i)
             EXPECT((i & 1) ? std::string(i+1, 's') : not_found,
                    store.get(i));
+        std::cout << "finish part 2" <<std::endl;
 
-        for (i = 1; i < max; ++i)
+        for (i = 1; i < max; ++i) {
+            //std::cout << i <<std::endl;
+            if(i == 64562){
+
+            }
             EXPECT(i & 1, store.del(i));
-
+        }
         phase();
 
         report();

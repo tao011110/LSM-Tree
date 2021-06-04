@@ -47,4 +47,5 @@ public:
     void makeSST(std::vector<memTable::dataNode> &vec);
 
     void checkCompaction();
+    bool isdebug = false;
 };
