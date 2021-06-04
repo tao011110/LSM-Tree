@@ -22,6 +22,10 @@ iostream
 fstream
 -
 
+D:/PROGRAM_CPP/LSM-2/cache.cpp
+cache.h
+D:/PROGRAM_CPP/LSM-2/cache.h
+
 D:/PROGRAM_CPP/LSM-2/cache.h
 string
 -
@@ -35,6 +39,14 @@ bloomfilter.h
 D:/PROGRAM_CPP/LSM-2/bloomfilter.h
 sstable.h
 D:/PROGRAM_CPP/LSM-2/sstable.h
+
+D:/PROGRAM_CPP/LSM-2/kvstore.cc
+kvstore.h
+D:/PROGRAM_CPP/LSM-2/kvstore.h
+utils.h
+D:/PROGRAM_CPP/LSM-2/utils.h
+string
+-
 
 D:/PROGRAM_CPP/LSM-2/kvstore.h
 kvstore_api.h
@@ -101,4 +113,26 @@ string
 -
 kvstore.h
 D:/PROGRAM_CPP/LSM-2/kvstore.h
+
+D:/PROGRAM_CPP/LSM-2/utils.h
+sstream
+-
+sys/stat.h
+-
+vector
+-
+sys/types.h
+-
+direct.h
+-
+stdio.h
+-
+io.h
+-
+windows.h
+-
+dirent.h
+-
+unistd.h
+-
 

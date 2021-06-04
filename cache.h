@@ -20,7 +20,7 @@ public:
         std::pair<uint64_t, uint32_t> *index;       //索引区，用来存储有序的索引数据，包含所有的键及对应的值在文件中的 offset (无符号 32 位整型)。
         Node *next;
         Node(){
-            index = new std::pair<uint64_t, uint32_t>;
+            index = new std::pair<uint64_t, uint32_t>[1];
             next = nullptr;
         }
         Node(std::string &p, sstable &st);

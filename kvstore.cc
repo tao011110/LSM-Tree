@@ -37,6 +37,7 @@ KVStore::~KVStore()
 {
     //将 MemTable 中的所有数据以 SSTable 形式写回
     std::vector<memTable::dataNode> vec = mt.writeBack();
+    //std::cout << "~KVStore write back!" << std::endl;
     if(vec.size() != 0) {
         makeSST(vec);
     }
@@ -50,9 +51,9 @@ KVStore::~KVStore()
  */
 void KVStore::put(uint64_t key, const std::string &s)
 {
-    if(isdebug == true){
-        mt.isdebug = true;
-    }
+//    if(isdebug == true){
+//        mt.isdebug = true;
+//    }
     if(mt.getByteSize() +  s.length() + 12 > 2086880){
 //        if(key >= 64500) {
 //        std::cout << "write into sst at   " << key << std::endl;
@@ -89,9 +90,9 @@ void KVStore::checkCompaction()
 
 void KVStore::makeSST(std::vector<memTable::dataNode> &vec)
 {
-    if(isdebug == true){
-        std::cout << "make sst" << std::endl;
-    }
+//    if(isdebug == true){
+//        std::cout << "make sst" << std::endl;
+//    }
     sstable st(vec);
     vec.clear();
     std::vector<memTable::dataNode>().swap(vec);
@@ -124,16 +125,16 @@ void KVStore::makeSST(std::vector<memTable::dataNode> &vec)
         cache.add(tmppath, st, currentLevel);
     }
 
-    if(isdebug == true) {
-        std::cout << "make  " << tmppath << std::endl;
-    }
+//    if(isdebug == true) {
+//        std::cout << "make  " << tmppath << std::endl;
+//    }
 }
 
 void KVStore::compaction(std::vector<std::string> &v)
 {
-    if(isdebug == true) {
-        std::cout << "compaction " << std::endl;
-    }
+//    if(isdebug == true) {
+//        std::cout << "compaction " << std::endl;
+//    }
     bool isDeepest = false;
     if(maxLevel == currentLevel){
         isDeepest = true;
@@ -333,9 +334,9 @@ void KVStore::compaction(std::vector<std::string> &v)
         }
         const char *delFile = path.data();
         utils::rmfile(delFile);
-        if(isdebug == true) {
-            std::cout << "next  delete  " << path << std::endl;
-        }
+//        if(isdebug == true) {
+//            std::cout << "next  delete  " << path << std::endl;
+//        }
     }
 
     //删除已有的sstable
@@ -343,9 +344,9 @@ void KVStore::compaction(std::vector<std::string> &v)
         std::string s = curvec[i]->path;
         const char *delFile = s.data();
         utils::rmfile(delFile);
-        if(isdebug == true) {
-            std::cout << "last  delete  " << s << "  " << std::endl;
-        }
+//        if(isdebug == true) {
+//            std::cout << "last  delete  " << s << "  " << std::endl;
+//        }
         delete curvec[i];
         curvec[i] = nullptr;
     }

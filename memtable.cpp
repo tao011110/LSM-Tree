@@ -38,9 +38,9 @@ void memTable::put(uint64_t key, const std::string &s)
 {
     Node *searchKey = search(key);
     if(searchKey != nullptr){
-        if(isdebug == true){
-            std::cout << key << "  " << s.length() << "   byteSize  "  << byteSize << std::endl;
-        }
+//        if(isdebug == true){
+//            std::cout << key << "  " << s.length() << "   byteSize  "  << byteSize << std::endl;
+//        }
         byteSize += (s.length() - (searchKey->value).length());
         while(searchKey != nullptr){
             searchKey->value = s;
